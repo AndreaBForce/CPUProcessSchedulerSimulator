@@ -18,11 +18,15 @@ public class ProcessListView {
     Button addBtn = new Button("Add new process");
     long id = 0;
 
-    public ProcessListView() {
+    public ProcessListView(TabView tabView) {
+
         container.setSpacing(16);
         container.setTranslateX(20);
         container.setTranslateY(20);
         container.getChildren().add(addBtn);
+        container.setPrefHeight(8000);
+        //container.prefWidthProperty().bind(tabView.getTab().getContextMenu().prefWidthProperty());
+        //container.prefHeightProperty().bind(tabView.getTab().getContextMenu().prefHeightProperty());
         addBtn.setOnMouseClicked(mouseEvent -> add(new Process("Process "+id)));
     }
 

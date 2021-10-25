@@ -18,7 +18,12 @@ public class TabPaneNew {
         //Parte da spostare che permette la creazione di un nuovo tab
         plus.setOnSelectionChanged (e ->{
             if(plus.isSelected()){
-                addTab(new TabView("Nome place"));
+                TabView aggiunta = new TabView("ProcessoN");
+                ProcessListView lista = new ProcessListView(aggiunta);
+
+                aggiunta.getTab().setContent(lista.container);
+
+                addTab(aggiunta);
             }
         }
         );
