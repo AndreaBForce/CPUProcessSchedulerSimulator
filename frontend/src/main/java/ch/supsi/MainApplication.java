@@ -17,7 +17,8 @@ public class MainApplication extends Application {
         Locale.setDefault(Locale.ITALIAN);
 
         stage.setTitle("Scheduler");
-        stage.setScene(new Scene(new GridPane(), 800, 500));
+        Scheduler scheduler = new Scheduler();
+        stage.setScene(new Scene(scheduler.getPane(), 800, 500));
         stage.show();
     }
 }
