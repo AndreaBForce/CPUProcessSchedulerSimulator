@@ -12,6 +12,7 @@ public class TabPaneNew {
         Platform.setImplicitExit(false);
 
         this.tabpane = new TabPane();
+
         Tab plus = new Tab("+");
         plus.setClosable(false);
 

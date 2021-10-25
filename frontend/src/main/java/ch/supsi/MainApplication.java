@@ -17,21 +17,8 @@ public class MainApplication extends Application {
         Locale.setDefault(Locale.ITALIAN);
 
         stage.setTitle("Scheduler");
+        stage.setScene(new Scene(new GridPane(), 800, 500));
 
-        GridPane gridPane = new GridPane();
-
-        TabPaneNew pane = new TabPaneNew();
-        TabView tab1 = new TabView("Tab 1");
-        TabView tab2 = new TabView("Tab 2");
-        //stage.setScene(new Scene(new GridPane(), 800, 500));
-
-        pane.addTab(tab1);
-        pane.addTab(tab2);
-
-        gridPane.getChildren().add(pane.getTabpane());
-
-        Scene scena = new Scene(gridPane,800,500);
-        stage.setScene(scena);
         stage.show();
     }
 }
