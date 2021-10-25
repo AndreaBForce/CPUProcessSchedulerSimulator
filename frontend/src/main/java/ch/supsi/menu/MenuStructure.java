@@ -30,8 +30,8 @@ public class MenuStructure {
         menuHelp.getItems().add(aboutItem);
 
         menuBar.getStyleClass().add("menuBar");
-        menuBar.prefWidthProperty().bind(schedulder.getPane().widthProperty());
-        schedulder.getPane().getChildren().add(menuBar);
+        menuBar.prefWidthProperty().bind(schedulder.getVboxMenu().widthProperty());
+        schedulder.getVboxMenu().getChildren().add(menuBar);
     }
 
     public MenuItem getAboutItem() {

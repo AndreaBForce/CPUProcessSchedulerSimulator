@@ -10,8 +10,7 @@ public class TabPaneNew {
 
     public TabPaneNew() {
         Platform.setImplicitExit(false);
-
-        this.tabpane = new TabPane();
+        tabpane = new TabPane();
 
         Tab plus = new Tab("+");
         plus.setClosable(false);
@@ -24,6 +23,7 @@ public class TabPaneNew {
         }
         );
 
+        tabpane.setLayoutY(25);
         //Evento che gestisce i soci
         tabpane.getTabs().add(plus);
     }
@@ -36,7 +36,10 @@ public class TabPaneNew {
         return tabpane;
     }
 
-    public void setTabpane(TabPane tabpane) {
-        this.tabpane = tabpane;
+    public void setTabpane(Scheduler schedulder) {
+
+        schedulder.getVboxMenu().getChildren().add(getTabpane());
     }
+
+
 }
