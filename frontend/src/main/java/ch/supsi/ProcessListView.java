@@ -1,10 +1,15 @@
 package ch.supsi;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -13,21 +18,38 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProcessListView {
-    VBox container = new VBox();
-    Button addBtn = new Button("Add new process");
+    VBox container;
+    VBox processBox;
+    List<HBox> cells;
+    Button addBtn;
     long id = 0;
 
-    public ProcessListView(TabView tabView) {
-
+    public ProcessListView() {
+        container = new VBox();
+        processBox = new VBox();
+        addBtn = new Button("Add new process");
+        cells = new ArrayList<>();
         container.setSpacing(16);
-        container.setTranslateX(20);
-        container.setTranslateY(20);
-        container.getChildren().add(addBtn);
-        container.setPrefHeight(8000);
-        //container.prefWidthProperty().bind(tabView.getTab().getContextMenu().prefWidthProperty());
-        //container.prefHeightProperty().bind(tabView.getTab().getContextMenu().prefHeightProperty());
-        addBtn.setOnMouseClicked(mouseEvent -> add(new Process("Process "+id)));
+        container.setPadding(new Insets(10));
+        container.setStyle("-fx-background-color: red");
+        container.getChildren().addAll(addBtn, processBox);
+        container.setMinWidth(200);
+//        container.setMaxWidth(600);
+        processBox.setMaxWidth(800);
+        processBox.setSpacing(10);
+        container.setAlignment(Pos.BASELINE_CENTER);
+//        container.setMinHeight(200);
+//        container.setMaxHeight(400);
+        addBtn.setOnMouseClicked(mouseEvent -> {
+                add(new Process("P" + id));
+            }
+        );
+
+//        container.heightProperty().addListener((observableValue, number, t1) -> System.out.println(observableValue));
     }
 
     public void add(Process process){
@@ -44,13 +66,13 @@ public class ProcessListView {
             label.setStyle("-fx-text-fill: #000000;");
 
         cell.getChildren().addAll(label,space,button);
-        
-        container.getChildren().add(cell);
+
+        processBox.getChildren().add(cell);
     }
 
     public void removeCell(String id){
         Node toRemove =  container.lookup('#'+id);
-        container.getChildren().remove(toRemove);
+        processBox.getChildren().remove(toRemove);
     }
 
     private HBox getCell(String hexColor){

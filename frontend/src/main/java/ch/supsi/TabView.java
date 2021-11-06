@@ -11,20 +11,16 @@ public class TabView {
     public TabView(String nome) {
         this.tab = new Tab(nome);
 
-        tab.setOnCloseRequest(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                exit = new ExitDialog();
+        tab.setOnCloseRequest(event -> {
+            exit = new ExitDialog();
 
-                exit.getExitStage().showAndWait();
+            exit.getExitStage().showAndWait();
 
 
-                if(exit.isEnd()) {
-                    //Se e' true si chiude la tab
-                }else {
-                    //Se e' false l'evento non si chiude
-                    event.consume();
-                }
+            if(!exit.isEnd()) {
+                //Se e' true si chiude la tab
+                //Se e' false l'evento non si chiude
+                event.consume();
             }
         });
     }

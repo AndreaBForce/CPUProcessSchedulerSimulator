@@ -7,7 +7,6 @@ import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 
 public class ProcessChartView {
     private final StackedBarChart<Number, String> chart;
