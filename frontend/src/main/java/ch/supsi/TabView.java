@@ -12,12 +12,10 @@ public class TabView {
     public TabView(String nome) {
         this.tab = new Tab(nome);
 
-        tab.setOnCloseRequest(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                exit = new ExitDialog();
+        tab.setOnCloseRequest(event -> {
+            exit = new ExitDialog();
 
-                exit.getExitStage().showAndWait();
+            exit.getExitStage().showAndWait();
 
 
                 if(!exit.isEnd()) {
