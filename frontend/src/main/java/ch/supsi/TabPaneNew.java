@@ -27,7 +27,7 @@ public class TabPaneNew {
                 processChart.testChart();
                 VBox vBox = new VBox();
                 vBox.setAlignment(Pos.BOTTOM_CENTER);
-                vBox.setStyle("-fx-background-color: #eac1f6");
+                vBox.setStyle("-fx-background-color: #f8fce5");
                 VBox.setVgrow(lista.container, Priority.ALWAYS);
                 Region space = new Region();
                 space.setStyle("-fx-background-color: #ffd500");
