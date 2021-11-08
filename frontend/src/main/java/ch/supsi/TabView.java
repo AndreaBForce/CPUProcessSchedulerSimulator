@@ -23,7 +23,7 @@ public class TabView {
                     event.consume();
                 }
             }
-        });
+        );
 //        tab.setOnCloseRequest(event -> new SaveSimulationHandler());
     }
 

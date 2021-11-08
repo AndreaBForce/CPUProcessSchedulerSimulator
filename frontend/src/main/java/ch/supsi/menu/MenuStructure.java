@@ -39,7 +39,6 @@ public class MenuStructure {
         menuBar.getStyleClass().add("menuBar");
         menuBar.prefWidthProperty().bind(scheduler.getVboxMenu().widthProperty());
         menuBar.setMinWidth(400);
-        scheduler.getVboxMenu().getChildren().add(menuBar);
     }
 
     public MenuItem getMenuNew() {
