@@ -5,7 +5,7 @@ import java.util.Properties;
 
 public class SchedulerProperties {
 
-    public static Properties getAppInfo() {
+    public Properties getAppInfo() {
         final Properties properties = new Properties();
         try {
             properties.load(SchedulerProperties.class.getClassLoader().getResourceAsStream("pom.properties"));
@@ -14,5 +14,4 @@ public class SchedulerProperties {
         }
         return properties;
     }
-
 }

@@ -2,8 +2,8 @@ package ch.supsi;
 
 import ch.supsi.handlers.HelpHandler;
 import ch.supsi.menu.MenuStructure;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import ch.supsi.menu.MenuView;
+import ch.supsi.utility.DisplayAlert;
 import javafx.scene.layout.VBox;
 
 public class Scheduler {
@@ -11,25 +11,25 @@ public class Scheduler {
     private MenuStructure menuStructure;
     private HelpHandler helpHandler;
     private TabPaneNew tabPane;
+    private MenuView menuView;
+    private DisplayAlert displayAlert;
 
     public Scheduler() {
         vboxMenu = new VBox();
         menuStructure = new MenuStructure();
-        helpHandler = new HelpHandler();
+        displayAlert = new DisplayAlert();
+        menuView = new MenuView(displayAlert);
+        helpHandler = new HelpHandler(displayAlert);
         tabPane = new TabPaneNew();
-
         setMenuBar();
     }
 
-    private void setMenuBar(){
-        menuStructure.setMenuBar(this);
-        menuStructure.getAboutItem().setOnAction(helpHandler);
-
+    private void setMenuBar() {
+        vboxMenu.getChildren().add(menuView.getMenuBar(this, tabPane));
         tabPane.setTabpane(this);
     }
 
     public VBox getVboxMenu() {
         return vboxMenu;
     }
-
 }
