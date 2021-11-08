@@ -12,23 +12,21 @@ public class TabView {
     public TabView(String nome) {
         this.tab = new Tab(nome);
 
-//        tab.setOnCloseRequest(new EventHandler<Event>() {
-//            @Override
-//            public void handle(Event event) {
-//                exit = new ExitDialog();
-//
-//                exit.getExitStage().showAndWait();
-//
-//
-//                if(exit.isEnd()) {
-//                    //Se e' true si chiude la tab
-//                }else {
-//                    //Se e' false l'evento non si chiude
-//                    event.consume();
-//                }
-//            }
-//        });
-        tab.setOnCloseRequest(event -> new SaveSimulationHandler());
+        tab.setOnCloseRequest(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                exit = new ExitDialog();
+
+                exit.getExitStage().showAndWait();
+
+
+                if(!exit.isEnd()) {
+
+                    event.consume();
+                }
+            }
+        });
+//        tab.setOnCloseRequest(event -> new SaveSimulationHandler());
     }
 
     public Tab getTab() {
