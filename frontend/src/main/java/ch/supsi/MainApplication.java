@@ -19,7 +19,6 @@ public class MainApplication extends Application {
         stage.setTitle("Scheduler");
         Scheduler scheduler = new Scheduler();
 
-
         stage.setScene(new Scene(scheduler.getVboxMenu(), 800, 500));
         stage.show();
     }

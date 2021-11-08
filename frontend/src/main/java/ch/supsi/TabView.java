@@ -1,5 +1,6 @@
 package ch.supsi;
 
+import ch.supsi.handlers.SaveSimulationHandler;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
@@ -19,14 +20,13 @@ public class TabView {
                 exit.getExitStage().showAndWait();
 
 
-                if(exit.isEnd()) {
-                    //Se e' true si chiude la tab
-                }else {
-                    //Se e' false l'evento non si chiude
+                if(!exit.isEnd()) {
+
                     event.consume();
                 }
             }
         });
+//        tab.setOnCloseRequest(event -> new SaveSimulationHandler());
     }
 
     public Tab getTab() {
