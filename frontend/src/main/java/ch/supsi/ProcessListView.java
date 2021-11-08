@@ -45,49 +45,107 @@ public class ProcessListView {
 //        container.setMinHeight(200);
 //        container.setMaxHeight(400);
         addBtn.setOnMouseClicked(mouseEvent -> {
-                add(new Process("P" + id));
-            }
+                    add(new Process("P" + id));
+                }
         );
 
 //        container.heightProperty().addListener((observableValue, number, t1) -> System.out.println(observableValue));
     }
 
-    public void add(Process process){
+    public void add(Process process) {
         String hexColor = "#83C1DC";
 
         HBox cell = getCell(hexColor);
         Label label = getLabel(process.toString());
+
+
+        //t = text
+        Label t_arrival_time = new Label();
+        Label t_burst_time = new Label();
+        Label t_priority = new Label();
+
+        //v = value
+        Label v_arrival = new Label();
+        Label v_burst = new Label();
+        Label v_priority = new Label();
+
+        t_arrival_time.setText("Arrival time: ");
+        t_burst_time.setText("Burst time: ");
+        t_priority.setText("Priority: ");
+
+        v_arrival.setText("5");
+        v_burst.setText("5");
+        v_priority.setText("5");
+
+        //Btn edit
+        Button btn_edit = new Button();
+
+        btn_edit.setText("Edit");
+        btn_edit.setStyle("-fx-background-insets: 0; -fx-background-color: #f0f0f0; -fx-font-size: 10px;");
+        btn_edit.setMaxHeight(10);
+        HBox.setMargin(btn_edit, new Insets(5, 5, 5, 5));
+
+        btn_edit.setOnMouseClicked(mouseEvent -> {
+            EditDialog editDialog = new EditDialog(label,v_arrival,v_burst,v_priority);
+            editDialog.getEditStage().showAndWait();
+        });
+
+
         Button button = getButton();
-        Region space = getSpace();
 
-        if(isDark(hexColor))
+
+
+
+        //contrast settings
+        if (isDark(hexColor)) {
             label.setStyle("-fx-text-fill: #ffffff;");
-        else
-            label.setStyle("-fx-text-fill: #000000;");
+            t_arrival_time.setStyle("-fx-text-fill: #ffffff;");
+            t_burst_time.setStyle("-fx-text-fill: #ffffff;");
+            t_priority.setStyle("-fx-text-fill: #ffffff;");
 
-        cell.getChildren().addAll(label,space,button);
+            v_arrival.setStyle("-fx-text-fill: #ffffff;");
+            v_burst.setStyle("-fx-text-fill: #ffffff;");
+            v_priority.setStyle("-fx-text-fill: #ffffff;");
+        } else {
+            label.setStyle("-fx-text-fill: #000000;");
+            t_arrival_time.setStyle("-fx-text-fill: #000000;");
+            t_burst_time.setStyle("-fx-text-fill: #000000;");
+            t_priority.setStyle("-fx-text-fill: #000000;");
+
+            v_arrival.setStyle("-fx-text-fill: #000000;");
+            v_burst.setStyle("-fx-text-fill: #000000;");
+            v_priority.setStyle("-fx-text-fill: #000000;");
+        }
+
+        //TODO: ADD LABEL: ARRIVAL TIME
+        //TODO: ADD LABEL: BURST TIME
+        //TODO: ADD LABEL: PRIORITY
+        //TODO: ADD BUTTON: EDIT
+        //TODO: ADD DIALOG TO EDI TO EDIT LABEL
+        cell.getChildren().addAll(label, t_arrival_time,v_arrival,getSpace(),t_burst_time,v_burst,getSpace(),t_priority,v_priority,getSpace(),btn_edit, button);
+
 
         processBox.getChildren().add(cell);
     }
 
-    public void removeCell(String id){
-        Node toRemove =  container.lookup('#'+id);
+    public void removeCell(String id) {
+        Node toRemove = container.lookup('#' + id);
         processBox.getChildren().remove(toRemove);
     }
 
-    private HBox getCell(String hexColor){
+    private HBox getCell(String hexColor) {
         HBox cell = new HBox();
-        cell.setStyle("-fx-background-radius: 5; -fx-background-color: "+hexColor+";");
+        cell.setStyle("-fx-background-radius: 5; -fx-background-color: " + hexColor + ";");
         cell.setEffect(new DropShadow(10, Color.BLACK));
         cell.setPrefHeight(32);
         cell.setAlignment(Pos.CENTER);
         cell.setFillHeight(false);
-        cell.setId("cell"+id);
+        cell.setId("cell" + id);
         id++;
         return cell;
     }
 
-    private Label getLabel(String text){
+    private Label getLabel(String text) {
         Label label = new Label(text);
         label.setFont(Font.font("Futura"));
         label.setPrefWidth(150);
@@ -95,21 +153,21 @@ public class ProcessListView {
         return label;
     }
 
-    public Region getSpace(){
+    public Region getSpace() {
         Region space = new Region();
-        space.setPrefWidth(200);
+        space.setPrefWidth(50);
         space.setPrefHeight(30);
         HBox.setHgrow(space, Priority.ALWAYS);
         return space;
     }
 
-    private Button getButton(){
+    private Button getButton() {
         Button button = new Button();
 
         button.setText("Remove");
         button.setStyle("-fx-background-insets: 0; -fx-background-color: #f0f0f0; -fx-font-size: 10px;");
         button.setMaxHeight(10);
-        HBox.setMargin(button, new Insets(5,5,5,5));
+        HBox.setMargin(button, new Insets(5, 5, 5, 5));
 
         button.setOnMouseClicked(mouseEvent -> {
             removeCell(button.getParent().getId());
@@ -118,7 +176,7 @@ public class ProcessListView {
         return button;
     }
 
-    private boolean isDark(String hexColor){
+    private boolean isDark(String hexColor) {
         double bright = Color.web(hexColor).getBrightness();
         return bright < 0.8;
     }

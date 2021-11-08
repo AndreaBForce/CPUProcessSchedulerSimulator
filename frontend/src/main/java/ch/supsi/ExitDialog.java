@@ -19,23 +19,25 @@ public class ExitDialog {
 
     //Da mettere resource bundle come parametro
     public ExitDialog() {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
+
         exitStage = new Stage();
-        exitStage.setTitle("Sei sicuro di uscire?");
+        exitStage.setTitle(resourceBundle.getString("exitDialogTitle.text"));
         exitStage.setAlwaysOnTop(true);
 
         //borderpane padre
         BorderPane exitBorder = new BorderPane();
         //Label di sicurezza
         Label sicuro = new Label();
-        sicuro.setText("Sei sicuro di voler uscire?");
+        sicuro.setText(resourceBundle.getString("exitDialogSure.text"));
         sicuro.setFont(new Font("Arial", 15));
         sicuro.setAlignment(Pos.CENTER);
         exitBorder.setTop(sicuro);
         HBox exitButtons = new HBox();
         Button exitAnnulla = new Button();
         Button exitEsci = new Button();
-        exitEsci.setText("Esci");
-        exitAnnulla.setText("Annulla");
+        exitEsci.setText(resourceBundle.getString("exitDialogClose.text"));
+        exitAnnulla.setText(resourceBundle.getString("exitDialogCancel.text"));
         exitEsci.setStyle("-fx-background-color: #336699; ");
         exitStage.initModality(Modality.APPLICATION_MODAL);
         exitButtons.setSpacing(20);
