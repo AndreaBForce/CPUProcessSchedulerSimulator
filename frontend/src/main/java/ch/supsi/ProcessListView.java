@@ -10,11 +10,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -23,6 +21,7 @@ import java.util.List;
 
 public class ProcessListView {
     VBox container;
+    ScrollPane scrollableList;
     VBox processBox;
     List<HBox> cells;
     Button addBtn;
@@ -33,10 +32,11 @@ public class ProcessListView {
         processBox = new VBox();
         addBtn = new Button("Add new process");
         cells = new ArrayList<>();
+        scrollableList = new ScrollPane();
         container.setSpacing(16);
         container.setPadding(new Insets(10));
         container.setStyle("-fx-background-color: red");
-        container.getChildren().addAll(addBtn, processBox);
+        container.getChildren().addAll(addBtn, scrollableList);
         container.setMinWidth(200);
 //        container.setMaxWidth(600);
         processBox.setMaxWidth(800);
@@ -49,7 +49,11 @@ public class ProcessListView {
             }
         );
 
-//        container.heightProperty().addListener((observableValue, number, t1) -> System.out.println(observableValue));
+        scrollableList.setContent(processBox);
+        scrollableList.setFitToWidth(true);
+        scrollableList.setStyle("-fx-background: red; -fx-background-color: red");
+        scrollableList.setMaxWidth(800);
+        processBox.setPadding(new Insets(10));
     }
 
     public void add(Process process){
