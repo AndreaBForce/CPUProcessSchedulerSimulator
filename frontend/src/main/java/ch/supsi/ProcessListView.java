@@ -72,7 +72,7 @@ public class ProcessListView {
         t_arrival_time.setText("Arrival time: ");
         t_burst_time.setText("Burst time: ");
         t_priority.setText("Priority: ");
-
+        
         v_arrival.setText("5");
         v_burst.setText("5");
         v_priority.setText("5");
