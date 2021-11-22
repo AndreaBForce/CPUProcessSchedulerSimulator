@@ -42,6 +42,10 @@ public class ProcessListView {
 //        container.setMinHeight(200);
 //        container.setMaxHeight(400);
 
+        add(new Process("TEST"));
+        add(new Process("TEST"));
+        add(new Process("TEST"));
+        add(new Process("TEST"));
 
 //        addBtn.setOnMouseClicked(mouseEvent -> {
 //                    add(new Process("P" + id));
@@ -101,10 +105,16 @@ public class ProcessListView {
             newWindow.show();
 
             submitBtn.setOnMouseClicked(mouseEvent1 -> {
-                add(new Process(textProcessName.getText()));
+                //TODO CHECK SE FLOAT
+                add(new Process(textProcessName.getText(),Float.parseFloat(tmpBurst.getText()),Float.parseFloat(tmpArr.getText()),Integer.parseInt(priority.getText())));
                 newWindow.close();
             });
         });
+        scrollableList.setContent(processBox);
+        scrollableList.setFitToWidth(true);
+        scrollableList.setStyle("-fx-background: red; -fx-background-color: red");
+        scrollableList.setMaxWidth(800);
+        processBox.setPadding(new Insets(10));
 
 //        container.heightProperty().addListener((observableValue, number, t1) -> System.out.println(observableValue));
     }
@@ -130,9 +140,9 @@ public class ProcessListView {
         t_burst_time.setText("Burst time: ");
         t_priority.setText("Priority: ");
         
-        v_arrival.setText("5");
-        v_burst.setText("5");
-        v_priority.setText("5");
+        v_arrival.setText(String.valueOf(process.getArrivalTime()));
+        v_burst.setText(String.valueOf(process.getBurstTime()));
+        v_priority.setText(String.valueOf(process.getPriority()));
 
         //Btn edit
         Button btn_edit = new Button();
