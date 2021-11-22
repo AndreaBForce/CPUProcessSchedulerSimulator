@@ -47,6 +47,7 @@ public class ProcessListView {
 //
 //        );
 
+        
         addBtn.setOnMouseClicked(mouseEvent -> {
             GridPane gridPane = new GridPane();
             gridPane.setAlignment(Pos.CENTER);
