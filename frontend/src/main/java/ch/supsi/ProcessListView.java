@@ -1,11 +1,8 @@
 package ch.supsi;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,6 +12,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +43,14 @@ public class ProcessListView {
         container.setAlignment(Pos.BASELINE_CENTER);
 //        container.setMinHeight(200);
 //        container.setMaxHeight(400);
+
+
+//        addBtn.setOnMouseClicked(mouseEvent -> {
+//                    add(new Process("P" + id));
+//                }
+//
+//        );
+
         addBtn.setOnMouseClicked(mouseEvent -> {
                     add(new Process("P" + id));
                 }
@@ -184,5 +191,4 @@ public class ProcessListView {
         double bright = Color.web(hexColor).getBrightness();
         return bright < 0.8;
     }
-
 }
