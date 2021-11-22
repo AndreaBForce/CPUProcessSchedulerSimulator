@@ -1,22 +1,17 @@
 package ch.supsi;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,15 +39,74 @@ public class ProcessListView {
         container.setAlignment(Pos.BASELINE_CENTER);
 //        container.setMinHeight(200);
 //        container.setMaxHeight(400);
+
+
+//        addBtn.setOnMouseClicked(mouseEvent -> {
+//                    add(new Process("P" + id));
+//                }
+//
+//        );
+
         addBtn.setOnMouseClicked(mouseEvent -> {
-                add(new Process("P" + id));
-            }
-        );
+            GridPane gridPane = new GridPane();
+            gridPane.setAlignment(Pos.CENTER);
+            gridPane.setHgap(10);
+            gridPane.setVgap(10);
+            gridPane.setPadding(new Insets(5, 5, 5, 5));
+            Scene secondScene = new Scene(gridPane, 320, 350);
+
+            Stage newWindow = new Stage();
+            newWindow.setTitle("Add new process");
+            newWindow.setScene(secondScene);
+
+            newWindow.setMaxWidth(350);
+            newWindow.setMinWidth(350);
+            newWindow.setMaxHeight(320);
+            newWindow.setMinHeight(320);
+
+            Text scenetitle = new Text("Add new process");
+            gridPane.add(scenetitle, 0, 0, 2, 1);
+
+            Label labelProcessName = new Label("Name:");
+            gridPane.add(labelProcessName, 0, 1);
+
+            TextField textProcessName = new TextField();
+            gridPane.add(textProcessName, 1, 1);
+
+            Label labelTmpArr = new Label("Arrival time:");
+            gridPane.add(labelTmpArr, 0, 2);
+            TextField tmpArr = new TextField();
+            gridPane.add(tmpArr, 1, 2);
+
+            Label labelTmpBurst = new Label("Burst time:");
+            gridPane.add(labelTmpBurst, 0, 3);
+            TextField tmpBurst = new TextField();
+            gridPane.add(tmpBurst, 1, 3);
+
+            Label labelPriority = new Label("Priority:");
+            gridPane.add(labelPriority, 0, 4);
+            TextField priority = new TextField();
+            gridPane.add(priority, 1, 4);
+
+
+            Button submitBtn = new Button("Add");
+            submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
+                    .or(Bindings.isEmpty(tmpArr.textProperty()))
+                    .or(Bindings.isEmpty(tmpBurst.textProperty()))
+                    .or(Bindings.isEmpty(priority.textProperty())));
+            gridPane.add(submitBtn, 1, 5);
+            newWindow.show();
+
+            submitBtn.setOnMouseClicked(mouseEvent1 -> {
+                add(new Process(textProcessName.getText()));
+                newWindow.close();
+            });
+        });
 
 //        container.heightProperty().addListener((observableValue, number, t1) -> System.out.println(observableValue));
     }
 
-    public void add(Process process){
+    public void add(Process process) {
         String hexColor = "#83C1DC";
 
         HBox cell = getCell(hexColor);
@@ -60,34 +114,34 @@ public class ProcessListView {
         Button button = getButton();
         Region space = getSpace();
 
-        if(isDark(hexColor))
+        if (isDark(hexColor))
             label.setStyle("-fx-text-fill: #ffffff;");
         else
             label.setStyle("-fx-text-fill: #000000;");
 
-        cell.getChildren().addAll(label,space,button);
+        cell.getChildren().addAll(label, space, button);
 
         processBox.getChildren().add(cell);
     }
 
-    public void removeCell(String id){
-        Node toRemove =  container.lookup('#'+id);
+    public void removeCell(String id) {
+        Node toRemove = container.lookup('#' + id);
         processBox.getChildren().remove(toRemove);
     }
 
-    private HBox getCell(String hexColor){
+    private HBox getCell(String hexColor) {
         HBox cell = new HBox();
-        cell.setStyle("-fx-background-radius: 5; -fx-background-color: "+hexColor+";");
+        cell.setStyle("-fx-background-radius: 5; -fx-background-color: " + hexColor + ";");
         cell.setEffect(new DropShadow(10, Color.BLACK));
         cell.setPrefHeight(32);
         cell.setAlignment(Pos.CENTER);
         cell.setFillHeight(false);
-        cell.setId("cell"+id);
+        cell.setId("cell" + id);
         id++;
         return cell;
     }
 
-    private Label getLabel(String text){
+    private Label getLabel(String text) {
         Label label = new Label(text);
         label.setFont(Font.font("Futura"));
         label.setPrefWidth(150);
@@ -95,7 +149,7 @@ public class ProcessListView {
         return label;
     }
 
-    public Region getSpace(){
+    public Region getSpace() {
         Region space = new Region();
         space.setPrefWidth(200);
         space.setPrefHeight(30);
@@ -103,13 +157,13 @@ public class ProcessListView {
         return space;
     }
 
-    private Button getButton(){
+    private Button getButton() {
         Button button = new Button();
 
         button.setText("Remove");
         button.setStyle("-fx-background-insets: 0; -fx-background-color: #f0f0f0; -fx-font-size: 10px;");
         button.setMaxHeight(10);
-        HBox.setMargin(button, new Insets(5,5,5,5));
+        HBox.setMargin(button, new Insets(5, 5, 5, 5));
 
         button.setOnMouseClicked(mouseEvent -> {
             removeCell(button.getParent().getId());
@@ -118,9 +172,8 @@ public class ProcessListView {
         return button;
     }
 
-    private boolean isDark(String hexColor){
+    private boolean isDark(String hexColor) {
         double bright = Color.web(hexColor).getBrightness();
         return bright < 0.8;
     }
-
 }

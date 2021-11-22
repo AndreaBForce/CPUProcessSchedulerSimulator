@@ -4,6 +4,7 @@ import ch.supsi.Scheduler;
 import ch.supsi.TabPaneNew;
 import ch.supsi.TabView;
 import ch.supsi.handlers.ExitHandler;
+import ch.supsi.handlers.ExportGraphHandler;
 import ch.supsi.handlers.HelpHandler;
 import ch.supsi.utility.DisplayAlert;
 import javafx.scene.control.MenuBar;
@@ -26,6 +27,12 @@ public class MenuView {
     public MenuBar getMenuBar(Scheduler scheduler, TabPaneNew tabPaneNew) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         menuStructure.setMenuBar(scheduler);
+
+        menuStructure.getMenuExportGraph().setOnAction(new ExportGraphHandler(scheduler));
+
+//        menuStructure.getMenuExportSim().setOnAction();
+
+//        menuStructure.getMenuImportSim().setOnAction();
 
         menuStructure.getExitItem().setOnAction(exitHandler);
 
