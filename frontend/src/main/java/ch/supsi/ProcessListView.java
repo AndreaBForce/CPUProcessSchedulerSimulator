@@ -51,6 +51,7 @@ public class ProcessListView {
 //
 //        );
 
+        
         addBtn.setOnMouseClicked(mouseEvent -> {
                     add(new Process("P" + id));
                 }
