@@ -4,10 +4,8 @@ import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -53,15 +51,62 @@ public class ProcessListView {
 
         
         addBtn.setOnMouseClicked(mouseEvent -> {
-                    add(new Process("P" + id));
-                }
-        );
+            GridPane gridPane = new GridPane();
+            gridPane.setAlignment(Pos.CENTER);
+            gridPane.setHgap(10);
+            gridPane.setVgap(10);
+            gridPane.setPadding(new Insets(5, 5, 5, 5));
+            Scene secondScene = new Scene(gridPane, 320, 350);
 
-        scrollableList.setContent(processBox);
-        scrollableList.setFitToWidth(true);
-        scrollableList.setStyle("-fx-background: red; -fx-background-color: red");
-        scrollableList.setMaxWidth(800);
-        processBox.setPadding(new Insets(10));
+            Stage newWindow = new Stage();
+            newWindow.setTitle("Add new process");
+            newWindow.setScene(secondScene);
+
+            newWindow.setMaxWidth(350);
+            newWindow.setMinWidth(350);
+            newWindow.setMaxHeight(320);
+            newWindow.setMinHeight(320);
+
+            Text scenetitle = new Text("Add new process");
+            gridPane.add(scenetitle, 0, 0, 2, 1);
+
+            Label labelProcessName = new Label("Name:");
+            gridPane.add(labelProcessName, 0, 1);
+
+            TextField textProcessName = new TextField();
+            gridPane.add(textProcessName, 1, 1);
+
+            Label labelTmpArr = new Label("Arrival time:");
+            gridPane.add(labelTmpArr, 0, 2);
+            TextField tmpArr = new TextField();
+            gridPane.add(tmpArr, 1, 2);
+
+            Label labelTmpBurst = new Label("Burst time:");
+            gridPane.add(labelTmpBurst, 0, 3);
+            TextField tmpBurst = new TextField();
+            gridPane.add(tmpBurst, 1, 3);
+
+            Label labelPriority = new Label("Priority:");
+            gridPane.add(labelPriority, 0, 4);
+            TextField priority = new TextField();
+            gridPane.add(priority, 1, 4);
+
+
+            Button submitBtn = new Button("Add");
+            submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
+                    .or(Bindings.isEmpty(tmpArr.textProperty()))
+                    .or(Bindings.isEmpty(tmpBurst.textProperty()))
+                    .or(Bindings.isEmpty(priority.textProperty())));
+            gridPane.add(submitBtn, 1, 5);
+            newWindow.show();
+
+            submitBtn.setOnMouseClicked(mouseEvent1 -> {
+                add(new Process(textProcessName.getText()));
+                newWindow.close();
+            });
+        });
+
+//        container.heightProperty().addListener((observableValue, number, t1) -> System.out.println(observableValue));
     }
 
     public void add(Process process) {
