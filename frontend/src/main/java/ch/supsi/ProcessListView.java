@@ -17,12 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProcessListView {
-    VBox container;
-    ScrollPane scrollableList;
-    VBox processBox;
-    List<HBox> cells;
-    Button addBtn;
-    long id = 0;
+    private VBox container;
+    private ScrollPane scrollableList;
+    private VBox processBox;
+    private final List<HBox> cells;
+    private Button addBtn;
+    private long id = 0;
 
     public ProcessListView() {
         container = new VBox();
@@ -35,24 +35,9 @@ public class ProcessListView {
         container.setStyle("-fx-background-color: red");
         container.getChildren().addAll(addBtn, scrollableList);
         container.setMinWidth(200);
-//        container.setMaxWidth(600);
         processBox.setMaxWidth(800);
         processBox.setSpacing(10);
         container.setAlignment(Pos.BASELINE_CENTER);
-//        container.setMinHeight(200);
-//        container.setMaxHeight(400);
-
-        add(new Process("TEST"));
-        add(new Process("TEST"));
-        add(new Process("TEST"));
-        add(new Process("TEST"));
-
-//        addBtn.setOnMouseClicked(mouseEvent -> {
-//                    add(new Process("P" + id));
-//                }
-//
-//        );
-
         
         addBtn.setOnMouseClicked(mouseEvent -> {
             GridPane gridPane = new GridPane();
@@ -115,8 +100,6 @@ public class ProcessListView {
         scrollableList.setStyle("-fx-background: red; -fx-background-color: red");
         scrollableList.setMaxWidth(800);
         processBox.setPadding(new Insets(10));
-
-//        container.heightProperty().addListener((observableValue, number, t1) -> System.out.println(observableValue));
     }
 
     public void add(Process process) {
@@ -125,72 +108,58 @@ public class ProcessListView {
         HBox cell = getCell(hexColor);
         Label label = getLabel(process.toString());
 
+        Label tmpArrivalTime = new Label();
+        Label tmpBurstTime = new Label();
+        Label tmpPriority = new Label();
 
-        //t = text
-        Label t_arrival_time = new Label();
-        Label t_burst_time = new Label();
-        Label t_priority = new Label();
+        Label valueArrival = new Label();
+        Label valueBurst = new Label();
+        Label valuePriority = new Label();
 
-        //v = value
-        Label v_arrival = new Label();
-        Label v_burst = new Label();
-        Label v_priority = new Label();
-
-        t_arrival_time.setText("Arrival time: ");
-        t_burst_time.setText("Burst time: ");
-        t_priority.setText("Priority: ");
+        tmpArrivalTime.setText("Arrival time: ");
+        tmpBurstTime.setText("Burst time: ");
+        tmpPriority.setText("Priority: ");
         
-        v_arrival.setText(String.valueOf(process.getArrivalTime()));
-        v_burst.setText(String.valueOf(process.getBurstTime()));
-        v_priority.setText(String.valueOf(process.getPriority()));
+        valueArrival.setText(String.valueOf(process.getArrivalTime()));
+        valueBurst.setText(String.valueOf(process.getBurstTime()));
+        valuePriority.setText(String.valueOf(process.getPriority()));
 
         //Btn edit
-        Button btn_edit = new Button();
+        Button btnEdit = new Button();
 
-        btn_edit.setText("Edit");
-        btn_edit.setStyle("-fx-background-insets: 0; -fx-background-color: #f0f0f0; -fx-font-size: 10px;");
-        btn_edit.setMaxHeight(10);
-        HBox.setMargin(btn_edit, new Insets(5, 5, 5, 5));
+        btnEdit.setText("Edit");
+        btnEdit.setStyle("-fx-background-insets: 0; -fx-background-color: #f0f0f0; -fx-font-size: 10px;");
+        btnEdit.setMaxHeight(10);
+        HBox.setMargin(btnEdit, new Insets(5, 5, 5, 5));
 
-        btn_edit.setOnMouseClicked(mouseEvent -> {
-            EditDialog editDialog = new EditDialog(label,v_arrival,v_burst,v_priority);
+        btnEdit.setOnMouseClicked(mouseEvent -> {
+            EditDialog editDialog = new EditDialog(label,valueArrival,valueBurst,valuePriority);
             editDialog.getEditStage().showAndWait();
         });
 
-
         Button button = getButton();
-
-
-
 
         //contrast settings
         if (isDark(hexColor)) {
             label.setStyle("-fx-text-fill: #ffffff;");
-            t_arrival_time.setStyle("-fx-text-fill: #ffffff;");
-            t_burst_time.setStyle("-fx-text-fill: #ffffff;");
-            t_priority.setStyle("-fx-text-fill: #ffffff;");
+            tmpArrivalTime.setStyle("-fx-text-fill: #ffffff;");
+            tmpBurstTime.setStyle("-fx-text-fill: #ffffff;");
+            tmpPriority.setStyle("-fx-text-fill: #ffffff;");
 
-            v_arrival.setStyle("-fx-text-fill: #ffffff;");
-            v_burst.setStyle("-fx-text-fill: #ffffff;");
-            v_priority.setStyle("-fx-text-fill: #ffffff;");
+            valueArrival.setStyle("-fx-text-fill: #ffffff;");
+            valueBurst.setStyle("-fx-text-fill: #ffffff;");
+            valuePriority.setStyle("-fx-text-fill: #ffffff;");
         } else {
             label.setStyle("-fx-text-fill: #000000;");
-            t_arrival_time.setStyle("-fx-text-fill: #000000;");
-            t_burst_time.setStyle("-fx-text-fill: #000000;");
-            t_priority.setStyle("-fx-text-fill: #000000;");
-
-            v_arrival.setStyle("-fx-text-fill: #000000;");
-            v_burst.setStyle("-fx-text-fill: #000000;");
-            v_priority.setStyle("-fx-text-fill: #000000;");
+            tmpArrivalTime.setStyle("-fx-text-fill: #000000;");
+            tmpBurstTime.setStyle("-fx-text-fill: #000000;");
+            tmpPriority.setStyle("-fx-text-fill: #000000;");
+            valueArrival.setStyle("-fx-text-fill: #000000;");
+            valueBurst.setStyle("-fx-text-fill: #000000;");
+            valuePriority.setStyle("-fx-text-fill: #000000;");
         }
 
-        //TODO: ADD LABEL: ARRIVAL TIME
-        //TODO: ADD LABEL: BURST TIME
-        //TODO: ADD LABEL: PRIORITY
-        //TODO: ADD BUTTON: EDIT
-        //TODO: ADD DIALOG TO EDI TO EDIT LABEL
-        cell.getChildren().addAll(label, t_arrival_time,v_arrival,getSpace(),t_burst_time,v_burst,getSpace(),t_priority,v_priority,getSpace(),btn_edit, button);
-
+        cell.getChildren().addAll(label, tmpArrivalTime,valueArrival,getSpace(),tmpBurstTime,valueBurst,getSpace(),tmpPriority,valuePriority,getSpace(),btnEdit, button);
 
         processBox.getChildren().add(cell);
     }
@@ -246,5 +215,9 @@ public class ProcessListView {
     private boolean isDark(String hexColor) {
         double bright = Color.web(hexColor).getBrightness();
         return bright < 0.8;
+    }
+
+    public VBox getContainer() {
+        return container;
     }
 }

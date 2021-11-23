@@ -1,5 +1,6 @@
 package ch.supsi;
 
+import ch.supsi.utility.ImageExport;
 import javafx.geometry.Pos;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -8,9 +9,12 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 
+import java.io.File;
+
 public class ProcessChartView {
     private final StackedBarChart<Number, String> chart;
     private final XYChart.Series<Number, String> processList;
+    private ImageExport imageExport;
 
     public ProcessChartView() {
         CategoryAxis categoryAxis = new CategoryAxis();
@@ -27,6 +31,10 @@ public class ProcessChartView {
 
         chart.setMinSize(250,100);
         chart.setMaxSize(1000, 120);
+    }
+
+    public void exportImage(File file){
+        imageExport = new ImageExport(chart, file);
     }
 
     public StackedBarChart<Number, String> getChart() {
@@ -56,7 +64,7 @@ public class ProcessChartView {
         add(new Process("P1"),1,"#f5e353");
         add(new Process("P2"), 2, "#8CF3F3");
         addSpace(1,3);
-        add(new Process("P3"),100,"#F19797");
+        add(new Process("P3"),5,"#F19797");
         addSpace(3,2);
 
         chart.getData().add(processList);

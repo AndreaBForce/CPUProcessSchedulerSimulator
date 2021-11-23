@@ -1,10 +1,10 @@
 package ch.supsi;
 
 public class Process {
-    String name;
-    float burstTime;
-    float arrivalTime;
-    int priority;
+    private String name;
+    private float burstTime;
+    private float arrivalTime;
+    private int priority;
 
     public Process(String name) {
         this.name = name;
