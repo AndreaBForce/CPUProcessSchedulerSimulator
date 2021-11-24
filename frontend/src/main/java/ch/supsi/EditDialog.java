@@ -1,5 +1,6 @@
 package ch.supsi;
 
+import ch.supsi.menu.ProcessDetailsView;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,7 +20,7 @@ public class EditDialog {
     private Scene scene;
 
     //TODO RIMPIAZZA CON OGGETTO PROCESSO
-    public EditDialog(Label p_name,Label p_arr_t,Label p_burst,Label p_prio){
+    public EditDialog(ProcessDetailsView detailsView,Process process){
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         editStage = new Stage();
         editStage.setTitle(resourceBundle.getString("editDialogTitle.text"));
@@ -35,38 +36,39 @@ public class EditDialog {
         HBox hb_btns = new HBox();
 
         //Label di modifica parametri
-        Label t_p_name = new Label();
-        Label t_arrival_time = new Label();
-        Label t_burst_time = new Label();
-        Label t_priority = new Label();
+        //TODO INTERNALIZZAZIONE
+        Label name = new Label();
+        Label arrivalTime = new Label();
+        Label burstTime = new Label();
+        Label priority = new Label();
 
-        t_p_name.setText("Process name: ");
-        t_arrival_time.setText("Arrival time:     ");
-        t_burst_time.setText("Burst time:       ");
-        t_priority.setText("Priority:            ");
+        name.setText("Process name: ");
+        arrivalTime.setText("Arrival time:     ");
+        burstTime.setText("Burst time:       ");
+        priority.setText("Priority:            ");
 
-        TextField v_p_name = new TextField();
-        TextField v_arrival = new TextField();
-        TextField v_burst = new TextField();
-        TextField v_priority = new TextField();
+        TextField pName = new TextField();
+        TextField pArrival = new TextField();
+        TextField pBurst = new TextField();
+        TextField pPrio = new TextField();
 
-        v_p_name.setText(p_name.getText());
-        v_arrival.setText(p_arr_t.getText());
-        v_burst.setText(p_burst.getText());
-        v_priority.setText(p_prio.getText());
+        pName.setText(detailsView.getProcessName().getText());
+        pArrival.setText(detailsView.getValueArrival().getText());
+        pBurst.setText(detailsView.getValueBurst().getText());
+        pPrio.setText(detailsView.getValuePriority().getText());
 
         //TODO: CHECK INPUT E FAI
 
-        hb_p_name.getChildren().addAll(t_p_name,v_p_name);
+        hb_p_name.getChildren().addAll(name,pName);
         hb_p_name.setSpacing(10);
 
-        hb_arrival.getChildren().addAll(t_arrival_time, v_arrival);
+        hb_arrival.getChildren().addAll(arrivalTime, pArrival);
         hb_arrival.setSpacing(10);
 
-        hb_burst.getChildren().addAll(t_burst_time, v_burst);
+        hb_burst.getChildren().addAll(burstTime, pBurst);
         hb_burst.setSpacing(10);
 
-        hb_priority.getChildren().addAll(t_priority, v_priority);
+        hb_priority.getChildren().addAll(priority, pPrio);
         hb_priority.setSpacing(10);
 
 
@@ -94,10 +96,17 @@ public class EditDialog {
         editStage.setScene(scene);
 
         btn_confirm.setOnMouseClicked(x -> {
-            p_name.setText(v_p_name.getText());
-            p_arr_t.setText(v_arrival.getText());
-            p_burst.setText(v_burst.getText());
-            p_prio.setText(v_priority.getText());
+            detailsView.getProcessName().setText(pName.getText());
+            detailsView.getValueArrival().setText(pArrival.getText());
+            detailsView.getValueBurst().setText(pBurst.getText());
+            detailsView.getValuePriority().setText(pPrio.getText());
+
+            process.setArrivalTime(Float.parseFloat(pArrival.getText()));
+            process.setName(pName.getText());
+            process.setBurstTime(Integer.valueOf(pBurst.getText()));
+            process.setPriority(Integer.valueOf(pPrio.getText()));
+
+
             editStage.close();
         });
 

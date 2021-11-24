@@ -1,5 +1,6 @@
 package ch.supsi;
 
+import ch.supsi.menu.ProcessDetailsView;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -105,24 +106,11 @@ public class ProcessListView {
     public void add(Process process) {
         String hexColor = "#83C1DC";
 
+
+
         HBox cell = getCell(hexColor);
-        Label label = getLabel(process.toString());
 
-        Label tmpArrivalTime = new Label();
-        Label tmpBurstTime = new Label();
-        Label tmpPriority = new Label();
-
-        Label valueArrival = new Label();
-        Label valueBurst = new Label();
-        Label valuePriority = new Label();
-
-        tmpArrivalTime.setText("Arrival time: ");
-        tmpBurstTime.setText("Burst time: ");
-        tmpPriority.setText("Priority: ");
-        
-        valueArrival.setText(String.valueOf(process.getArrivalTime()));
-        valueBurst.setText(String.valueOf(process.getBurstTime()));
-        valuePriority.setText(String.valueOf(process.getPriority()));
+        ProcessDetailsView processDetails = new ProcessDetailsView(process);
 
         //Btn edit
         Button btnEdit = new Button();
@@ -133,13 +121,14 @@ public class ProcessListView {
         HBox.setMargin(btnEdit, new Insets(5, 5, 5, 5));
 
         btnEdit.setOnMouseClicked(mouseEvent -> {
-            EditDialog editDialog = new EditDialog(label,valueArrival,valueBurst,valuePriority);
+            EditDialog editDialog = new EditDialog(processDetails,process);
             editDialog.getEditStage().showAndWait();
         });
 
         Button button = getButton();
 
-        //contrast settings
+
+        /*//contrast settings
         if (isDark(hexColor)) {
             label.setStyle("-fx-text-fill: #ffffff;");
             tmpArrivalTime.setStyle("-fx-text-fill: #ffffff;");
@@ -157,9 +146,19 @@ public class ProcessListView {
             valueArrival.setStyle("-fx-text-fill: #000000;");
             valueBurst.setStyle("-fx-text-fill: #000000;");
             valuePriority.setStyle("-fx-text-fill: #000000;");
-        }
+        }*/
 
-        cell.getChildren().addAll(label, tmpArrivalTime,valueArrival,getSpace(),tmpBurstTime,valueBurst,getSpace(),tmpPriority,valuePriority,getSpace(),btnEdit, button);
+
+        cell.getChildren().addAll(getSpace(),
+                processDetails.getProcessName(),
+                getSpace(),
+                processDetails.getTmpArrivalTime(),processDetails.getValueArrival(),
+                getSpace(),
+                processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
+                getSpace(),
+                processDetails.getTmpPriority(),processDetails.getValuePriority(),
+                getSpace(),
+                btnEdit, button);
 
         processBox.getChildren().add(cell);
     }
