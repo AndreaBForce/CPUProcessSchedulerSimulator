@@ -1,4 +1,3 @@
-import SJF.*;
 import org.junit.Test;
 import service.SJF.ProcessBack;
 import service.SJF.SJF;
