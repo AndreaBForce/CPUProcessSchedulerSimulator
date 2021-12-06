@@ -1,4 +1,4 @@
-package SJF;
+package service.SJF;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

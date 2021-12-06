@@ -1,4 +1,4 @@
-package RoundRobin;
+package service.RoundRobin;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

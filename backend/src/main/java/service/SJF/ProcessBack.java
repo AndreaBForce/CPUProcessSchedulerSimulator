@@ -1,4 +1,4 @@
-package SJF;
+package service.SJF;
 
 import java.util.Objects;
 
