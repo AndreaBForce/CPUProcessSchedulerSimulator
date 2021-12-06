@@ -13,7 +13,7 @@ public class EDFScheduler {
         this.simulationArray = new ArrayList<>();
     }
 
-    boolean isSchedulable(){
+    public boolean isSchedulable(){
         float computationBound = 0;
         for (ProcessBackend p: processArray) {
             p.setState(ProcessState.READY);

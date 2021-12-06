@@ -15,7 +15,7 @@ public class RMSScheduler {
     }
 
 
-    boolean isSchedulable(){
+    public boolean isSchedulable(){
         float computationBound = 0;
         for (ProcessBackend p: processArray) {
             p.setState(ProcessState.READY);
