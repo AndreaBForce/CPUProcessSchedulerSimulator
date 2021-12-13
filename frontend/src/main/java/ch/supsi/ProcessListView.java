@@ -2,6 +2,9 @@ package ch.supsi;
 
 import ch.supsi.menu.ProcessDetailsView;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -29,17 +32,21 @@ public class ProcessListView {
         container = new VBox();
         processBox = new VBox();
         addBtn = new Button("Add new process");
+
         cells = new ArrayList<>();
         scrollableList = new ScrollPane();
         container.setSpacing(16);
         container.setPadding(new Insets(10));
         container.setStyle("-fx-background-color: red");
-        container.getChildren().addAll(addBtn, scrollableList);
+        container.getChildren().addAll(addBtn,scrollableList);
         container.setMinWidth(200);
         processBox.setMaxWidth(800);
         processBox.setSpacing(10);
         container.setAlignment(Pos.BASELINE_CENTER);
-        
+
+
+
+
         addBtn.setOnMouseClicked(mouseEvent -> {
             GridPane gridPane = new GridPane();
             gridPane.setAlignment(Pos.CENTER);
@@ -104,6 +111,7 @@ public class ProcessListView {
     }
 
     public void add(Process process) {
+
         String hexColor = "#83C1DC";
 
 
