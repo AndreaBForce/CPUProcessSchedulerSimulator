@@ -1,5 +1,6 @@
 package ch.supsi.menu;
 
+import ch.supsi.CreateSimDialog;
 import ch.supsi.Scheduler;
 import ch.supsi.TabPaneNew;
 import ch.supsi.TabView;
@@ -56,10 +57,15 @@ public class MenuView {
         menuStructure.getExitItem().setOnAction(exitHandler);
 
         menuStructure.getMenuNew().setOnAction(actionEvent -> {
-            TextInputDialog td = new TextInputDialog("");
-            td.setHeaderText(resourceBundle.getString("textInputDialog.text"));
-            td.showAndWait();
-            tabPaneNew.addTab(new TabView(td.getEditor().getText()));
+            
+            //TODO mettere un dialog che si apre e che restituisce il nome del processo e il tipo
+
+            CreateSimDialog createSimulation = new CreateSimDialog();
+
+            createSimulation.getCreateStage().showAndWait();
+
+            tabPaneNew.createNewSimulation(createSimulation.getName(), createSimulation.getAlgortihm(),createSimulation.isConfirm());
+
         });
 
         menuStructure.getAboutItem().setOnAction(helpHandler);
