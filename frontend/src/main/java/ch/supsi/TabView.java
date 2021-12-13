@@ -1,13 +1,7 @@
 package ch.supsi;
 
-import ch.supsi.handlers.SaveSimulationHandler;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
+import Dialogs.ExitDialog;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 
 public class TabView {
     private Tab tab;

@@ -1,4 +1,4 @@
-package ch.supsi;
+package Dialogs;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

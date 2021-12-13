@@ -1,16 +1,12 @@
 package ch.supsi.menu;
 
-import ch.supsi.CreateSimDialog;
-import ch.supsi.Scheduler;
-import ch.supsi.TabPaneNew;
-import ch.supsi.TabView;
+import Dialogs.CreateSimDialog;
+import Dialogs.DisplayInfoDialog;
+import ch.supsi.*;
 import ch.supsi.handlers.ExitHandler;
 import ch.supsi.handlers.HelpHandler;
 import ch.supsi.utility.DisplayAlert;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -56,9 +52,8 @@ public class MenuView {
 
         menuStructure.getExitItem().setOnAction(exitHandler);
 
+        //Menu che mostra il popup per creare la nuova simulazione
         menuStructure.getMenuNew().setOnAction(actionEvent -> {
-            
-            //TODO mettere un dialog che si apre e che restituisce il nome del processo e il tipo
 
             CreateSimDialog createSimulation = new CreateSimDialog();
 
@@ -68,7 +63,15 @@ public class MenuView {
 
         });
 
+
         menuStructure.getAboutItem().setOnAction(helpHandler);
+
+        //Action che mostra il popup per mostrare la descrizione di come funziona un processo
+        menuStructure.getInfoAlgoItem().setOnAction(actionEvent -> {
+            DisplayInfoDialog displayInfoDialog = new DisplayInfoDialog();
+
+            displayInfoDialog.getDisplayStage().showAndWait();
+        });
 
         return menuStructure.getMenuBar();
     }

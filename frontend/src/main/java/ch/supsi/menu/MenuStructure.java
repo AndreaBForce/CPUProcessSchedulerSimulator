@@ -17,7 +17,10 @@ public class MenuStructure {
     private MenuItem menuImportSim;
     private MenuItem menuExportSim;
     private Menu menuHelp;
+
     private MenuItem aboutItem;
+    private MenuItem infoAlgoItem;
+
     private MenuBar menuBar = new MenuBar();
 
     public void setMenuBar(Scheduler scheduler){
@@ -27,7 +30,10 @@ public class MenuStructure {
         menuEdit = new Menu(resourceBundle.getString("menuEdit.text"));
         menuNew = new MenuItem(resourceBundle.getString("menuNewSim.text"));
         menuHelp = new Menu(resourceBundle.getString("menuHelp.text"));
+
         aboutItem = new MenuItem(resourceBundle.getString("menuAbout.text"));
+        infoAlgoItem = new MenuItem(resourceBundle.getString("menuInfoAlgorithm.text"));
+
         menuExportGraph = new MenuItem(resourceBundle.getString("menuExportGraph.text"));
         menuImportSim = new MenuItem(resourceBundle.getString("menuImportGraph.text"));
         menuExportSim = new MenuItem(resourceBundle.getString("menuExportSim.text"));
@@ -42,7 +48,10 @@ public class MenuStructure {
         menuFile.getItems().add(menuImportSim);
         menuFile.getItems().add(menuExportSim);
         menuEdit.getItems().add(menuNew);
+
         menuHelp.getItems().add(aboutItem);
+        menuHelp.getItems().add(infoAlgoItem);
+
 
         menuBar.getStyleClass().add("menuBar");
         menuBar.prefWidthProperty().bind(scheduler.getVboxMenu().widthProperty());
@@ -59,6 +68,10 @@ public class MenuStructure {
 
     public MenuItem getAboutItem() {
         return aboutItem;
+    }
+
+    public MenuItem getInfoAlgoItem() {
+        return infoAlgoItem;
     }
 
     public MenuBar getMenuBar() {

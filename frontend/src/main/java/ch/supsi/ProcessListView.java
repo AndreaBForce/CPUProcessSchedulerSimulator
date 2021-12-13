@@ -1,10 +1,8 @@
 package ch.supsi;
 
+import Dialogs.EditDialog;
 import ch.supsi.menu.ProcessDetailsView;
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;

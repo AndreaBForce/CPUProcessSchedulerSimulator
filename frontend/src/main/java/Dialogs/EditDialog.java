@@ -1,5 +1,6 @@
-package ch.supsi;
+package Dialogs;
 
+import ch.supsi.Process;
 import ch.supsi.menu.ProcessDetailsView;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,7 +21,7 @@ public class EditDialog {
     private Scene scene;
 
     //TODO RIMPIAZZA CON OGGETTO PROCESSO
-    public EditDialog(ProcessDetailsView detailsView,Process process){
+    public EditDialog(ProcessDetailsView detailsView, Process process){
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         editStage = new Stage();
         editStage.setTitle(resourceBundle.getString("editDialogTitle.text"));
