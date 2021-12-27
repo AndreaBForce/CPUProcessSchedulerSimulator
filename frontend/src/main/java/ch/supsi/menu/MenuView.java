@@ -8,6 +8,7 @@ import ch.supsi.handlers.HelpHandler;
 import ch.supsi.utility.DisplayAlert;
 import controller.ControllerBackend;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import utility.Simulation;
@@ -71,10 +72,9 @@ public class MenuView {
 
         //Menu che mostra il popup per creare la nuova simulazione
         menuStructure.getMenuNew().setOnAction(actionEvent -> {
-            TextInputDialog td = new TextInputDialog("");
-            td.setHeaderText(resourceBundle.getString("textInputDialog.text"));
-            td.showAndWait();
-            tabPaneNew.addTab(new TabView(td.getEditor().getText()));
+            CreateSimDialog createSimulation = new CreateSimDialog();
+            createSimulation.getCreateStage().showAndWait();
+            tabPaneNew.createNewSimulation(createSimulation.getName(), createSimulation.getAlgortihm(),createSimulation.isConfirm());
         });
 
 
