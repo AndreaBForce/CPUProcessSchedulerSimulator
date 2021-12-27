@@ -6,6 +6,8 @@ import ch.supsi.menu.MenuView;
 import ch.supsi.utility.DisplayAlert;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+
 public class Scheduler {
     private final VBox vboxMenu;
     private MenuStructure menuStructure;
@@ -14,7 +16,7 @@ public class Scheduler {
     private MenuView menuView;
     private DisplayAlert displayAlert;
 
-    public Scheduler() {
+    public Scheduler() throws IOException {
         vboxMenu = new VBox();
         menuStructure = new MenuStructure();
         displayAlert = new DisplayAlert();
@@ -24,7 +26,7 @@ public class Scheduler {
         setMenuBar();
     }
 
-    private void setMenuBar() {
+    private void setMenuBar() throws IOException {
         vboxMenu.getChildren().add(menuView.getMenuBar(this, tabPane));
         tabPane.setTabpane(this);
     }

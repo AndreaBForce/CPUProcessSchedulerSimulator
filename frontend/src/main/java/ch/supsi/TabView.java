@@ -6,11 +6,11 @@ import javafx.scene.control.Tab;
 public class TabView {
     private Tab tab;
     private ExitDialog exit;
-    private String nameSimulazion;
+    private String nameSimulation;
     private String nameAlgorithm;
 
-    public TabView(String nome,String nameAlgorithm) {
-        this.nameSimulazion = nome;
+    public TabView(String nome, String nameAlgorithm) {
+        nameSimulation = nome;
         this.nameAlgorithm = nameAlgorithm;
         this.tab = new Tab(nome);
 

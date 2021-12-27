@@ -32,7 +32,7 @@ public class DisplayAlert {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         helpHandler.setTitle(resourceBundle.getString("helpTitle.text"));
         Properties appInfo = schedulerProperties.getAppInfo();
-        helpHandler.setContentText("Calendar app\nversion " + appInfo.getProperty("project.version") + "\nbuild " + appInfo.getProperty("project.build") + " (UTC)");
+        helpHandler.setContentText("Scheduler app\nversion " + appInfo.getProperty("project.version") + "\nbuild " + appInfo.getProperty("project.build") + " (UTC)");
         return helpHandler;
     }
 

@@ -1,0 +1,1 @@
+[{"name":"p","arrivalTime":2,"burstTime":3,"priority":1},{"name":"p2","arrivalTime":3,"burstTime":1,"priority":4},{"name":"p1","arrivalTime":1,"burstTime":2,"priority":1}]

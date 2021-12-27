@@ -38,7 +38,6 @@ public class MenuStructure {
         menuImportSim = new MenuItem(resourceBundle.getString("menuImportGraph.text"));
         menuExportSim = new MenuItem(resourceBundle.getString("menuExportSim.text"));
 
-
         menuBar.getMenus().add(menuFile);
         menuBar.getMenus().add(menuEdit);
         menuBar.getMenus().add(menuHelp);
