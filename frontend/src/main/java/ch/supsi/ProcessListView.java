@@ -33,7 +33,6 @@ public class ProcessListView {
         container.setSpacing(16);
         container.setPadding(new Insets(10));
         container.setStyle("-fx-background-color: red");
-        container.getChildren().addAll(addBtn, scrollableList);
         container.setMinWidth(200);
         processBox.setMaxWidth(800);
         processBox.setSpacing(10);

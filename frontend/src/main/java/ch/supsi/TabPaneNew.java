@@ -22,7 +22,7 @@ public class TabPaneNew {
         //Parte da spostare che permette la creazione di un nuovo tab
         plus.setOnSelectionChanged (e ->{
             if(plus.isSelected()){
-                TabView aggiunta = new TabView("ProcessoN");
+                TabView aggiunta = new TabView("ProcessoN", "ciao");
                 ProcessListView lista = new ProcessListView();
                 processChartView = new ProcessChartView();
                 processChartView.testChart();

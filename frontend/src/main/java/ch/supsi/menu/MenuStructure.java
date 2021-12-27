@@ -18,7 +18,7 @@ public class MenuStructure {
     private MenuItem menuExportSim;
     private Menu menuHelp;
     private MenuItem aboutItem;
-    private MenuBar menuBar = new MenuBar();
+    private final MenuBar menuBar = new MenuBar();
 
     public void setMenuBar(Scheduler scheduler){
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
@@ -31,7 +31,6 @@ public class MenuStructure {
         menuExportGraph = new MenuItem(resourceBundle.getString("menuExportGraph.text"));
         menuImportSim = new MenuItem(resourceBundle.getString("menuImportGraph.text"));
         menuExportSim = new MenuItem(resourceBundle.getString("menuExportSim.text"));
-
 
         menuBar.getMenus().add(menuFile);
         menuBar.getMenus().add(menuEdit);

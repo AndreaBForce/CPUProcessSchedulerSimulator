@@ -8,8 +8,12 @@ import javafx.scene.control.Tab;
 public class TabView {
     private Tab tab;
     private ExitDialog exit;
+    private String nameSimulation;
+    private String nameAlgorithm;
 
-    public TabView(String nome) {
+    public TabView(String nome, String nameAlgorithm) {
+        nameSimulation = nome;
+        this.nameAlgorithm = nameAlgorithm;
         this.tab = new Tab(nome);
 
         tab.setOnCloseRequest(event -> {
