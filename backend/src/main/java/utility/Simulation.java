@@ -1,5 +1,7 @@
 package utility;
 
+import service.process.Process;
+
 import java.util.List;
 
 public class Simulation {

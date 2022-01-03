@@ -14,7 +14,7 @@ public class ServiceScheduler {
 
     public void fcfsSchedulerService(){
         try {
-            serializerJSON.serialize(fcfsAlgorithm.schedulerFCFS(serializerJSON.deserialize()));
+            serializerJSON.serialize(fcfsAlgorithm.compute(serializerJSON.deserialize()));
         } catch (IOException e) {
             e.printStackTrace();
         }

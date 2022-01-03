@@ -1,7 +1,8 @@
 import controller.SerializerJSON;
 import org.junit.Before;
 import org.junit.Test;
-import service.FCFS.Process;
+import service.process.Process;
+import service.process.ProcessBatch;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,9 +18,9 @@ public class SerializerTest {
 
     @Before
     public void init(){
-        Process p = new Process("p", 2, 3, 1);
-        Process p1 = new Process("p1", 1, 2, 1);
-        Process p2 = new Process("p2", 3, 1, 4);
+        Process p = new ProcessBatch("p", 2, 3);
+        Process p1 = new ProcessBatch("p1", 1, 2);
+        Process p2 = new ProcessBatch("p2", 3, 1);
         processList.add(p);
         processList.add(p2);
         processList.add(p1);
