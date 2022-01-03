@@ -3,6 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import service.process.Process;
+import service.process.ProcessBatch;
 
 import java.io.*;
 import java.util.List;
@@ -21,7 +22,7 @@ public class SerializerJSON {
         FileReader file = new FileReader("json");
         BufferedReader br = new BufferedReader(file);
         String line = br.readLine();
-        List<Process> processList = gson.fromJson(line, new TypeToken<List<Process>>(){}.getType());
+        List<Process> processList = gson.fromJson(line, new TypeToken<List<ProcessBatch>>(){}.getType());
         br.close();
         return processList;
     }

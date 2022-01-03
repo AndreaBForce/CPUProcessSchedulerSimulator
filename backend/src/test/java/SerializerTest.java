@@ -1,3 +1,4 @@
+import com.google.gson.Gson;
 import controller.SerializerJSON;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import static org.junit.Assert.*;
 
 public class SerializerTest {
     private final SerializerJSON serializerJSON = new SerializerJSON();
+    private final Gson gson = new Gson();
     private final List<Process> processList = new ArrayList<>();
 
     @Before
@@ -28,12 +30,11 @@ public class SerializerTest {
 
     @Test
     public void serializerTest(){
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader("json"))) {
             serializerJSON.serialize(processList);
-            BufferedReader br = new BufferedReader(new FileReader("json"));
             String line = br.readLine();
-            br.close();
-            assertEquals("[{\"name\":\"p\",\"arrivalTime\":2,\"burstTime\":3,\"priority\":1},{\"name\":\"p2\",\"arrivalTime\":3,\"burstTime\":1,\"priority\":4},{\"name\":\"p1\",\"arrivalTime\":1,\"burstTime\":2,\"priority\":1}]", line);
+            String expected = gson.toJson(processList);
+            assertEquals(expected, line);
         } catch (IOException e) {
             e.printStackTrace();
         }
