@@ -1,19 +1,17 @@
-package service.EDF;
+package service.process;
 
-public class ProcessBackend {
-    private String name;
-    private float period;
-    private float executionTime;
+public class ProcessRealTime extends Process {
+    private double period;
     private ProcessState state;
 
     private int timePassed;
     private int nextDeadline;
 
 
-    public ProcessBackend(String name,float period, float executionTime) {
+    public ProcessRealTime(String name, double period, double burstTime) {
         this.name = name;
         this.period = period;
-        this.executionTime = executionTime;
+        this.burstTime = burstTime;
         this.timePassed = -99999;
         this.nextDeadline = -99999;
     }
@@ -34,20 +32,16 @@ public class ProcessBackend {
         this.timePassed = timePassed;
     }
 
-    public float getPeriod() {
+    public double getPeriod() {
         return period;
     }
 
-    public void setPeriod(float period) {
+    public void setPeriod(double period) {
         this.period = period;
     }
 
-    public float getExecutionTime() {
-        return executionTime;
-    }
-
-    public void setExecutionTime(float executionTime) {
-        this.executionTime = executionTime;
+    public void setBurstTime(double burstTime) {
+        this.burstTime = burstTime;
     }
 
     public ProcessState getState() {
@@ -56,10 +50,6 @@ public class ProcessBackend {
 
     public void setState(ProcessState state) {
         this.state = state;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
@@ -71,10 +61,19 @@ public class ProcessBackend {
         return "Process{" +
                 "name='" + name + '\'' +
                 ", period=" + period +
-                ", executionTime=" + executionTime +
+                ", executionTime=" + burstTime +
                 ", state=" + state +
                 ", timePassed=" + timePassed +
                 ", nextDeadline=" + nextDeadline +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ProcessRealTime that = (ProcessRealTime) o;
+        return Double.compare(that.getPeriod(), getPeriod()) == 0 && getTimePassed() == that.getTimePassed() && getNextDeadline() == that.getNextDeadline() && getState() == that.getState();
     }
 }
