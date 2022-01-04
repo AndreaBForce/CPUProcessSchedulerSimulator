@@ -62,10 +62,6 @@ public class ProcessChartView {
 
     public void testChart(){
         add(new Process("P1"),1,"#f5e353");
-        add(new Process("P2"), 2, "#8CF3F3");
-        addSpace(1,3);
-        add(new Process("P3"),5,"#F19797");
-        addSpace(3,2);
 
         chart.getData().add(processList);
     }

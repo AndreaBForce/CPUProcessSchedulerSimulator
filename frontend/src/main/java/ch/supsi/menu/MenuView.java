@@ -8,31 +8,28 @@ import ch.supsi.handlers.HelpHandler;
 import ch.supsi.utility.DisplayAlert;
 import controller.ControllerBackend;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import utility.Simulation;
+import utility.SimulationBackend;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class MenuView {
 
     private final ExitHandler exitHandler;
     private final HelpHandler helpHandler;
     private final MenuStructure menuStructure;
-    ControllerBackend controllerBackend = new ControllerBackend();
+    private ControllerBackend controllerBackend;
 
-    public MenuView(DisplayAlert displayAlert) {
+    public MenuView(DisplayAlert displayAlert, ControllerBackend controllerBackend) {
+        this.controllerBackend = controllerBackend;
         this.exitHandler = new ExitHandler(displayAlert);
         this.helpHandler = new HelpHandler(displayAlert);
         this.menuStructure = new MenuStructure();
     }
 
-    public MenuBar getMenuBar(Scheduler scheduler, TabPaneNew tabPaneNew) throws IOException {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
+    public MenuBar getMenuBar(Scheduler scheduler, TabPaneNew tabPaneNew) {
         menuStructure.setMenuBar(scheduler);
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -54,7 +51,7 @@ public class MenuView {
 
        menuStructure.getMenuExportSim().setOnAction(actionEvent -> {
            try {
-               controllerBackend.exportSimulation(new Simulation("ciao", "lfs", new ArrayList<>()));
+               controllerBackend.exportSimulation(new SimulationBackend("ciao", "lfs"));
            } catch (IOException e) {
                e.printStackTrace();
            }

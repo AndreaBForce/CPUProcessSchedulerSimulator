@@ -3,9 +3,11 @@ package service;
 import controller.SerializerJSON;
 import repository.Repository;
 import service.FCFS.FCFSAlgorithm;
-import utility.Simulation;
+import service.FCFS.Process;
+import utility.SimulationBackend;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ServiceScheduler {
     private final SerializerJSON serializerJSON = new SerializerJSON();
@@ -15,16 +17,21 @@ public class ServiceScheduler {
     public void fcfsSchedulerService(){
         try {
             serializerJSON.serialize(fcfsAlgorithm.schedulerFCFS(serializerJSON.deserialize()));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Process> fcfsSchedulerTest(List<Process> processList){
+        return fcfsAlgorithm.schedulerFCFS(processList);
     }
 
     public void importScenary() throws IOException {
         repository.readSimulation();
     }
 
-    public void exportScenary(Simulation simulation) throws IOException {
+    public void exportScenary(SimulationBackend simulation) throws IOException {
         repository.writeSimulation(simulation);
     }
 

@@ -25,6 +25,7 @@ public class ProcessListView {
     private final List<HBox> cells;
     private Button addBtn;
     private long id = 0;
+    private List<Process> processList = new ArrayList<>();
 
     public ProcessListView() {
         container = new VBox();
@@ -41,9 +42,6 @@ public class ProcessListView {
         processBox.setMaxWidth(800);
         processBox.setSpacing(10);
         container.setAlignment(Pos.BASELINE_CENTER);
-
-
-
 
         addBtn.setOnMouseClicked(mouseEvent -> {
             GridPane gridPane = new GridPane();
@@ -109,18 +107,12 @@ public class ProcessListView {
     }
 
     public void add(Process process) {
-
+        processList.add(process);
         String hexColor = "#83C1DC";
-
-
-
         HBox cell = getCell(hexColor);
-
         ProcessDetailsView processDetails = new ProcessDetailsView(process);
-
         //Btn edit
         Button btnEdit = new Button();
-
         btnEdit.setText("Edit");
         btnEdit.setStyle("-fx-background-insets: 0; -fx-background-color: #f0f0f0; -fx-font-size: 10px;");
         btnEdit.setMaxHeight(10);
@@ -132,8 +124,6 @@ public class ProcessListView {
         });
 
         Button button = getButton();
-
-
         /*//contrast settings
         if (isDark(hexColor)) {
             label.setStyle("-fx-text-fill: #ffffff;");
@@ -153,8 +143,6 @@ public class ProcessListView {
             valueBurst.setStyle("-fx-text-fill: #000000;");
             valuePriority.setStyle("-fx-text-fill: #000000;");
         }*/
-
-
         cell.getChildren().addAll(getSpace(),
                 processDetails.getProcessName(),
                 getSpace(),
@@ -224,5 +212,9 @@ public class ProcessListView {
 
     public VBox getContainer() {
         return container;
+    }
+
+    public List<Process> getProcessList() {
+        return processList;
     }
 }

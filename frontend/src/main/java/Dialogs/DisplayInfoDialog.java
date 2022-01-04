@@ -1,15 +1,16 @@
 package Dialogs;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -27,16 +28,11 @@ public class DisplayInfoDialog {
         displayStage.setTitle(resourceBundle.getString("menuNewSim.text"));
         displayStage.setAlwaysOnTop(true);
 
-        //borderpane padre
         BorderPane displaySimulationBorder = new BorderPane();
-
-
-        //hbox
         HBox dropdownAlgo = new HBox();
-
         VBox total = new VBox();
 
-        //scelta algoritmo
+        VBox.setMargin(dropdownAlgo, new Insets(10,16,10,16));
 
         ComboBox chooseAlgorithmCombo = new ComboBox();
         chooseAlgorithmCombo.getItems().addAll("FIFO",
@@ -56,21 +52,13 @@ public class DisplayInfoDialog {
         dropdownAlgo.setAlignment(Pos.CENTER);
 
         HBox showBorder = new HBox();
-        Button showDescription = new Button();
-        showDescription.setText(resourceBundle.getString("showDescription.text"));
-        showBorder.getChildren().addAll(showDescription);
         showBorder.setAlignment(Pos.CENTER);
 
-
-        //Aggiungo
         total.getChildren().addAll(dropdownAlgo,showBorder);
-
-        //setto
         displaySimulationBorder.setTop(total);
 
-
-        //HBOX DESCRIZIONE SCELTA
         Label algoritmhDescription = new Label();
+        algoritmhDescription.setTextAlignment(TextAlignment.JUSTIFY);
         algoritmhDescription.setWrapText(true);
         algoritmhDescription.setMaxHeight(200);
         algoritmhDescription.setMinWidth(200);
@@ -93,7 +81,6 @@ public class DisplayInfoDialog {
 
         displaySimulationBorder.setBottom(buttonHBOX);
 
-        
         scene = new Scene(displaySimulationBorder, 500, 300);
         displayStage.setScene(scene);
 
@@ -102,7 +89,7 @@ public class DisplayInfoDialog {
             displayStage.close();
         });
 
-        showDescription.setOnAction(x -> {
+        chooseAlgorithmCombo.setOnAction(x -> {
             switch (chooseAlgorithmCombo.getValue().toString()){
                 case "FIFO":
                     algoritmhDescription.setText(resourceBundle.getString("FIFO.text"));

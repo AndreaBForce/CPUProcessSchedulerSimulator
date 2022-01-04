@@ -2,7 +2,7 @@ package ch.supsi.controller;
 
 import ch.supsi.utility.Mediator;
 import controller.ControllerBackend;
-import utility.Simulation;
+import utility.SimulationBackend;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ public class Controller {
     Mediator mediator = new Mediator();
     ControllerBackend controllerBackend = new ControllerBackend();
 
-   public void exportSimulation(Simulation simulation) throws Exception {
+   public void exportSimulation(SimulationBackend simulation) throws Exception {
        mediator.exportSimulator(simulation);
    }
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class FCFSTest {
+public class TestFCFS {
     private FCFSAlgorithm fcfsAlgorithm = new FCFSAlgorithm();
     @Test
     public void schedulerFCFSTest(){

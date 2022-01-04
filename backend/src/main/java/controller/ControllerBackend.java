@@ -1,9 +1,11 @@
 package controller;
 
+import service.FCFS.Process;
 import service.ServiceScheduler;
-import utility.Simulation;
+import utility.SimulationBackend;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ControllerBackend {
     private final ServiceScheduler service = new ServiceScheduler();
@@ -12,11 +14,12 @@ public class ControllerBackend {
         service.fcfsSchedulerService();
     }
 
+
     public void importSimulation() throws IOException {
         service.importScenary();
     }
 
-    public void exportSimulation(Simulation simulation) throws IOException {
+    public void exportSimulation(SimulationBackend simulation) throws IOException {
         service.exportScenary(simulation);
     }
 }

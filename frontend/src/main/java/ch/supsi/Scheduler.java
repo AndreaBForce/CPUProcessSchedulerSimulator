@@ -4,6 +4,7 @@ import ch.supsi.handlers.HelpHandler;
 import ch.supsi.menu.MenuStructure;
 import ch.supsi.menu.MenuView;
 import ch.supsi.utility.DisplayAlert;
+import controller.ControllerBackend;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -15,14 +16,15 @@ public class Scheduler {
     private TabPaneNew tabPane;
     private MenuView menuView;
     private DisplayAlert displayAlert;
+    private ControllerBackend controllerBackend = new ControllerBackend();
 
     public Scheduler() throws IOException {
         vboxMenu = new VBox();
         menuStructure = new MenuStructure();
         displayAlert = new DisplayAlert();
-        menuView = new MenuView(displayAlert);
+        menuView = new MenuView(displayAlert, controllerBackend);
         helpHandler = new HelpHandler(displayAlert);
-        tabPane = new TabPaneNew();
+        tabPane = new TabPaneNew(controllerBackend);
         setMenuBar();
     }
 
