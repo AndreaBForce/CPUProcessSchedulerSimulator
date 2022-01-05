@@ -60,6 +60,8 @@ public class TabPaneNew {
         if(confirmed) {
             TabView aggiunta = new TabView(nameSimulation, nameAlgorithm);
             ProcessListView lista = new ProcessListView();
+            lista.setAlgortihm(nameAlgorithm);
+
             processChartView = new ProcessChartView();
             processChartView.testChart();
             VBox vBox = new VBox();
