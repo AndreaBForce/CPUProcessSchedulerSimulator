@@ -1,11 +1,9 @@
 package controller;
 
-import service.FCFS.Process;
 import service.ServiceScheduler;
 import utility.SimulationBackend;
 
 import java.io.IOException;
-import java.util.List;
 
 public class ControllerBackend {
     private final ServiceScheduler service = new ServiceScheduler();

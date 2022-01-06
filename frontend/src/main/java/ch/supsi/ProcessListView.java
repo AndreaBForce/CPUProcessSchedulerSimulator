@@ -84,18 +84,30 @@ public class ProcessListView {
             TextField priority = new TextField();
             gridPane.add(priority, 1, 4);
 
+            Label labelColor = new Label("Color:");
+            gridPane.add(labelColor, 0, 5);
+            ColorPicker colorPicker = new ColorPicker();
+            Color color = colorPicker.getValue();
+            gridPane.add(colorPicker, 1,5);
 
             Button submitBtn = new Button("Add");
             submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
                     .or(Bindings.isEmpty(tmpArr.textProperty()))
                     .or(Bindings.isEmpty(tmpBurst.textProperty()))
-                    .or(Bindings.isEmpty(priority.textProperty())));
-            gridPane.add(submitBtn, 1, 5);
+                    .or(Bindings.isEmpty(priority.textProperty()))
+                    .or(Bindings.greaterThan(String.valueOf(0), priority.textProperty()))
+                    .or(Bindings.greaterThan(String.valueOf(1), tmpBurst.textProperty()))
+                    .or(Bindings.greaterThan(String.valueOf(0), tmpArr.textProperty()))
+                    );
+            gridPane.add(submitBtn, 1, 6);
             newWindow.show();
 
             submitBtn.setOnMouseClicked(mouseEvent1 -> {
-                //TODO CHECK SE FLOAT
-                add(new Process(textProcessName.getText(),Float.parseFloat(tmpBurst.getText()),Float.parseFloat(tmpArr.getText()),Integer.parseInt(priority.getText())));
+                //TODO CHECK IF FLOAT
+
+
+
+                add(new Process(textProcessName.getText(),Float.parseFloat(tmpBurst.getText()),Float.parseFloat(tmpArr.getText()),Integer.parseInt(priority.getText()), color));
                 newWindow.close();
             });
         });

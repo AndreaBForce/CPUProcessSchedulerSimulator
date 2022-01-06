@@ -107,4 +107,8 @@ public class TabPaneNew {
     public Button getStartButton() {
         return startButton;
     }
+
+    public Simulation getSimulation() {
+        return simulation;
+    }
 }

@@ -12,6 +12,7 @@ public class MenuStructure {
     private Menu menuFile;
     private MenuItem exitItem;
     private Menu menuEdit;
+    private MenuItem menuRandomSim;
     private MenuItem menuNew;
     private MenuItem menuExportGraph;
     private MenuItem menuImportSim;
@@ -28,6 +29,7 @@ public class MenuStructure {
         menuFile = new Menu(resourceBundle.getString("menuFile.text"));
         exitItem = new MenuItem(resourceBundle.getString("menuExit.text"));
         menuEdit = new Menu(resourceBundle.getString("menuEdit.text"));
+        menuRandomSim = new MenuItem(resourceBundle.getString("menuRandomSim.text"));
         menuNew = new MenuItem(resourceBundle.getString("menuNewSim.text"));
         menuHelp = new Menu(resourceBundle.getString("menuHelp.text"));
 
@@ -47,6 +49,7 @@ public class MenuStructure {
         menuFile.getItems().add(menuImportSim);
         menuFile.getItems().add(menuExportSim);
         menuEdit.getItems().add(menuNew);
+        menuEdit.getItems().add(menuRandomSim);
 
         menuHelp.getItems().add(aboutItem);
         menuHelp.getItems().add(infoAlgoItem);

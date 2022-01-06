@@ -21,9 +21,11 @@ public class MenuView {
     private final HelpHandler helpHandler;
     private final MenuStructure menuStructure;
     private ControllerBackend controllerBackend;
+    private TabPaneNew tabPaneNew;
 
-    public MenuView(DisplayAlert displayAlert, ControllerBackend controllerBackend) {
+    public MenuView(DisplayAlert displayAlert, ControllerBackend controllerBackend, TabPaneNew tabPaneNew) {
         this.controllerBackend = controllerBackend;
+        this.tabPaneNew = tabPaneNew;
         this.exitHandler = new ExitHandler(displayAlert);
         this.helpHandler = new HelpHandler(displayAlert);
         this.menuStructure = new MenuStructure();
@@ -51,7 +53,7 @@ public class MenuView {
 
        menuStructure.getMenuExportSim().setOnAction(actionEvent -> {
            try {
-               controllerBackend.exportSimulation(new SimulationBackend("ciao", "lfs"));
+               controllerBackend.exportSimulation(new SimulationBackend(tabPaneNew.getSimulation().getName(), tabPaneNew.getSimulation().getAlgorithmName()));
            } catch (IOException e) {
                e.printStackTrace();
            }

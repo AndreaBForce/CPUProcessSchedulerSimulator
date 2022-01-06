@@ -22,9 +22,9 @@ public class Scheduler {
         vboxMenu = new VBox();
         menuStructure = new MenuStructure();
         displayAlert = new DisplayAlert();
-        menuView = new MenuView(displayAlert, controllerBackend);
         helpHandler = new HelpHandler(displayAlert);
         tabPane = new TabPaneNew(controllerBackend);
+        menuView = new MenuView(displayAlert, controllerBackend, tabPane);
         setMenuBar();
     }
 
