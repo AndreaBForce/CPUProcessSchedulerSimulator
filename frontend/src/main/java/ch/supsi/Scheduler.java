@@ -23,7 +23,7 @@ public class Scheduler {
         menuStructure = new MenuStructure();
         displayAlert = new DisplayAlert();
         helpHandler = new HelpHandler(displayAlert);
-        tabPane = new TabPaneNew(controllerBackend);
+        tabPane = new TabPaneNew(controllerBackend, this);
         menuView = new MenuView(displayAlert, controllerBackend, tabPane);
         setMenuBar();
     }

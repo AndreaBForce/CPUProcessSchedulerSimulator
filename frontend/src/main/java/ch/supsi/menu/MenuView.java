@@ -37,7 +37,7 @@ public class MenuView {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File("/home/matteo"));
 
-        menuStructure.getMenuExportGraph().setOnAction(actionEvent -> {
+        /*menuStructure.getMenuExportGraph().setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
 
             FileChooser.ExtensionFilter extFilterPng = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
@@ -49,15 +49,15 @@ public class MenuView {
             if (file != null) {
                 tabPaneNew.getProcessChartView().exportImage(file);
             }
-        });
+        });*/
 
-       menuStructure.getMenuExportSim().setOnAction(actionEvent -> {
+       /*menuStructure.getMenuExportSim().setOnAction(actionEvent -> {
            try {
                controllerBackend.exportSimulation(new SimulationBackend(tabPaneNew.getSimulation().getName(), tabPaneNew.getSimulation().getAlgorithmName()));
            } catch (IOException e) {
                e.printStackTrace();
            }
-       });
+       });*/
 
         menuStructure.getMenuImportSim().setOnAction(actionEvent -> {
             try {

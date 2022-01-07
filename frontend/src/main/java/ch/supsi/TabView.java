@@ -1,11 +1,15 @@
 package ch.supsi;
 
 import Dialogs.ExitDialog;
+import ch.supsi.utility.Simulation;
 import javafx.scene.control.Tab;
 
 public class TabView {
     private Tab tab;
     private ExitDialog exit;
+    private ProcessChartView processChartView;
+    private Simulation simulation;
+    private ProcessListView processListView;
     private String nameSimulation;
     private String nameAlgorithm;
 
@@ -13,6 +17,7 @@ public class TabView {
         nameSimulation = nome;
         this.nameAlgorithm = nameAlgorithm;
         this.tab = new Tab(nome);
+        processChartView = new ProcessChartView();
 
         tab.setOnCloseRequest(event -> {
             exit = new ExitDialog();
@@ -26,7 +31,6 @@ public class TabView {
                 }
             }
         );
-//        tab.setOnCloseRequest(event -> new SaveSimulationHandler());
     }
 
     public Tab getTab() {
@@ -35,5 +39,29 @@ public class TabView {
 
     public void setTab(Tab tab) {
         this.tab = tab;
+    }
+
+    public ExitDialog getExit() {
+        return exit;
+    }
+
+    public ProcessChartView getProcessChartView() {
+        return processChartView;
+    }
+
+    public Simulation getSimulation() {
+        return simulation;
+    }
+
+    public String getNameSimulation() {
+        return nameSimulation;
+    }
+
+    public String getNameAlgorithm() {
+        return nameAlgorithm;
+    }
+
+    public void setSimulation(Simulation simulation) {
+        this.simulation = simulation;
     }
 }
