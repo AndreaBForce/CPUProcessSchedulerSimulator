@@ -87,26 +87,104 @@ public class ProcessListView {
             Label labelTmpArr = new Label("Arrival time:");
             TextField tmpArr = new TextField();
             gridPane.add(tmpArr, 1, 2);
+            tmpArr.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+                if (!newValue) {
+                    if (!tmpArr.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
+                        tmpArr.setText("");
+                    }
+                }
+            });
 
             Label labelTmpBurst = new Label("Burst time:");
             TextField tmpBurst = new TextField();
             gridPane.add(tmpBurst, 1, 3);
+            tmpBurst.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+                if (!newValue) {
+                    if (!tmpBurst.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
+                        tmpBurst.setText("");
+                    }
+                }
+            });
 
             Label labelPriority = new Label("Priority:");
             TextField priority = new TextField();
-
+            priority.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+                if (!newValue) {
+                    if (!priority.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
+                        priority.setText("");
+                    }
+                }
+            });
 
             Button submitBtn = new Button("Add");
             submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
                     .or(Bindings.isEmpty(tmpArr.textProperty()))
                     .or(Bindings.isEmpty(tmpBurst.textProperty()))
-                    .or(Bindings.isEmpty(priority.textProperty())));
+                    .or(Bindings.isEmpty(priority.textProperty()))
+                    .or(Bindings.greaterThan(String.valueOf(0.1), priority.textProperty()))
+                    .or(Bindings.greaterThan(String.valueOf(0.1), tmpBurst.textProperty()))
+                    .or(Bindings.greaterThan(String.valueOf(0.1), tmpArr.textProperty())));
             gridPane.add(submitBtn, 1, 5);
+
+            switch (algortihm){
+                case "FIFO":
+                case "SJF":
+                    //Arrival time
+                    gridPane.add(labelTmpArr, 0, 3);
+                    gridPane.add(tmpArr, 1, 3);
+                    //Burst time
+                    gridPane.add(labelTmpBurst, 0, 4);
+                    gridPane.add(tmpBurst, 1, 4);
+                    //setto il testo di priority cosi non va in eccezione
+                    priority.setText("4");
+                    submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
+                            .or(Bindings.isEmpty(tmpArr.textProperty()))
+                            .or(Bindings.isEmpty(tmpBurst.textProperty()))
+                    );
+                    gridPane.add(submitBtn, 1, 5);
+                    break;
+                case "Round Robin":
+                case "Lottery":
+                    //Arrival time
+                    gridPane.add(labelTmpArr, 0, 3);
+                    gridPane.add(tmpArr, 1, 3);
+                    //Burst time
+                    gridPane.add(labelTmpBurst, 0, 4);
+                    gridPane.add(tmpBurst, 1, 4);
+                    //Priority
+                    gridPane.add(labelPriority, 0, 5);
+                    gridPane.add(priority, 1, 5);
+                    submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
+                            .or(Bindings.isEmpty(tmpArr.textProperty()))
+                            .or(Bindings.isEmpty(tmpBurst.textProperty()))
+                            .or(Bindings.isEmpty(priority.textProperty())
+                            ));
+                    gridPane.add(submitBtn, 1, 6);
+                    break;
+                case "RMA":
+                case "EDF":
+                    //setto il testo di arrival time cosi non va in eccezione
+                    tmpArr.setText("4");
+                    //Burst time
+                    gridPane.add(labelTmpBurst, 0, 3);
+                    gridPane.add(tmpBurst, 1, 3);
+                    //Priority - diventa period cosi mega stonks
+                    labelPriority.setText("Period:");
+                    gridPane.add(labelPriority, 0, 4);
+                    gridPane.add(priority, 1, 4);
+                    submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
+                            .or(Bindings.isEmpty(tmpBurst.textProperty()))
+                            .or(Bindings.isEmpty(priority.textProperty())
+                            ));
+                    gridPane.add(submitBtn, 1, 5);
+                    break;
+            }
+
             newWindow.show();
 
             submitBtn.setOnMouseClicked(mouseEvent1 -> {
-                //TODO CHECK SE FLOAT
-                add(new Process(textProcessName.getText(),Float.parseFloat(tmpBurst.getText()),Float.parseFloat(tmpArr.getText()),Integer.parseInt(priority.getText())));
+
+                add(new Process(textProcessName.getText(),Float.parseFloat(tmpBurst.getText()),Float.parseFloat(tmpArr.getText()),Integer.parseInt(priority.getText()),colorPicker.getValue()));
                 newWindow.close();
             });
         });
@@ -119,8 +197,9 @@ public class ProcessListView {
 
     public void add(Process process) {
 
-        String hexColor = "#83C1DC";
-
+        //TODO FAI IL FILTRO DEL COLORE SE ALTO O BASSO DI CAMBIARE IN NERO O BIANCO
+        String hexColor = process.toHexString(process.getColor());
+        //83C1DC <-> COLORE INIZIALE
 
 
         HBox cell = getCell(hexColor);
@@ -139,40 +218,53 @@ public class ProcessListView {
 
         Button button = getButton();
 
-
-        /*//contrast settings
-        if (isDark(hexColor)) {
-            label.setStyle("-fx-text-fill: #ffffff;");
-            tmpArrivalTime.setStyle("-fx-text-fill: #ffffff;");
-            tmpBurstTime.setStyle("-fx-text-fill: #ffffff;");
-            tmpPriority.setStyle("-fx-text-fill: #ffffff;");
-
-            valueArrival.setStyle("-fx-text-fill: #ffffff;");
-            valueBurst.setStyle("-fx-text-fill: #ffffff;");
-            valuePriority.setStyle("-fx-text-fill: #ffffff;");
-        } else {
-            label.setStyle("-fx-text-fill: #000000;");
-            tmpArrivalTime.setStyle("-fx-text-fill: #000000;");
-            tmpBurstTime.setStyle("-fx-text-fill: #000000;");
-            tmpPriority.setStyle("-fx-text-fill: #000000;");
-            valueArrival.setStyle("-fx-text-fill: #000000;");
-            valueBurst.setStyle("-fx-text-fill: #000000;");
-            valuePriority.setStyle("-fx-text-fill: #000000;");
-        }*/
-
-
-        cell.getChildren().addAll(getSpace(),
-                processDetails.getProcessName(),
-                getSpace(),
-                processDetails.getTmpArrivalTime(),processDetails.getValueArrival(),
-                getSpace(),
-                processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
-                getSpace(),
-                processDetails.getTmpPriority(),processDetails.getValuePriority(),
-                getSpace(),
-                btnEdit, button);
+        switch (algortihm){
+            case "FIFO":
+            case "SJF":
+                cell.getChildren().addAll(getSpace(),
+                        processDetails.getProcessName(),
+                        getSpace(),
+                        processDetails.getTmpArrivalTime(),processDetails.getValueArrival(),
+                        getSpace(),
+                        processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
+                        getSpace(),
+                        btnEdit, button);
+                break;
+            case "Round Robin":
+            case "Lottery":
+                cell.getChildren().addAll(getSpace(),
+                        processDetails.getProcessName(),
+                        getSpace(),
+                        processDetails.getTmpArrivalTime(),processDetails.getValueArrival(),
+                        getSpace(),
+                        processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
+                        getSpace(),
+                        processDetails.getTmpPriority(),processDetails.getValuePriority(),
+                        getSpace(),
+                        btnEdit, button);
+                break;
+            case "RMA":
+            case "EDF":
+                processDetails.getTmpPriority().setText("Period:");
+                cell.getChildren().addAll(getSpace(),
+                        processDetails.getProcessName(),
+                        getSpace(),
+                        processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
+                        getSpace(),
+                        processDetails.getTmpPriority(),processDetails.getValuePriority(),
+                        getSpace(),
+                        btnEdit, button);
+                break;
+        }
 
         processBox.getChildren().add(cell);
+    }
+
+    public String getAlgortihm() {
+        return algortihm;
+    }
+    public void setAlgortihm(String algortihm) {
+        this.algortihm = algortihm;
     }
 
     public void removeCell(String id) {
@@ -221,6 +313,10 @@ public class ProcessListView {
         });
 
         return button;
+    }
+
+    public List<Process> getProcessList() {
+        return processList;
     }
 
     private boolean isDark(String hexColor) {
