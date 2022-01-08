@@ -2,26 +2,29 @@ package ch.supsi.controller;
 
 import ch.supsi.Process;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SerializerJSON {
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final Gson gson = new Gson();
 
-    public void serialize(List<Process> processList) throws IOException {
-        File jsonFile = new File("json");
-        for (Process process : processList) {
-            mapper.writeValue(jsonFile, process);
-        }
+    public void serialize(List<ch.supsi.Process> processList) throws IOException {
+        String json = gson.toJson(processList);
+        FileWriter jsonFile = new FileWriter("json");
+        jsonFile.write(json);
+        jsonFile.close();
     }
 
-    public List<Process> deserialize() throws IOException {
-        List<Process> processList = new ArrayList<>();
-        File file = new File("json");
-        mapper.readValue(file, Process.class);
-        return null;
+    public List<ch.supsi.Process> deserialize() throws IOException {
+        FileReader file = new FileReader("json");
+        BufferedReader br = new BufferedReader(file);
+        String line = br.readLine();
+        List <ch.supsi.Process> processList = gson.fromJson(line, new TypeToken<List<Process>>(){}.getType());
+        br.close();
+        return processList;
     }
 }

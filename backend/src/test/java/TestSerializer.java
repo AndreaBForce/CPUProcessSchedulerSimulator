@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class SerializerTest {
+public class TestSerializer {
     private final SerializerJSON serializerJSON = new SerializerJSON();
     private final Gson gson = new Gson();
     private final List<Process> processList = new ArrayList<>();

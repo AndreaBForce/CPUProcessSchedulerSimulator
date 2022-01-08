@@ -1,32 +1,31 @@
 package ch.supsi;
 
 import Dialogs.ExitDialog;
+import ch.supsi.utility.Simulation;
 import javafx.scene.control.Tab;
 
 public class TabView {
     private Tab tab;
     private ExitDialog exit;
-    private String nameSimulation;
-    private String nameAlgorithm;
+    private ProcessChartView processChartView;
+    private Simulation simulation;
+    private String simulationName;
+    private String algorithmName;
 
-    public TabView(String nome, String nameAlgorithm) {
-        nameSimulation = nome;
-        this.nameAlgorithm = nameAlgorithm;
-        this.tab = new Tab(nome);
+    public TabView(String simulationName, String algorithmName) {
+        this.simulationName = simulationName;
+        this.algorithmName = algorithmName;
+        this.tab = new Tab(simulationName);
+        processChartView = new ProcessChartView();
 
         tab.setOnCloseRequest(event -> {
-            exit = new ExitDialog();
-
-            exit.getExitStage().showAndWait();
-
-
-                if(!exit.isEnd()) {
-
-                    event.consume();
+                    exit = new ExitDialog();
+                    exit.getExitStage().showAndWait();
+                    if (!exit.isEnd()) {
+                        event.consume();
+                    }
                 }
-            }
         );
-//        tab.setOnCloseRequest(event -> new SaveSimulationHandler());
     }
 
     public Tab getTab() {
@@ -35,5 +34,29 @@ public class TabView {
 
     public void setTab(Tab tab) {
         this.tab = tab;
+    }
+
+    public ExitDialog getExit() {
+        return exit;
+    }
+
+    public ProcessChartView getProcessChartView() {
+        return processChartView;
+    }
+
+    public Simulation getSimulation() {
+        return simulation;
+    }
+
+    public String getSimulationName() {
+        return simulationName;
+    }
+
+    public String getAlgorithmName() {
+        return algorithmName;
+    }
+
+    public void setSimulation(Simulation simulation) {
+        this.simulation = simulation;
     }
 }
