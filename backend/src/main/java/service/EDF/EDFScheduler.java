@@ -28,7 +28,7 @@ public class EDFScheduler {
         }
     }
 
-    void compute(){
+    public void compute(){
         int TIME_PERIOD = 150;
         boolean someoneRunning = false;
         int nServed = 0;

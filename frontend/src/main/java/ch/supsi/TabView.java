@@ -9,27 +9,22 @@ public class TabView {
     private ExitDialog exit;
     private ProcessChartView processChartView;
     private Simulation simulation;
-    private ProcessListView processListView;
-    private String nameSimulation;
-    private String nameAlgorithm;
+    private String simulationName;
+    private String algorithmName;
 
-    public TabView(String nome, String nameAlgorithm) {
-        nameSimulation = nome;
-        this.nameAlgorithm = nameAlgorithm;
-        this.tab = new Tab(nome);
+    public TabView(String simulationName, String algorithmName) {
+        this.simulationName = simulationName;
+        this.algorithmName = algorithmName;
+        this.tab = new Tab(simulationName);
         processChartView = new ProcessChartView();
 
         tab.setOnCloseRequest(event -> {
-            exit = new ExitDialog();
-
-            exit.getExitStage().showAndWait();
-
-
-                if(!exit.isEnd()) {
-
-                    event.consume();
+                    exit = new ExitDialog();
+                    exit.getExitStage().showAndWait();
+                    if (!exit.isEnd()) {
+                        event.consume();
+                    }
                 }
-            }
         );
     }
 
@@ -53,12 +48,12 @@ public class TabView {
         return simulation;
     }
 
-    public String getNameSimulation() {
-        return nameSimulation;
+    public String getSimulationName() {
+        return simulationName;
     }
 
-    public String getNameAlgorithm() {
-        return nameAlgorithm;
+    public String getAlgorithmName() {
+        return algorithmName;
     }
 
     public void setSimulation(Simulation simulation) {

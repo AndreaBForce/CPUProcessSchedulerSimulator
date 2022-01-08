@@ -9,8 +9,6 @@ import ch.supsi.utility.DisplayAlert;
 import controller.ControllerBackend;
 import javafx.scene.control.MenuBar;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import utility.SimulationBackend;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,28 +35,6 @@ public class MenuView {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File("/home/matteo"));
 
-        /*menuStructure.getMenuExportGraph().setOnAction(actionEvent -> {
-            FileChooser fileChooser = new FileChooser();
-
-            FileChooser.ExtensionFilter extFilterPng = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
-            FileChooser.ExtensionFilter extFilterJpeg = new FileChooser.ExtensionFilter("Jpeg files (*.jpeg)", "*.jpeg");
-            fileChooser.getExtensionFilters().add(extFilterPng);
-            fileChooser.getExtensionFilters().add(extFilterJpeg);
-
-            File file = fileChooser.showSaveDialog(scheduler.getVboxMenu().getScene().getWindow());
-            if (file != null) {
-                tabPaneNew.getProcessChartView().exportImage(file);
-            }
-        });*/
-
-       /*menuStructure.getMenuExportSim().setOnAction(actionEvent -> {
-           try {
-               controllerBackend.exportSimulation(new SimulationBackend(tabPaneNew.getSimulation().getName(), tabPaneNew.getSimulation().getAlgorithmName()));
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-       });*/
-
         menuStructure.getMenuImportSim().setOnAction(actionEvent -> {
             try {
                 controllerBackend.importSimulation();
@@ -69,17 +45,14 @@ public class MenuView {
 
         menuStructure.getExitItem().setOnAction(exitHandler);
 
-        //Menu che mostra il popup per creare la nuova simulazione
         menuStructure.getMenuNew().setOnAction(actionEvent -> {
             CreateSimDialog createSimulation = new CreateSimDialog();
             createSimulation.getCreateStage().showAndWait();
             tabPaneNew.createNewSimulation(createSimulation.getName(), createSimulation.getAlgortihm(),createSimulation.isConfirm());
         });
 
-
         menuStructure.getAboutItem().setOnAction(helpHandler);
 
-        //Action che mostra il popup per mostrare la descrizione di come funziona un processo
         menuStructure.getInfoAlgoItem().setOnAction(actionEvent -> {
             DisplayInfoDialog displayInfoDialog = new DisplayInfoDialog();
 

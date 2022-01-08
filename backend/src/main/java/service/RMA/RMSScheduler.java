@@ -31,7 +31,7 @@ public class RMSScheduler {
     }
 
 
-    void compute(){
+    public void compute(){
         int TIME_PERIOD = 150,prior;
         boolean someoneRunning = false;
         int nServed = 0;

@@ -11,6 +11,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
+import utility.SimulationBackend;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,8 +37,6 @@ public class TabPaneNew {
         //Parte da spostare che permette la creazione di un nuovo tab
         plus.setOnSelectionChanged(e -> {
                     if (plus.isSelected()) {
-
-
                         if (createSimulation.isFirst()) {
                             createNewSimulation("Simulation tab", "FIFO", true);
                         } else {
@@ -68,23 +67,20 @@ public class TabPaneNew {
     public void createNewSimulation(String nameSimulation, String nameAlgorithm, boolean confirmed) {
         ProcessListView list = new ProcessListView();
         Button exportGraph = new Button("Export graph");
+        exportGraph.setDisable(true);
         Button exportSim = new Button("Export simulation");
+        exportSim.setDisable(true);
         TabView newTab = new TabView(nameSimulation, nameAlgorithm);
         tabViewList.add(newTab);
         if (confirmed) {
-
-
-            //simulation = new Simulation(nameSimulation, nameAlgorithm, list.getProcessList());
-            //processChartView = new ProcessChartView();
             newTab.getProcessChartView().testChart();
             VBox vBox = new VBox();
             vBox.setAlignment(Pos.BOTTOM_CENTER);
             vBox.setStyle("-fx-background-color: #f8fce5");
             VBox.setVgrow(list.getContainer(), Priority.ALWAYS);
 
-            // Label label = new Label(simulation.getAlgorithmName() + "                ");
+            Label label = new Label(nameAlgorithm + "                ");
             startButton = new Button("start");
-
 
             VBox vBox1 = new VBox();
             HBox hBox1 = new HBox();
@@ -94,7 +90,7 @@ public class TabPaneNew {
             hBox.setMinHeight(50);
             hBox1.getChildren().add(exportGraph);
             hBox1.getChildren().add(exportSim);
-            //hBox2.getChildren().add(label);
+            hBox2.getChildren().add(label);
             hBox2.getChildren().add(startButton);
             hBox1.setAlignment(Pos.CENTER);
             hBox2.setAlignment(Pos.CENTER);
@@ -128,8 +124,23 @@ public class TabPaneNew {
             }
         });
 
+        exportSim.setOnMouseClicked(mouseEvent -> {
+            Tab tab = tabpane.getSelectionModel().getSelectedItem();
+            TabView select = null;
+            for (TabView tabView : tabViewList) {
+                if (tab.equals(tabView.getTab()))
+                    select = tabView;
+            }
+            try {
+                controllerBackend.exportSimulation(new SimulationBackend(select.getSimulation().getName(), select.getSimulation().getAlgorithmName()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         startButton.setOnMouseClicked(mouseEvent -> {
+            exportGraph.setDisable(false);
+            exportSim.setDisable(false);
             Tab tab = tabpane.getSelectionModel().getSelectedItem();
             TabView select = null;
             for (TabView tabView : tabViewList) {

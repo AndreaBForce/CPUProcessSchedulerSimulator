@@ -21,7 +21,7 @@ public class CreateSimDialog {
     private boolean isFirst = true;
     private boolean confirm = false;
 
-    public CreateSimDialog(){
+    public CreateSimDialog() {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
 
         createStage = new Stage();
@@ -48,7 +48,7 @@ public class CreateSimDialog {
         nameSim.setSpacing(20);
         nameSim.setAlignment(Pos.CENTER);
 
-        nameSim.getChildren().addAll(nameSimulation,textSimulationName);
+        nameSim.getChildren().addAll(nameSimulation, textSimulationName);
 
         //scelta algoritmo
 
@@ -64,12 +64,12 @@ public class CreateSimDialog {
         algoChooseLabel.setText(resourceBundle.getString("textAlgori.text"));
         algoChooseLabel.setFont(new Font("Arial", 15));
 
-        dropdownAlgo.getChildren().addAll(algoChooseLabel,chooseAlgorithmCombo);
+        dropdownAlgo.getChildren().addAll(algoChooseLabel, chooseAlgorithmCombo);
         dropdownAlgo.setSpacing(20);
         dropdownAlgo.setAlignment(Pos.CENTER);
 
         //Aggiungo
-        total.getChildren().addAll(nameSim,dropdownAlgo);
+        total.getChildren().addAll(nameSim, dropdownAlgo);
 
         //setto
         createSimulationBorder.setCenter(total);
@@ -82,9 +82,7 @@ public class CreateSimDialog {
         exitAnnulla.setText(resourceBundle.getString("annullaCreaSimulation.text"));
 
 
-
-
-        buttonHBOX.getChildren().addAll(createSimulation,exitAnnulla);
+        buttonHBOX.getChildren().addAll(createSimulation, exitAnnulla);
         buttonHBOX.setAlignment(Pos.CENTER);
         buttonHBOX.setSpacing(20);
 
@@ -95,7 +93,6 @@ public class CreateSimDialog {
 
 
         createSimulationBorder.setBottom(buttonHBOX);
-
 
 
         scene = new Scene(createSimulationBorder, 400, 100);
