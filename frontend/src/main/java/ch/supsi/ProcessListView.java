@@ -86,7 +86,6 @@ public class ProcessListView {
 
             Label labelTmpArr = new Label("Arrival time:");
             TextField tmpArr = new TextField();
-            gridPane.add(tmpArr, 1, 2);
             tmpArr.focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (!tmpArr.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
@@ -97,7 +96,6 @@ public class ProcessListView {
 
             Label labelTmpBurst = new Label("Burst time:");
             TextField tmpBurst = new TextField();
-            gridPane.add(tmpBurst, 1, 3);
             tmpBurst.focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (!tmpBurst.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
@@ -117,14 +115,6 @@ public class ProcessListView {
             });
 
             Button submitBtn = new Button("Add");
-            submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
-                    .or(Bindings.isEmpty(tmpArr.textProperty()))
-                    .or(Bindings.isEmpty(tmpBurst.textProperty()))
-                    .or(Bindings.isEmpty(priority.textProperty()))
-                    .or(Bindings.greaterThan(String.valueOf(0.1), priority.textProperty()))
-                    .or(Bindings.greaterThan(String.valueOf(0.1), tmpBurst.textProperty()))
-                    .or(Bindings.greaterThan(String.valueOf(0.1), tmpArr.textProperty())));
-            gridPane.add(submitBtn, 1, 5);
 
             switch (algortihm){
                 case "FIFO":
@@ -140,6 +130,8 @@ public class ProcessListView {
                     submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
                             .or(Bindings.isEmpty(tmpArr.textProperty()))
                             .or(Bindings.isEmpty(tmpBurst.textProperty()))
+                            .or(Bindings.greaterThan(String.valueOf(0.1), tmpBurst.textProperty()))
+                            .or(Bindings.greaterThan(String.valueOf(0.1), tmpArr.textProperty()))
                     );
                     gridPane.add(submitBtn, 1, 5);
                     break;
@@ -157,8 +149,11 @@ public class ProcessListView {
                     submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
                             .or(Bindings.isEmpty(tmpArr.textProperty()))
                             .or(Bindings.isEmpty(tmpBurst.textProperty()))
-                            .or(Bindings.isEmpty(priority.textProperty())
-                            ));
+                            .or(Bindings.isEmpty(priority.textProperty()))
+                            .or(Bindings.greaterThan(String.valueOf(0.1), priority.textProperty()))
+                            .or(Bindings.greaterThan(String.valueOf(0.1), tmpBurst.textProperty()))
+                            .or(Bindings.greaterThan(String.valueOf(0.1), tmpArr.textProperty()))
+                    );
                     gridPane.add(submitBtn, 1, 6);
                     break;
                 case "RMA":
@@ -174,8 +169,10 @@ public class ProcessListView {
                     gridPane.add(priority, 1, 4);
                     submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
                             .or(Bindings.isEmpty(tmpBurst.textProperty()))
-                            .or(Bindings.isEmpty(priority.textProperty())
-                            ));
+                            .or(Bindings.isEmpty(priority.textProperty()))
+                            .or(Bindings.greaterThan(String.valueOf(0.1), priority.textProperty()))
+                            .or(Bindings.greaterThan(String.valueOf(0.1), tmpBurst.textProperty()))
+                    );
                     gridPane.add(submitBtn, 1, 5);
                     break;
             }

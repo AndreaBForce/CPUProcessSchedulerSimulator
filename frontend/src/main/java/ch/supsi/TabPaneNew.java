@@ -65,6 +65,7 @@ public class TabPaneNew {
 
     public void createNewSimulation(String nameSimulation, String nameAlgorithm, boolean confirmed) {
         ProcessListView list = new ProcessListView();
+        list.setAlgortihm(nameAlgorithm);
         Button exportGraph = new Button("Export graph");
         exportGraph.setDisable(true);
         Button exportSim = new Button("Export simulation");
