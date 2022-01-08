@@ -22,7 +22,7 @@ public class MenuStructure {
 
     private MenuBar menuBar = new MenuBar();
 
-    public void setMenuBar(Scheduler scheduler){
+    public void setMenuBar(Scheduler scheduler) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         menuFile = new Menu(resourceBundle.getString("menuFile.text"));
         exitItem = new MenuItem(resourceBundle.getString("menuExit.text"));
@@ -72,6 +72,10 @@ public class MenuStructure {
 
     public MenuBar getMenuBar() {
         return menuBar;
+    }
+
+    public MenuItem getMenuRandomSim() {
+        return menuRandomSim;
     }
 
     public MenuItem getMenuImportSim() {
