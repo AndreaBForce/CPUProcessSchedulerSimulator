@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProcessListView {
-    private VBox container;
-    private ScrollPane scrollableList;
-    private VBox processBox;
+    private final VBox container;
+    private final ScrollPane scrollableList;
+    private final VBox processBox;
     private final List<HBox> cells;
-    private Button addBtn;
+    private final Button addBtn;
     private long id = 0;
-    private List<Process> processList = new ArrayList<>();
+    private final List<Process> processList = new ArrayList<>();
 
     public ProcessListView() {
         container = new VBox();
@@ -73,41 +73,53 @@ public class ProcessListView {
             gridPane.add(labelTmpArr, 0, 2);
             TextField tmpArr = new TextField();
             gridPane.add(tmpArr, 1, 2);
+            tmpArr.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+                if (!newValue) {
+                    if (!tmpArr.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
+                        tmpArr.setText("");
+                    }
+                }
+            });
 
             Label labelTmpBurst = new Label("Burst time:");
             gridPane.add(labelTmpBurst, 0, 3);
             TextField tmpBurst = new TextField();
             gridPane.add(tmpBurst, 1, 3);
+            tmpBurst.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+                if (!newValue) {
+                    if (!tmpBurst.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
+                        tmpBurst.setText("");
+                    }
+                }
+            });
 
             Label labelPriority = new Label("Priority:");
             gridPane.add(labelPriority, 0, 4);
             TextField priority = new TextField();
             gridPane.add(priority, 1, 4);
 
-            Label labelColor = new Label("Color:");
-            gridPane.add(labelColor, 0, 5);
-            ColorPicker colorPicker = new ColorPicker();
-            Color color = colorPicker.getValue();
-            gridPane.add(colorPicker, 1,5);
+            priority.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+                if (!newValue) {
+                    if (!priority.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
+                        priority.setText("");
+                    }
+                }
+            });
 
             Button submitBtn = new Button("Add");
             submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
                     .or(Bindings.isEmpty(tmpArr.textProperty()))
                     .or(Bindings.isEmpty(tmpBurst.textProperty()))
                     .or(Bindings.isEmpty(priority.textProperty()))
-                    .or(Bindings.greaterThan(String.valueOf(0), priority.textProperty()))
-                    .or(Bindings.greaterThan(String.valueOf(1), tmpBurst.textProperty()))
-                    .or(Bindings.greaterThan(String.valueOf(0), tmpArr.textProperty()))
+                    .or(Bindings.greaterThan(String.valueOf(0.1), priority.textProperty()))
+                    .or(Bindings.greaterThan(String.valueOf(0.1), tmpBurst.textProperty()))
+                    .or(Bindings.greaterThan(String.valueOf(0.1), tmpArr.textProperty()))
                     );
             gridPane.add(submitBtn, 1, 6);
             newWindow.show();
 
             submitBtn.setOnMouseClicked(mouseEvent1 -> {
-                //TODO CHECK IF FLOAT
-
-
-
-                add(new Process(textProcessName.getText(),Float.parseFloat(tmpBurst.getText()),Float.parseFloat(tmpArr.getText()),Integer.parseInt(priority.getText()), color));
+                add(new Process(textProcessName.getText(),Float.parseFloat(tmpBurst.getText()),Float.parseFloat(tmpArr.getText()),Integer.parseInt(priority.getText())));
                 newWindow.close();
             });
         });

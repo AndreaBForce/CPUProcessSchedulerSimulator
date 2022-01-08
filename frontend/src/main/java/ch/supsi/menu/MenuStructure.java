@@ -14,9 +14,7 @@ public class MenuStructure {
     private Menu menuEdit;
     private MenuItem menuRandomSim;
     private MenuItem menuNew;
-    private MenuItem menuExportGraph;
     private MenuItem menuImportSim;
-    private MenuItem menuExportSim;
     private Menu menuHelp;
 
     private MenuItem aboutItem;
@@ -36,18 +34,14 @@ public class MenuStructure {
         aboutItem = new MenuItem(resourceBundle.getString("menuAbout.text"));
         infoAlgoItem = new MenuItem(resourceBundle.getString("menuInfoAlgorithm.text"));
 
-        menuExportGraph = new MenuItem(resourceBundle.getString("menuExportGraph.text"));
         menuImportSim = new MenuItem(resourceBundle.getString("menuImportGraph.text"));
-        menuExportSim = new MenuItem(resourceBundle.getString("menuExportSim.text"));
 
         menuBar.getMenus().add(menuFile);
         menuBar.getMenus().add(menuEdit);
         menuBar.getMenus().add(menuHelp);
 
         menuFile.getItems().add(exitItem);
-        menuFile.getItems().add(menuExportGraph);
         menuFile.getItems().add(menuImportSim);
-        menuFile.getItems().add(menuExportSim);
         menuEdit.getItems().add(menuNew);
         menuEdit.getItems().add(menuRandomSim);
 
@@ -78,14 +72,6 @@ public class MenuStructure {
 
     public MenuBar getMenuBar() {
         return menuBar;
-    }
-
-    public MenuItem getMenuExportGraph() {
-        return menuExportGraph;
-    }
-
-    public MenuItem getMenuExportSim() {
-        return menuExportSim;
     }
 
     public MenuItem getMenuImportSim() {

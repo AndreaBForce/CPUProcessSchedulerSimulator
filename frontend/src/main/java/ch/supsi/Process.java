@@ -7,18 +7,16 @@ public class Process {
     private float burstTime;
     private float arrivalTime;
     private int priority;
-    private Color color;
 
     public Process(String name) {
         this.name = name;
     }
 
-    public Process(String name, float burstTime, float arrivalTime, int priority, Color color) {
+    public Process(String name, float burstTime, float arrivalTime, int priority) {
         this.name = name;
         this.burstTime = burstTime;
         this.arrivalTime = arrivalTime;
         this.priority = priority;
-        this.color = color;
     }
 
     public String getName() {

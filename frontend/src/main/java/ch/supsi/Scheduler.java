@@ -18,7 +18,7 @@ public class Scheduler {
     private DisplayAlert displayAlert;
     private ControllerBackend controllerBackend = new ControllerBackend();
 
-    public Scheduler() throws IOException {
+    public Scheduler() {
         vboxMenu = new VBox();
         menuStructure = new MenuStructure();
         displayAlert = new DisplayAlert();
@@ -28,7 +28,7 @@ public class Scheduler {
         setMenuBar();
     }
 
-    private void setMenuBar() throws IOException {
+    private void setMenuBar() {
         vboxMenu.getChildren().add(menuView.getMenuBar(this, tabPane));
         tabPane.setTabpane(this);
     }

@@ -50,8 +50,6 @@ public class CreateSimDialog {
 
         nameSim.getChildren().addAll(nameSimulation, textSimulationName);
 
-        //scelta algoritmo
-
         ComboBox chooseAlgorithmCombo = new ComboBox();
         chooseAlgorithmCombo.getItems().addAll("FIFO",
                 "SJF",
@@ -68,10 +66,7 @@ public class CreateSimDialog {
         dropdownAlgo.setSpacing(20);
         dropdownAlgo.setAlignment(Pos.CENTER);
 
-        //Aggiungo
         total.getChildren().addAll(nameSim, dropdownAlgo);
-
-        //setto
         createSimulationBorder.setCenter(total);
 
         HBox buttonHBOX = new HBox();
@@ -80,7 +75,6 @@ public class CreateSimDialog {
         Button exitAnnulla = new Button();
         createSimulation.setText(resourceBundle.getString("creaSimulation.text"));
         exitAnnulla.setText(resourceBundle.getString("annullaCreaSimulation.text"));
-
 
         buttonHBOX.getChildren().addAll(createSimulation, exitAnnulla);
         buttonHBOX.setAlignment(Pos.CENTER);
@@ -91,13 +85,10 @@ public class CreateSimDialog {
 
         createStage.initModality(Modality.APPLICATION_MODAL);
 
-
         createSimulationBorder.setBottom(buttonHBOX);
-
 
         scene = new Scene(createSimulationBorder, 400, 100);
         createStage.setScene(scene);
-
 
         createSimulation.setOnAction(x -> {
             name = textSimulationName.getText();

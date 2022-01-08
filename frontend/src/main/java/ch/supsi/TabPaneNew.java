@@ -34,7 +34,6 @@ public class TabPaneNew {
         Tab plus = new Tab("+");
         plus.setClosable(false);
 
-        //Parte da spostare che permette la creazione di un nuovo tab
         plus.setOnSelectionChanged(e -> {
                     if (plus.isSelected()) {
                         if (createSimulation.isFirst()) {
