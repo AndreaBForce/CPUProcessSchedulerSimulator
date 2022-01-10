@@ -38,7 +38,7 @@ public class ProcessListView {
         container.setSpacing(16);
         container.setPadding(new Insets(10));
         container.setStyle("-fx-background-color: red");
-        container.getChildren().addAll(addBtn,scrollableList);
+        container.getChildren().addAll(addBtn, scrollableList);
         container.setMinWidth(200);
         processBox.setMaxWidth(800);
         processBox.setSpacing(10);
@@ -81,7 +81,7 @@ public class ProcessListView {
             Label labelColor = new Label("Color:");
             gridPane.add(labelColor, 0, 2);
             ColorPicker colorPicker = new ColorPicker();
-            gridPane.add(colorPicker,1,2);
+            gridPane.add(colorPicker, 1, 2);
 
 
             Label labelTmpArr = new Label("Arrival time:");
@@ -116,7 +116,7 @@ public class ProcessListView {
 
             Button submitBtn = new Button("Add");
 
-            switch (algortihm){
+            switch (algortihm) {
                 case "FIFO":
                 case "SJF":
                     //Arrival time
@@ -136,6 +136,21 @@ public class ProcessListView {
                     gridPane.add(submitBtn, 1, 5);
                     break;
                 case "Round Robin":
+                    //Arrival time
+                    priority.setText("4");
+                    gridPane.add(labelTmpArr, 0, 3);
+                    gridPane.add(tmpArr, 1, 3);
+                    //Burst time
+                    gridPane.add(labelTmpBurst, 0, 4);
+                    gridPane.add(tmpBurst, 1, 4);
+                    submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
+                            .or(Bindings.isEmpty(tmpArr.textProperty()))
+                            .or(Bindings.isEmpty(tmpBurst.textProperty()))
+                            .or(Bindings.greaterThan(String.valueOf(0.1), tmpBurst.textProperty()))
+                            .or(Bindings.greaterThan(String.valueOf(0.1), tmpArr.textProperty()))
+                    );
+                    gridPane.add(submitBtn, 1, 6);
+                    break;
                 case "Lottery":
                     //Arrival time
                     gridPane.add(labelTmpArr, 0, 3);
@@ -180,8 +195,7 @@ public class ProcessListView {
             newWindow.show();
 
             submitBtn.setOnMouseClicked(mouseEvent1 -> {
-
-                add(new Process(textProcessName.getText(),Float.parseFloat(tmpBurst.getText()),Float.parseFloat(tmpArr.getText()),Integer.parseInt(priority.getText()),colorPicker.getValue()));
+                add(new Process(textProcessName.getText(), Float.parseFloat(tmpBurst.getText()), Float.parseFloat(tmpArr.getText()), Integer.parseInt(priority.getText()), colorPicker.getValue()));
                 newWindow.close();
             });
         });
@@ -197,7 +211,7 @@ public class ProcessListView {
         //TODO FAI IL FILTRO DEL COLORE SE ALTO O BASSO DI CAMBIARE IN NERO O BIANCO
         String hexColor = process.toHexString(process.getColor());
         //83C1DC <-> COLORE INIZIALE
-
+        processList.add(process);
 
         HBox cell = getCell(hexColor);
         ProcessDetailsView processDetails = new ProcessDetailsView(process);
@@ -209,34 +223,45 @@ public class ProcessListView {
         HBox.setMargin(btnEdit, new Insets(5, 5, 5, 5));
 
         btnEdit.setOnMouseClicked(mouseEvent -> {
-            EditDialog editDialog = new EditDialog(processDetails,process);
+            EditDialog editDialog = new EditDialog(processDetails, process);
             editDialog.getEditStage().showAndWait();
         });
 
         Button button = getButton();
 
-        switch (algortihm){
+        switch (algortihm) {
             case "FIFO":
             case "SJF":
                 cell.getChildren().addAll(getSpace(),
                         processDetails.getProcessName(),
                         getSpace(),
-                        processDetails.getTmpArrivalTime(),processDetails.getValueArrival(),
+                        processDetails.getTmpArrivalTime(), processDetails.getValueArrival(),
                         getSpace(),
                         processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
                         getSpace(),
                         btnEdit, button);
                 break;
             case "Round Robin":
+                cell.getChildren().addAll(getSpace(),
+                        processDetails.getProcessName(),
+                        getSpace(),
+                        processDetails.getTmpArrivalTime(), processDetails.getValueArrival(),
+                        getSpace(),
+                        processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
+                        getSpace(),
+                        processDetails.getTmpPriority(),
+                        getSpace(),
+                        btnEdit, button);
+                break;
             case "Lottery":
                 cell.getChildren().addAll(getSpace(),
                         processDetails.getProcessName(),
                         getSpace(),
-                        processDetails.getTmpArrivalTime(),processDetails.getValueArrival(),
+                        processDetails.getTmpArrivalTime(), processDetails.getValueArrival(),
                         getSpace(),
                         processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
                         getSpace(),
-                        processDetails.getTmpPriority(),processDetails.getValuePriority(),
+                        processDetails.getTmpPriority(), processDetails.getValuePriority(),
                         getSpace(),
                         btnEdit, button);
                 break;
@@ -248,18 +273,18 @@ public class ProcessListView {
                         getSpace(),
                         processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
                         getSpace(),
-                        processDetails.getTmpPriority(),processDetails.getValuePriority(),
+                        processDetails.getTmpPriority(), processDetails.getValuePriority(),
                         getSpace(),
                         btnEdit, button);
                 break;
         }
-
         processBox.getChildren().add(cell);
     }
 
     public String getAlgortihm() {
         return algortihm;
     }
+
     public void setAlgortihm(String algortihm) {
         this.algortihm = algortihm;
     }
@@ -267,6 +292,9 @@ public class ProcessListView {
     public void removeCell(String id) {
         Node toRemove = container.lookup('#' + id);
         processBox.getChildren().remove(toRemove);
+        HBox node = (HBox) toRemove;
+        Label label = (Label) node.getChildren().get(1);
+        processList.removeIf(process -> process.getName().equals(label.getText()));
     }
 
     private HBox getCell(String hexColor) {
@@ -306,6 +334,7 @@ public class ProcessListView {
         HBox.setMargin(button, new Insets(5, 5, 5, 5));
 
         button.setOnMouseClicked(mouseEvent -> {
+
             removeCell(button.getParent().getId());
         });
 

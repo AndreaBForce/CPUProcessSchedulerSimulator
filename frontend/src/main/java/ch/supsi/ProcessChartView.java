@@ -22,6 +22,7 @@ public class ProcessChartView {
         this.chart = new StackedBarChart<>(numberAxis, categoryAxis);
         this.processList = new XYChart.Series<>();
 
+        testChart();
         categoryAxis.setTickMarkVisible(false);
 
         chart.setLegendVisible(false);
@@ -61,8 +62,11 @@ public class ProcessChartView {
     }
 
     public void testChart(){
-        add(new Process("P1"),1,"#f5e353");
 
         chart.getData().add(processList);
+    }
+
+    public XYChart.Series<Number, String> getProcessList() {
+        return processList;
     }
 }
