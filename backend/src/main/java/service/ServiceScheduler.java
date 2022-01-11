@@ -17,51 +17,52 @@ public class ServiceScheduler {
     private final FCFSAlgorithm fcfsAlgorithm = new FCFSAlgorithm();
     private RoundRobin roundRobin;
     private SJF sjf;
-    //private final EDFScheduler edfScheduler = new EDFScheduler();
-    //private final RMSScheduler rmsScheduler = new RMSScheduler();
+    private final EDFScheduler edfScheduler = new EDFScheduler();
+    private final RMSScheduler rmsScheduler = new RMSScheduler();
     private final Repository repository = new Repository();
 
     public void fcfsSchedulerService() {
         try {
+            System.out.println("ciao1");
             serializerJSON.serialize(fcfsAlgorithm.compute(serializerJSON.deserialize()));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /*public void rmaSchedulerService() {
+    public void rmaSchedulerService() {
         try {
             serializerJSON.serialize(rmsScheduler.compute(serializerJSON.deserialize()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
-    /*public void roundRobinSchedulerService(double contextSwitch, double quantum){
-        roundRobin = new RoundRobin(contextSwitch, quantum)
+    public void roundRobinSchedulerService(double contextSwitch, double quantum){
+        roundRobin = new RoundRobin(contextSwitch, quantum);
         try {
-            serializerJSON.serialize(roundRobin.simulate(serializerJSON.deserialize()));
+            serializerJSON.serialize(roundRobin.compute(serializerJSON.deserialize()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
-    /*public void sjfSchedulerService(double contextSwitch){
+    public void sjfSchedulerService(double contextSwitch){
         sjf = new SJF(contextSwitch);
         try {
-            serializerJSON.serialize(sjf.simulate(serializerJSON.deserialize()));
+            serializerJSON.serialize(sjf.compute(serializerJSON.deserialize()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
-    /*public void edfSchedulerService(){
+    public void edfSchedulerService(){
         try {
             serializerJSON.serialize(edfScheduler.compute(serializerJSON.deserialize()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public void importScenary() throws IOException {
         repository.readSimulation();

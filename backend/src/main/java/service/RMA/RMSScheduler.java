@@ -18,7 +18,6 @@ public class RMSScheduler implements IAlgorithm {
         for (ProcessRealTime p: processes) {
             p.setState(ProcessState.READY);
             computationBound = computationBound + (p.getBurstTime()/p.getPeriod());
-
         }
 
         return computationBound <= 0.77;

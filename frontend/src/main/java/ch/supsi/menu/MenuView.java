@@ -51,6 +51,10 @@ public class MenuView {
             tabPaneNew.createNewSimulation(createSimulation.getName(), createSimulation.getAlgortihm(),createSimulation.isConfirm());
         });
 
+        menuStructure.getMenuRandomSim().setOnAction(actionEvent -> {
+            tabPaneNew.createRandomSimulation();
+        });
+
         menuStructure.getAboutItem().setOnAction(helpHandler);
 
         menuStructure.getInfoAlgoItem().setOnAction(actionEvent -> {
