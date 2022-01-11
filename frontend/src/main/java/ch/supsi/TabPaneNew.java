@@ -23,7 +23,8 @@ import java.util.List;
 public class TabPaneNew {
     private TabPane tabpane;
     private List<TabView> tabViewList = new ArrayList<>();
-    private Button startButton  = new Button("start");;
+    private Button startButton = new Button("start");
+    ;
     private ControllerBackend controllerBackend;
     private Scheduler scheduler;
     private SerializerJSON serializerJSON = new SerializerJSON();
@@ -72,7 +73,7 @@ public class TabPaneNew {
         int numProcess = (int) (Math.random() * 5) + 1;
         list.setAlgortihm(algorithms[algorithm]);
         for (int i = 0; i < numProcess; i++) {
-            list.add(new Process("p" + i, (float)(Math.random() * 10.9) + 0.1f, (float)Math.random(), (int)(Math.random() * 11), Color.color(Math.random(), Math.random(), Math.random())));
+            list.add(new Process("p" + i, (float) (Math.random() * 10.9) + 0.1f, (float) Math.random(), (int) (Math.random() * 11), Color.color(Math.random(), Math.random(), Math.random())));
         }
 
         Button exportGraph = new Button("Export graph");
@@ -147,17 +148,17 @@ public class TabPaneNew {
         });
     }
 
-    public Color getColor(String name, List<Process> processList){
+    public Color getColor(String name, List<Process> processList) {
         for (Process process : processList)
-            if(process.getName().equals(name))
+            if (process.getName().equals(name))
                 return process.getColor();
-        if(name.equals("SP")){
+        if (name.equals("SP")) {
             return Color.WHITE;
-        }else
+        } else
             return Color.RED;
     }
 
-    public void exportGraph(){
+    public void exportGraph() {
         TabView select = getSelectedTab();
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterPng = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
@@ -169,7 +170,7 @@ public class TabPaneNew {
         }
     }
 
-    public void exportSim(){
+    public void exportSim() {
         TabView select = getSelectedTab();
         try {
             controllerBackend.exportSimulation(new SimulationBackend(select.getSimulationName(), select.getAlgorithmName()));
@@ -178,7 +179,7 @@ public class TabPaneNew {
         }
     }
 
-    public TabView getSelectedTab(){
+    public TabView getSelectedTab() {
         Tab tab = tabpane.getSelectionModel().getSelectedItem();
         TabView select = null;
         for (TabView tabView : tabViewList) {
@@ -188,18 +189,18 @@ public class TabPaneNew {
         return select;
     }
 
-    public void serializeProcess(String nameAlgorithm, TabView select, ProcessListView list){
+    public void serializeProcess(String nameAlgorithm, TabView select, ProcessListView list) {
         try {
             serializerJSON.serialize(select.getSimulation().getProcessList());
-            if(nameAlgorithm.equals("SJF")) {
+            if (nameAlgorithm.equals("SJF")) {
                 controllerBackend.sjfScheduler(1);
-            }else if(nameAlgorithm.equals("Round Robin")){
-                controllerBackend.roundRobinScheduler(2,3);
-            }else if(nameAlgorithm.equals("EDF")){
+            } else if (nameAlgorithm.equals("Round Robin")) {
+                controllerBackend.roundRobinScheduler(2, 3);
+            } else if (nameAlgorithm.equals("EDF")) {
                 controllerBackend.edfScheduler();
-            }else if(nameAlgorithm.equals("FIFO")){
+            } else if (nameAlgorithm.equals("FIFO")) {
                 controllerBackend.fcfsScheduler();
-            }else if(nameAlgorithm.equals("RMS")){
+            } else if (nameAlgorithm.equals("RMS")) {
                 controllerBackend.rmsScheduler();
             }
             List<Process> processList = serializerJSON.deserialize();
@@ -212,7 +213,7 @@ public class TabPaneNew {
         }
     }
 
-    public HBox getHbox(Button exportGraph, Button exportSim, String algorithm){
+    public HBox getHbox(Button exportGraph, Button exportSim, String algorithm) {
         Label label = new Label(algorithm + "                ");
         VBox vBox1 = new VBox();
         HBox hBox1 = new HBox();

@@ -4,7 +4,6 @@ import controller.SerializerJSON;
 import repository.Repository;
 import service.EDF.EDFScheduler;
 import service.FCFS.FCFSAlgorithm;
-//import service.FCFS.Process;
 import service.RMA.RMSScheduler;
 import service.RoundRobin.RoundRobin;
 import service.SJF.SJF;
@@ -24,7 +23,7 @@ public class ServiceScheduler {
     public void fcfsSchedulerService() {
         try {
             System.out.println("ciao1");
-            serializerJSON.serialize(fcfsAlgorithm.compute(serializerJSON.deserialize()));
+            serializerJSON.serialize(fcfsAlgorithm.compute(serializerJSON.deserialize("FCFS")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +31,7 @@ public class ServiceScheduler {
 
     public void rmaSchedulerService() {
         try {
-            serializerJSON.serialize(rmsScheduler.compute(serializerJSON.deserialize()));
+            serializerJSON.serialize(rmsScheduler.compute(serializerJSON.deserialize("RMS")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,7 +40,7 @@ public class ServiceScheduler {
     public void roundRobinSchedulerService(double contextSwitch, double quantum){
         roundRobin = new RoundRobin(contextSwitch, quantum);
         try {
-            serializerJSON.serialize(roundRobin.compute(serializerJSON.deserialize()));
+            serializerJSON.serialize(roundRobin.compute(serializerJSON.deserialize("Round Robin")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,7 +49,7 @@ public class ServiceScheduler {
     public void sjfSchedulerService(double contextSwitch){
         sjf = new SJF(contextSwitch);
         try {
-            serializerJSON.serialize(sjf.compute(serializerJSON.deserialize()));
+            serializerJSON.serialize(sjf.compute(serializerJSON.deserialize("SJF")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,7 +57,7 @@ public class ServiceScheduler {
 
     public void edfSchedulerService(){
         try {
-            serializerJSON.serialize(edfScheduler.compute(serializerJSON.deserialize()));
+            serializerJSON.serialize(edfScheduler.compute(serializerJSON.deserialize("EDF")));
         } catch (IOException e) {
             e.printStackTrace();
         }

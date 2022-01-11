@@ -9,8 +9,6 @@ public class ControllerBackend {
     private final ServiceScheduler service = new ServiceScheduler();
 
     public void fcfsScheduler() {
-
-        System.out.println("ciao");
         service.fcfsSchedulerService();
     }
 
