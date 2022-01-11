@@ -6,12 +6,22 @@ public abstract class Process {
     String name;
     double burstTime;
 
+    public Process(String name, double burstTime) {
+        this.name = name;
+        this.burstTime = burstTime;
+    }
+
     public String getName() {
         return name;
     }
 
     public double getBurstTime() {
         return burstTime;
+    }
+
+    @Override
+    public String toString() {
+        return "\n" + getName() + " bt: "+getBurstTime();
     }
 
     @Override

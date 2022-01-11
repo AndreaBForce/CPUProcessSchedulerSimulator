@@ -9,9 +9,8 @@ public class ProcessRealTime extends Process {
 
 
     public ProcessRealTime(String name, double period, double burstTime) {
-        this.name = name;
+        super(name, burstTime);
         this.period = period;
-        this.burstTime = burstTime;
         this.timePassed = -99999;
         this.nextDeadline = -99999;
     }

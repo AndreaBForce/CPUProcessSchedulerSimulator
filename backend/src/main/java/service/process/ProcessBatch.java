@@ -5,8 +5,7 @@ public class ProcessBatch extends Process{
 
 
     public ProcessBatch(String name, double burstTime, double arrivalTime) {
-        this.name = name;
-        this.burstTime = burstTime;
+        super(name, burstTime);
         this.arrivalTime = arrivalTime;
     }
 
@@ -28,7 +27,7 @@ public class ProcessBatch extends Process{
 
     @Override
     public String toString() {
-        return "\n" + getName() + " bt: "+getBurstTime() + " at: "+getArrivalTime();
+        return super.toString() + " at: "+getArrivalTime();
     }
 
     @Override
