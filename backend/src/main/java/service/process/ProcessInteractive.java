@@ -4,7 +4,6 @@ public class ProcessInteractive extends Process {
     private final double arrivalTime;
     private double remainingBurstTime;
 
-
     public ProcessInteractive(String name, double burstTime, double arrivalTime) {
         super(name, burstTime);
         this.arrivalTime = arrivalTime;

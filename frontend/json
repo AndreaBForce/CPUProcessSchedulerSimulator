@@ -1,1 +1,1 @@
-[{"arrivalTime":2.0,"name":"efer","burstTime":1.0}]
+[{"name":"p0","burstTime":10.490103,"arrivalTime":0.37562427,"priority":1,"color":{"red":0.32710323,"green":0.76155233,"blue":0.3554985,"opacity":1.0}},{"name":"p1","burstTime":1.599063,"arrivalTime":0.39679834,"priority":3,"color":{"red":0.5758878,"green":0.0917409,"blue":0.92110497,"opacity":1.0}}]
