@@ -19,7 +19,7 @@ public class Mediator {
     }
 
     public void fcfsAlgorithm(){
-        controllerBackend.fcfsScheduler();
+        //controllerBackend.fcfsScheduler();
     }
 
 }

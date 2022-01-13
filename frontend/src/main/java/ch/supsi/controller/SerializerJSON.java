@@ -1,12 +1,10 @@
 package ch.supsi.controller;
 
 import ch.supsi.Process;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SerializerJSON {

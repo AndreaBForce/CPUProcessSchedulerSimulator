@@ -12,6 +12,10 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import service.process.ProcessBatch;
+import service.process.ProcessInteractive;
+import service.process.ProcessPriority;
+import service.process.ProcessRealTime;
 import utility.SimulationBackend;
 
 import java.io.File;
@@ -23,7 +27,7 @@ import java.util.List;
 public class TabPaneNew {
     private TabPane tabpane;
     private List<TabView> tabViewList = new ArrayList<>();
-    private Button startButton = new Button("start");
+    private Button startButton;
     ;
     private ControllerBackend controllerBackend;
     private Scheduler scheduler;
@@ -82,7 +86,7 @@ public class TabPaneNew {
         exportSim.setDisable(true);
         TabView newTab = new TabView("random", algorithms[algorithm]);
         tabViewList.add(newTab);
-
+        startButton = new Button("start");
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.BOTTOM_CENTER);
         vBox.setStyle("-fx-background-color: #f8fce5");
@@ -106,7 +110,7 @@ public class TabPaneNew {
             TabView select = getSelectedTab();
             select.getProcessChartView().getProcessList().getData().clear();
             select.setSimulation(new Simulation("random", algorithms[algorithm], list.getProcessList()));
-            serializeProcess(algorithms[algorithm], select, list);
+            //serializeProcess(algorithms[algorithm], select, list);
         });
     }
 
@@ -119,6 +123,8 @@ public class TabPaneNew {
         exportSim.setDisable(true);
         TabView newTab = new TabView(nameSimulation, nameAlgorithm);
         tabViewList.add(newTab);
+
+        startButton = new Button("start");
         if (confirmed) {
             VBox vBox = new VBox();
             vBox.setAlignment(Pos.BOTTOM_CENTER);
@@ -144,7 +150,35 @@ public class TabPaneNew {
             TabView select = getSelectedTab();
             select.getProcessChartView().getProcessList().getData().clear();
             select.setSimulation(new Simulation(nameSimulation, nameAlgorithm, list.getProcessList()));
-            serializeProcess(nameAlgorithm, select, list);
+
+
+            if(nameAlgorithm.equals("Round Robin")){
+                List<ProcessInteractive> processInteractives = new ArrayList<>();
+                for (Process process : list.getProcessList()) {
+                    processInteractives.add(new ProcessInteractive(process.getName(), process.getBurstTime(), process.getArrivalTime()));
+                }
+                serializeProcess(nameAlgorithm, select, processInteractives, list);
+            }else if(nameAlgorithm.equals("FIFO") || nameAlgorithm.equals("SJF")){
+                List<ProcessBatch> processInteractives = new ArrayList<>();
+                for (Process process : list.getProcessList()) {
+                    processInteractives.add(new ProcessBatch(process.getName(), process.getBurstTime(), process.getArrivalTime()));
+                }
+                serializeProcess(nameAlgorithm, select, processInteractives, list);
+            }else if(nameAlgorithm.equals("EDF") || nameAlgorithm.equals("RMS")){
+                List<ProcessRealTime> processInteractives = new ArrayList<>();
+                for (Process process : list.getProcessList()) {
+                    processInteractives.add(new ProcessRealTime(process.getName(), process.getPriority(), process.getArrivalTime()));
+                }
+                serializeProcess(nameAlgorithm, select, processInteractives, list);
+            }else{
+                List<ProcessPriority> processInteractives = new ArrayList<>();
+                for (Process process : list.getProcessList()) {
+                    processInteractives.add(new ProcessPriority(process.getName(), process.getBurstTime(), process.getPriority()));
+                }
+                serializeProcess(nameAlgorithm, select, processInteractives, list);
+            }
+
+
         });
     }
 
@@ -189,28 +223,45 @@ public class TabPaneNew {
         return select;
     }
 
-    public void serializeProcess(String nameAlgorithm, TabView select, ProcessListView list) {
+    public void serializeProcess(String nameAlgorithm, TabView select, List<? extends service.process.Process> processList, ProcessListView list) {
         try {
+            List<service.process.Process> processList1 = null;
             serializerJSON.serialize(select.getSimulation().getProcessList());
             if (nameAlgorithm.equals("SJF")) {
-                controllerBackend.sjfScheduler(1);
+//                controllerBackend.sjfScheduler(1);
+                processList1 = controllerBackend.sjf(0.2, (List<ProcessBatch>) processList);
             } else if (nameAlgorithm.equals("Round Robin")) {
-                controllerBackend.roundRobinScheduler(2, 3);
+                //controllerBackend.roundRobinScheduler(2, 3);
+                processList1 = controllerBackend.rr(0.2,2.5, (List<ProcessInteractive>) processList);
             } else if (nameAlgorithm.equals("EDF")) {
-                controllerBackend.edfScheduler();
+//                controllerBackend.edfScheduler();
+                processList1 = controllerBackend.edf((List<ProcessRealTime>) processList);
             } else if (nameAlgorithm.equals("FIFO")) {
-                controllerBackend.fcfsScheduler();
+                //controllerBackend.fcfsScheduler();
+                processList1 = controllerBackend.fcfs((List<ProcessBatch>) processList);
             } else if (nameAlgorithm.equals("RMS")) {
-                controllerBackend.rmsScheduler();
+                //controllerBackend.rmsScheduler();
+                processList1 = controllerBackend.rms((List<ProcessRealTime>) processList);
             }
-            List<Process> processList = serializerJSON.deserialize();
+            //List<Process> processList = serializerJSON.deserialize();
 
-            for (Process process : processList) {
-                select.getProcessChartView().add(process, (int) process.getBurstTime(), process.toHexString(getColor(process.getName(), list.getProcessList())));
+            for (service.process.Process process : processList1) {
+                select.getProcessChartView().add(process, (int) process.getBurstTime(), toHexString(getColor(process.getName(), list.getProcessList())));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //TODO Spostare questo pezzo di codice che converte in esadecimale il colore in una classe adatta
+    private String format(double val) {
+        String in = Integer.toHexString((int) Math.round(val * 255));
+        return in.length() == 1 ? "0" + in : in;
+    }
+
+    public String toHexString(Color value) {
+        return "#" + (format(value.getRed()) + format(value.getGreen()) + format(value.getBlue()) + format(value.getOpacity()))
+                .toUpperCase();
     }
 
     public HBox getHbox(Button exportGraph, Button exportSim, String algorithm) {
