@@ -117,7 +117,7 @@ public class ProcessListView {
             Button submitBtn = new Button("Add");
 
             switch (algortihm) {
-                case "FIFO":
+                case "FCFS":
                 case "SJF":
                     //Arrival time
                     gridPane.add(labelTmpArr, 0, 3);
@@ -241,7 +241,7 @@ public class ProcessListView {
         Button button = getButton();
 
         switch (algortihm) {
-            case "FIFO":
+            case "FCFS":
             case "SJF":
                 cell.getChildren().addAll(getSpace(),
                         processDetails.getProcessName(),

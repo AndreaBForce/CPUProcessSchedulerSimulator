@@ -2,6 +2,7 @@ package repository;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;;
+import utility.Simulation;
 import utility.SimulationBackend;
 
 import java.io.BufferedReader;
@@ -19,11 +20,24 @@ public class Repository {
         jsonFile.close();
     }
 
-    public SimulationBackend readSimulation() throws IOException {
+    public Simulation readSimulation() throws IOException {
         FileReader file = new FileReader("simulation");
         BufferedReader br = new BufferedReader(file);
         String line = br.readLine();
-        SimulationBackend simulation = gson.fromJson(line, new TypeToken<SimulationBackend>(){}.getType());
+        String [] lines = line.split(",");
+        int i = 17;
+        StringBuilder nameAlg = new StringBuilder();
+        while(lines[1].charAt(i) != '\"'){
+            nameAlg.append(lines[1].charAt(i));
+            i++;
+        }
+        Simulation simulation = null;
+        if(nameAlg.toString().equals("SJF")) {
+            simulation = gson.fromJson(line, new TypeToken<Simulation>() {
+            }.getType());
+            System.out.println(simulation);
+
+        }
         br.close();
         return simulation;
     }

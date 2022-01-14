@@ -43,7 +43,7 @@ public class ProcessChartView {
         return chart;
     }
 
-    public void add(Process process, int length, String color){
+    public void add(Process process, double length, String color){
         XYChart.Data<Number, String> data = new XYChart.Data<>(length,"");
         Label label = new Label(process.getName());
         label.setAlignment(Pos.CENTER);

@@ -1,9 +1,8 @@
 package ch.supsi;
 
 import Dialogs.CreateSimDialog;
-import ch.supsi.controller.SerializerJSON;
+import ch.supsi.controller.Mediator;
 import ch.supsi.utility.Simulation;
-import controller.ControllerBackend;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,13 +27,11 @@ public class TabPaneNew {
     private TabPane tabpane;
     private List<TabView> tabViewList = new ArrayList<>();
     private Button startButton;
-    ;
-    private ControllerBackend controllerBackend;
+    private Mediator mediator;
     private Scheduler scheduler;
-    private SerializerJSON serializerJSON = new SerializerJSON();
 
-    public TabPaneNew(ControllerBackend controllerBackend, Scheduler scheduler) {
-        this.controllerBackend = controllerBackend;
+    public TabPaneNew(Scheduler scheduler, Mediator mediator) {
+        this.mediator = mediator;
         this.scheduler = scheduler;
         tabpane = new TabPane();
         CreateSimDialog createSimulation = new CreateSimDialog();
@@ -70,6 +67,11 @@ public class TabPaneNew {
         schedulder.getVboxMenu().getChildren().add(getTabpane());
     }
 
+    public static double roundAvoid(double value, int places) {
+        double scale = Math.pow(10, places);
+        return Math.round(value * scale) / scale;
+    }
+
     public void createRandomSimulation() {
         ProcessListView list = new ProcessListView();
         String[] algorithms = {"RMA", "Lottery", "FCFS", "EDF", "SJF", "Round Robin"};
@@ -77,7 +79,7 @@ public class TabPaneNew {
         int numProcess = (int) (Math.random() * 5) + 1;
         list.setAlgortihm(algorithms[algorithm]);
         for (int i = 0; i < numProcess; i++) {
-            list.add(new Process("p" + i, (float) (Math.random() * 10.9) + 0.1f, (float) Math.random(), (int) (Math.random() * 11), Color.color(Math.random(), Math.random(), Math.random())));
+            list.add(new Process("p" + i, roundAvoid((double) (Math.random() * 10.9) + 0.1, 1), roundAvoid((double) (Math.random() * 10.9) + 0.1, 1), (int) (Math.random() * 11), Color.color(Math.random(), Math.random(), Math.random())));
         }
 
         Button exportGraph = new Button("Export graph");
@@ -109,8 +111,7 @@ public class TabPaneNew {
             exportSim.setDisable(false);
             TabView select = getSelectedTab();
             select.getProcessChartView().getProcessList().getData().clear();
-            select.setSimulation(new Simulation("random", algorithms[algorithm], list.getProcessList()));
-            //serializeProcess(algorithms[algorithm], select, list);
+            computeAlgorithm("random", algorithms[algorithm], select, list);
         });
     }
 
@@ -149,37 +150,41 @@ public class TabPaneNew {
             exportSim.setDisable(false);
             TabView select = getSelectedTab();
             select.getProcessChartView().getProcessList().getData().clear();
-            select.setSimulation(new Simulation(nameSimulation, nameAlgorithm, list.getProcessList()));
 
-
-            if(nameAlgorithm.equals("Round Robin")){
-                List<ProcessInteractive> processInteractives = new ArrayList<>();
-                for (Process process : list.getProcessList()) {
-                    processInteractives.add(new ProcessInteractive(process.getName(), process.getBurstTime(), process.getArrivalTime()));
-                }
-                serializeProcess(nameAlgorithm, select, processInteractives, list);
-            }else if(nameAlgorithm.equals("FIFO") || nameAlgorithm.equals("SJF")){
-                List<ProcessBatch> processInteractives = new ArrayList<>();
-                for (Process process : list.getProcessList()) {
-                    processInteractives.add(new ProcessBatch(process.getName(), process.getBurstTime(), process.getArrivalTime()));
-                }
-                serializeProcess(nameAlgorithm, select, processInteractives, list);
-            }else if(nameAlgorithm.equals("EDF") || nameAlgorithm.equals("RMS")){
-                List<ProcessRealTime> processInteractives = new ArrayList<>();
-                for (Process process : list.getProcessList()) {
-                    processInteractives.add(new ProcessRealTime(process.getName(), process.getPriority(), process.getArrivalTime()));
-                }
-                serializeProcess(nameAlgorithm, select, processInteractives, list);
-            }else{
-                List<ProcessPriority> processInteractives = new ArrayList<>();
-                for (Process process : list.getProcessList()) {
-                    processInteractives.add(new ProcessPriority(process.getName(), process.getBurstTime(), process.getPriority()));
-                }
-                serializeProcess(nameAlgorithm, select, processInteractives, list);
-            }
-
-
+            computeAlgorithm(nameSimulation, nameAlgorithm, select, list);
         });
+    }
+
+    public void computeAlgorithm(String nameSimulation, String nameAlgorithm, TabView select, ProcessListView list) {
+        if (nameAlgorithm.equals("Round Robin")) {
+            List<ProcessInteractive> processInteractives = new ArrayList<>();
+            for (Process process : list.getProcessList()) {
+                processInteractives.add(new ProcessInteractive(process.getName(), process.getBurstTime(), process.getArrivalTime()));
+            }
+            select.setSimulation(new Simulation(nameSimulation, nameAlgorithm, processInteractives));
+            serializeProcess(nameAlgorithm, select, processInteractives, list);
+        } else if (nameAlgorithm.equals("FIFO") || nameAlgorithm.equals("SJF")) {
+            List<ProcessBatch> processInteractives = new ArrayList<>();
+            for (Process process : list.getProcessList()) {
+                processInteractives.add(new ProcessBatch(process.getName(), process.getBurstTime(), process.getArrivalTime()));
+            }
+            select.setSimulation(new Simulation(nameSimulation, nameAlgorithm, processInteractives));
+            serializeProcess(nameAlgorithm, select, processInteractives, list);
+        } else if (nameAlgorithm.equals("EDF") || nameAlgorithm.equals("RMA")) {
+            List<ProcessRealTime> processInteractives = new ArrayList<>();
+            for (Process process : list.getProcessList()) {
+                processInteractives.add(new ProcessRealTime(process.getName(), process.getPriority(), process.getBurstTime()));
+            }
+            select.setSimulation(new Simulation(nameSimulation, nameAlgorithm, processInteractives));
+            serializeProcess(nameAlgorithm, select, processInteractives, list);
+        } else {
+            List<ProcessPriority> processInteractives = new ArrayList<>();
+            for (Process process : list.getProcessList()) {
+                processInteractives.add(new ProcessPriority(process.getName(), process.getBurstTime(), process.getPriority()));
+            }
+            select.setSimulation(new Simulation(nameSimulation, nameAlgorithm, processInteractives));
+            serializeProcess(nameAlgorithm, select, processInteractives, list);
+        }
     }
 
     public Color getColor(String name, List<Process> processList) {
@@ -207,7 +212,7 @@ public class TabPaneNew {
     public void exportSim() {
         TabView select = getSelectedTab();
         try {
-            controllerBackend.exportSimulation(new SimulationBackend(select.getSimulationName(), select.getAlgorithmName()));
+            mediator.exportSimulation(new SimulationBackend(select.getSimulationName(), select.getAlgorithmName(), select.getSimulation().getProcessList()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -224,36 +229,27 @@ public class TabPaneNew {
     }
 
     public void serializeProcess(String nameAlgorithm, TabView select, List<? extends service.process.Process> processList, ProcessListView list) {
-        try {
-            List<service.process.Process> processList1 = null;
-            serializerJSON.serialize(select.getSimulation().getProcessList());
-            if (nameAlgorithm.equals("SJF")) {
-//                controllerBackend.sjfScheduler(1);
-                processList1 = controllerBackend.sjf(0.2, (List<ProcessBatch>) processList);
-            } else if (nameAlgorithm.equals("Round Robin")) {
-                //controllerBackend.roundRobinScheduler(2, 3);
-                processList1 = controllerBackend.rr(0.2,2.5, (List<ProcessInteractive>) processList);
-            } else if (nameAlgorithm.equals("EDF")) {
-//                controllerBackend.edfScheduler();
-                processList1 = controllerBackend.edf((List<ProcessRealTime>) processList);
-            } else if (nameAlgorithm.equals("FIFO")) {
-                //controllerBackend.fcfsScheduler();
-                processList1 = controllerBackend.fcfs((List<ProcessBatch>) processList);
-            } else if (nameAlgorithm.equals("RMS")) {
-                //controllerBackend.rmsScheduler();
-                processList1 = controllerBackend.rms((List<ProcessRealTime>) processList);
-            }
-            //List<Process> processList = serializerJSON.deserialize();
+        //TODO PARAMS ------ ROUND ROBIN ----- SJF ------ LOTTERY
+        List<service.process.Process> processList1 = null;
+        if (nameAlgorithm.equals("SJF")) {
+            processList1 = mediator.sjfScheduler(0.2, (List<ProcessBatch>) processList);
+        } else if (nameAlgorithm.equals("Round Robin")) {
+            processList1 = mediator.roundRobinScheduler(0.2, 2.5, (List<ProcessInteractive>) processList);
+        } else if (nameAlgorithm.equals("EDF")) {
+            processList1 = mediator.edfScheduler((List<ProcessRealTime>) processList);
+        } else if (nameAlgorithm.equals("FIFO")) {
+            processList1 = mediator.fcfsScheduler((List<ProcessBatch>) processList);
+        } else if (nameAlgorithm.equals("RMA")) {
+            processList1 = mediator.rmsScheduler((List<ProcessRealTime>) processList);
+        }else {
+            processList1 = mediator.lotteryScheduler(2.0, (List<ProcessPriority>) processList);
+        }
 
-            for (service.process.Process process : processList1) {
-                select.getProcessChartView().add(process, (int) process.getBurstTime(), toHexString(getColor(process.getName(), list.getProcessList())));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (service.process.Process process : processList1) {
+            select.getProcessChartView().add(process, process.getBurstTime(), toHexString(getColor(process.getName(), list.getProcessList())));
         }
     }
 
-    //TODO Spostare questo pezzo di codice che converte in esadecimale il colore in una classe adatta
     private String format(double val) {
         String in = Integer.toHexString((int) Math.round(val * 255));
         return in.length() == 1 ? "0" + in : in;
@@ -285,6 +281,4 @@ public class TabPaneNew {
         hBox.getChildren().add(vBox1);
         return hBox;
     }
-
-
 }

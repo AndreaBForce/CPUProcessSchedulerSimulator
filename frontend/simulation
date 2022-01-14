@@ -1,1 +1,1 @@
-{"name":"Simulation tab","algorithmName":"FIFO"}
+{"name":"random","algorithmName":"SJF","processList":[{"name":"p0","burstTime":5.8},{"name":"p1","burstTime":3.8},{"name":"p2","burstTime":1.8}]}
