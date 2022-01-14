@@ -1,15 +1,15 @@
 package ch.supsi.utility;
 
-import ch.supsi.Process;
+import service.process.Process;
 
 import java.util.List;
 
 public class Simulation {
     private String name;
     private String algorithmName;
-    private List<Process> processList;
+    private List<? extends service.process.Process> processList;
 
-    public Simulation(String name, String algorithmName, List<Process> processList) {
+    public Simulation(String name, String algorithmName, List<? extends service.process.Process> processList) {
         this.name = name;
         this.algorithmName = algorithmName;
         this.processList = processList;
@@ -19,11 +19,7 @@ public class Simulation {
         return name;
     }
 
-    public String getAlgorithmName() {
-        return algorithmName;
-    }
-
-    public List<Process> getProcessList() {
+    public List<? extends Process> getProcessList() {
         return processList;
     }
 }

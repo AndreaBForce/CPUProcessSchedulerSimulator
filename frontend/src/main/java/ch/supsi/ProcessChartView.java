@@ -8,6 +8,7 @@ import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import service.process.Process;
 
 import java.io.File;
 
@@ -42,9 +43,9 @@ public class ProcessChartView {
         return chart;
     }
 
-    public void add(Process process, int length, String color){
+    public void add(Process process, double length, String color){
         XYChart.Data<Number, String> data = new XYChart.Data<>(length,"");
-        Label label = new Label(process.toString());
+        Label label = new Label(process.getName());
         label.setAlignment(Pos.CENTER);
         label.setStyle("-fx-background-color: "+color);
         data.setNode(label);

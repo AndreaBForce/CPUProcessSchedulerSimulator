@@ -4,23 +4,16 @@ import javafx.scene.paint.Color;
 
 public class Process {
     private String name;
-    private float burstTime;
-    private float arrivalTime;
+    private double burstTime;
+    private double arrivalTime;
     private int priority;
     private Color color;
 
-    public Process(String name, float burstTime, float arrivalTime, int priority,Color color) {
+    public Process(String name, double burstTime, double arrivalTime, int priority, Color color) {
         this.name = name;
         this.burstTime = burstTime;
         this.arrivalTime = arrivalTime;
         this.priority = priority;
-        this.color = color;
-    }
-
-    public Process(String name, float burstTime, float arrivalTime, Color color) {
-        this.name = name;
-        this.burstTime = burstTime;
-        this.arrivalTime = arrivalTime;
         this.color = color;
     }
 
@@ -32,7 +25,7 @@ public class Process {
         this.name = name;
     }
 
-    public float getBurstTime() {
+    public double getBurstTime() {
         return burstTime;
     }
 
@@ -40,7 +33,7 @@ public class Process {
         this.burstTime = burstTime;
     }
 
-    public float getArrivalTime() {
+    public double getArrivalTime() {
         return arrivalTime;
     }
 
@@ -60,24 +53,9 @@ public class Process {
         return color;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     @Override
     public String toString() {
         return name;
     }
 
-
-    //TODO Spostare questo pezzo di codice che converte in esadecimale il colore in una classe adatta
-    private String format(double val) {
-        String in = Integer.toHexString((int) Math.round(val * 255));
-        return in.length() == 1 ? "0" + in : in;
-    }
-
-    public String toHexString(Color value) {
-        return "#" + (format(value.getRed()) + format(value.getGreen()) + format(value.getBlue()) + format(value.getOpacity()))
-                .toUpperCase();
-    }
 }

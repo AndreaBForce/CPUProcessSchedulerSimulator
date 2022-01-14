@@ -88,7 +88,7 @@ public class ProcessListView {
             TextField tmpArr = new TextField();
             tmpArr.focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
-                    if (!tmpArr.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
+                    if (!tmpArr.getText().matches("^(?:1?\\d(?:\\.\\d{1,2})?|20(?:\\.0?)?)$")) {
                         tmpArr.setText("");
                     }
                 }
@@ -98,7 +98,7 @@ public class ProcessListView {
             TextField tmpBurst = new TextField();
             tmpBurst.focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
-                    if (!tmpBurst.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
+                    if (!tmpBurst.getText().matches("^(?:1?\\d(?:\\.\\d{1,2})?|20(?:\\.0?)?)$")) {
                         tmpBurst.setText("");
                     }
                 }
@@ -108,7 +108,7 @@ public class ProcessListView {
             TextField priority = new TextField();
             priority.focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
-                    if (!priority.getText().matches("[1-5](\\.[0-9]{1,2}){0,1}|6(\\.0{1,2}){0,1}")) {
+                    if (!priority.getText().matches("^(?:1?\\d(?:\\.\\d{1,2})?|20(?:\\.0?)?)$")) {
                         priority.setText("");
                     }
                 }
@@ -117,7 +117,7 @@ public class ProcessListView {
             Button submitBtn = new Button("Add");
 
             switch (algortihm) {
-                case "FIFO":
+                case "FCFS":
                 case "SJF":
                     //Arrival time
                     gridPane.add(labelTmpArr, 0, 3);
@@ -206,10 +206,21 @@ public class ProcessListView {
         processBox.setPadding(new Insets(10));
     }
 
+    //TODO Spostare questo pezzo di codice che converte in esadecimale il colore in una classe adatta
+    private String format(double val) {
+        String in = Integer.toHexString((int) Math.round(val * 255));
+        return in.length() == 1 ? "0" + in : in;
+    }
+
+    public String toHexString(Color value) {
+        return "#" + (format(value.getRed()) + format(value.getGreen()) + format(value.getBlue()) + format(value.getOpacity()))
+                .toUpperCase();
+    }
+
     public void add(Process process) {
 
         //TODO FAI IL FILTRO DEL COLORE SE ALTO O BASSO DI CAMBIARE IN NERO O BIANCO
-        String hexColor = process.toHexString(process.getColor());
+        String hexColor = toHexString(process.getColor());
         //83C1DC <-> COLORE INIZIALE
         processList.add(process);
 
@@ -230,7 +241,7 @@ public class ProcessListView {
         Button button = getButton();
 
         switch (algortihm) {
-            case "FIFO":
+            case "FCFS":
             case "SJF":
                 cell.getChildren().addAll(getSpace(),
                         processDetails.getProcessName(),
