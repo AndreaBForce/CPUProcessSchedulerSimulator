@@ -32,6 +32,7 @@ public class Scheduler {
     }
 
     private void setMenuBar() {
+        vboxMenu.getStylesheets().add("Style.css");
         vboxMenu.getChildren().add(menuView.getMenuBar(this, tabPane));
         tabPane.setTabpane(this);
     }

@@ -1,36 +1,28 @@
 package Dialogs;
 
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 
-public class CreateSimDialog {
-    private Stage createStage;
-    private Scene scene;
+public class SimulationDialog extends Dialog {
     private String name;
-    private String algortihm;
+    private String algorithm;
 
     private boolean isFirst = true;
     private boolean confirm = false;
 
-    public CreateSimDialog() {
+    public SimulationDialog() {
+
+        super(420, 100);
+
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
 
-        createStage = new Stage();
-        createStage.setTitle(resourceBundle.getString("menuNewSim.text"));
-        createStage.setAlwaysOnTop(true);
-
-        //borderpane padre
-        BorderPane createSimulationBorder = new BorderPane();
-
+        getStage().setTitle(resourceBundle.getString("menuNewSim.text"));
+        getStage().setAlwaysOnTop(true);
 
         //hbox
         HBox nameSim = new HBox();
@@ -41,7 +33,7 @@ public class CreateSimDialog {
         //Label creazione simulazione
         Label nameSimulation = new Label();
         nameSimulation.setText(resourceBundle.getString("textInputDialog.text"));
-        nameSimulation.setFont(new Font("Arial", 15));
+
         nameSimulation.setAlignment(Pos.CENTER);
         TextField textSimulationName = new TextField();
 
@@ -50,7 +42,7 @@ public class CreateSimDialog {
 
         nameSim.getChildren().addAll(nameSimulation, textSimulationName);
 
-        ComboBox chooseAlgorithmCombo = new ComboBox();
+        ComboBox<String> chooseAlgorithmCombo = new ComboBox<>();
         chooseAlgorithmCombo.getItems().addAll("FCFS",
                 "SJF",
                 "Round Robin",
@@ -60,61 +52,56 @@ public class CreateSimDialog {
         chooseAlgorithmCombo.setValue("FCFS");
         Label algoChooseLabel = new Label();
         algoChooseLabel.setText(resourceBundle.getString("textAlgori.text"));
-        algoChooseLabel.setFont(new Font("Arial", 15));
 
         dropdownAlgo.getChildren().addAll(algoChooseLabel, chooseAlgorithmCombo);
         dropdownAlgo.setSpacing(20);
         dropdownAlgo.setAlignment(Pos.CENTER);
 
         total.getChildren().addAll(nameSim, dropdownAlgo);
-        createSimulationBorder.setCenter(total);
+        getBorderPane().setCenter(total);
 
         HBox buttonHBOX = new HBox();
 
-        Button createSimulation = new Button();
-        Button exitAnnulla = new Button();
-        createSimulation.setText(resourceBundle.getString("creaSimulation.text"));
-        exitAnnulla.setText(resourceBundle.getString("annullaCreaSimulation.text"));
+        Button createBtn = new Button();
+        Button exitBtn = new Button();
+        createBtn.getStyleClass().add("btn");
+        exitBtn.getStyleClass().add("btn");
+        createBtn.setText(resourceBundle.getString("creaSimulation.text"));
+        exitBtn.setText(resourceBundle.getString("annullaCreaSimulation.text"));
 
-        buttonHBOX.getChildren().addAll(createSimulation, exitAnnulla);
+        buttonHBOX.getChildren().addAll(createBtn, exitBtn);
         buttonHBOX.setAlignment(Pos.CENTER);
         buttonHBOX.setSpacing(20);
 
-        createSimulation.setPrefSize(120, 30);
-        exitAnnulla.setPrefSize(120, 30);
+        createBtn.setPrefSize(150, 30);
+        exitBtn.setPrefSize(120, 30);
 
-        createStage.initModality(Modality.APPLICATION_MODAL);
+        getStage().initModality(Modality.APPLICATION_MODAL);
 
-        createSimulationBorder.setBottom(buttonHBOX);
+        getBorderPane().setBottom(buttonHBOX);
 
-        scene = new Scene(createSimulationBorder, 400, 100);
-        createStage.setScene(scene);
+        getStage().setScene(getScene());
 
-        createSimulation.setOnAction(x -> {
+        createBtn.setOnAction(x -> {
             name = textSimulationName.getText();
-            algortihm = chooseAlgorithmCombo.getValue().toString();
+            algorithm = chooseAlgorithmCombo.getValue().toString();
             confirm = true;
-            createStage.close();
+            getStage().close();
         });
 
-        exitAnnulla.setOnAction(x -> {
+        exitBtn.setOnAction(x -> {
             confirm = false;
-            createStage.close();
+            getStage().close();
         });
 
-    }
-
-
-    public Stage getCreateStage() {
-        return createStage;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getAlgortihm() {
-        return algortihm;
+    public String getAlgorithm() {
+        return algorithm;
     }
 
     public boolean isConfirm() {

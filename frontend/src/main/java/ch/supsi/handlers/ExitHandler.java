@@ -21,7 +21,7 @@ public class ExitHandler implements EventHandler<ActionEvent> {
         Alert alert = displayAlert.getExitHandler();
         Optional<ButtonType> res = alert.showAndWait();
         if (res.get().equals(ButtonType.OK)) {
-            System.exit(1);
+            System.exit(0);
         }
     }
 }

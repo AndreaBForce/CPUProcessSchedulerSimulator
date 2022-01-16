@@ -1,6 +1,6 @@
 package ch.supsi;
 
-import Dialogs.CreateSimDialog;
+import Dialogs.SimulationDialog;
 import ch.supsi.controller.Mediator;
 import ch.supsi.utility.Simulation;
 import javafx.geometry.Pos;
@@ -31,7 +31,7 @@ public class TabPaneNew {
         this.mediator = mediator;
         this.scheduler = scheduler;
         tabpane = new TabPane();
-        CreateSimDialog createSimulation = new CreateSimDialog();
+        SimulationDialog createSimulation = new SimulationDialog();
         Tab plus = new Tab("+");
         plus.setClosable(false);
 
@@ -40,15 +40,14 @@ public class TabPaneNew {
                         if (createSimulation.isFirst()) {
                             createNewSimulation("Simulation tab", "FIFO", true);
                         } else {
-                            createSimulation.getCreateStage().showAndWait();
-                            createNewSimulation(createSimulation.getName(), createSimulation.getAlgortihm(), createSimulation.isConfirm());
+                            createSimulation.getStage().showAndWait();
+                            createNewSimulation(createSimulation.getName(), createSimulation.getAlgorithm(), createSimulation.isConfirm());
                         }
                     }
                 }
         );
 
         VBox.setVgrow(tabpane, Priority.ALWAYS);
-        tabpane.setStyle("-fx-background-color: yellow");
         tabpane.getTabs().add(plus);
     }
 
@@ -71,21 +70,25 @@ public class TabPaneNew {
 
     public void createRandomSimulation() {
         ProcessListView list = new ProcessListView();
+        list.initList();
         String[] algorithms = {"RMA", "Lottery", "FCFS", "EDF", "SJF", "Round Robin"};
         int algorithm = (int) (Math.random() * 6);
         int numProcess = (int) (Math.random() * 4) + 2;
-        list.setAlgortihm(algorithms[algorithm]);
+        list.setAlgorithm(algorithms[algorithm]);
         for (int i = 0; i < numProcess; i++) {
             list.add(new Process("p" + i, roundAvoid((double) (Math.random() * 10.9) + 0.1, 1), roundAvoid((double) (Math.random() * 10.9) + 0.1, 1), (int) (Math.random() * 11), Color.color(Math.random(), Math.random(), Math.random())));
         }
 
         Button exportGraph = new Button("Export graph");
+        exportGraph.getStyleClass().add("btn");
         exportGraph.setDisable(true);
         Button exportSim = new Button("Export simulation");
+        exportSim.getStyleClass().add("btn");
         exportSim.setDisable(true);
         TabView newTab = new TabView("random", algorithms[algorithm]);
         tabViewList.add(newTab);
-        startButton = new Button("start");
+        startButton = new Button("Start");
+        startButton.getStyleClass().add("btn");
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.BOTTOM_CENTER);
         vBox.setStyle("-fx-background-color: #f8fce5");
@@ -114,15 +117,19 @@ public class TabPaneNew {
 
     public void createNewSimulation(String nameSimulation, String nameAlgorithm, boolean confirmed) {
         ProcessListView list = new ProcessListView();
-        list.setAlgortihm(nameAlgorithm);
+        list.initList();
+        list.setAlgorithm(nameAlgorithm);
         Button exportGraph = new Button("Export graph");
+        exportGraph.getStyleClass().add("btn");
         exportGraph.setDisable(true);
         Button exportSim = new Button("Export simulation");
+        exportSim.getStyleClass().add("btn");
         exportSim.setDisable(true);
         TabView newTab = new TabView(nameSimulation, nameAlgorithm);
         tabViewList.add(newTab);
 
-        startButton = new Button("start");
+        startButton = new Button("Start");
+        startButton.getStyleClass().add("btn");
         if (confirmed) {
             VBox vBox = new VBox();
             vBox.setAlignment(Pos.BOTTOM_CENTER);
@@ -234,10 +241,13 @@ public class TabPaneNew {
 
     public void addImportSimulation(Simulation simulation) {
         ProcessListView list = new ProcessListView();
-        list.setAlgortihm(simulation.getAlgorithmName());
+        list.initList();
+        list.setAlgorithm(simulation.getAlgorithmName());
         Button exportGraph = new Button("Export graph");
+        exportGraph.getStyleClass().add("btn");
         exportGraph.setDisable(true);
         Button exportSim = new Button("Export simulation");
+        exportSim.getStyleClass().add("btn");
         exportSim.setDisable(true);
         TabView newTab = new TabView(simulation.getName(), simulation.getAlgorithmName());
         tabViewList.add(newTab);
@@ -385,12 +395,14 @@ public class TabPaneNew {
     }
 
     public HBox getHbox(Button exportGraph, Button exportSim, String algorithm) {
-        Label label = new Label(algorithm + "                ");
+        Label label = new Label(algorithm);
         VBox vBox1 = new VBox();
         HBox hBox1 = new HBox();
         HBox hBox2 = new HBox();
         HBox hBox = new HBox();
-        hBox.setStyle("-fx-background-color: #ffd500");
+
+        label.setStyle("-fx-font-size: 18;");
+
         hBox.setMinHeight(50);
         hBox1.getChildren().add(exportGraph);
         hBox1.getChildren().add(exportSim);
@@ -398,10 +410,16 @@ public class TabPaneNew {
         hBox2.getChildren().add(startButton);
         hBox1.setAlignment(Pos.CENTER);
         hBox2.setAlignment(Pos.CENTER);
+        hBox2.setMinWidth(300);
 
         vBox1.getChildren().add(hBox2);
         vBox1.getChildren().add(hBox1);
 
+        vBox1.setSpacing(10);
+        hBox1.setSpacing(10);
+        hBox2.setSpacing(40);
+
+        hBox.setAlignment(Pos.BASELINE_CENTER);
         hBox.getChildren().add(vBox1);
         return hBox;
     }
