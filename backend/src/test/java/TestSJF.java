@@ -40,6 +40,5 @@ public class TestSJF {
         resultList.add(new ProcessBatch("P3", 8,11));
 
         assertEquals(sjf.compute(process), resultList);
-        assertNull(sjf.compute(new ArrayList<>()));
     }
 }

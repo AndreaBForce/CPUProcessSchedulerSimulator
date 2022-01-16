@@ -102,11 +102,10 @@ public class EditDialog {
             detailsView.getValueBurst().setText(pBurst.getText());
             detailsView.getValuePriority().setText(pPrio.getText());
 
-            process.setArrivalTime(Float.parseFloat(pArrival.getText()));
+            process.setArrivalTime(Double.parseDouble(pArrival.getText()));
             process.setName(pName.getText());
-            process.setBurstTime(Integer.valueOf(pBurst.getText()));
-            process.setPriority(Integer.valueOf(pPrio.getText()));
-
+            process.setBurstTime(Double.parseDouble(pBurst.getText()));
+            process.setPriority(Integer.parseInt(pPrio.getText()));
 
             editStage.close();
         });

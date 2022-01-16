@@ -29,7 +29,7 @@ public class Process {
         return burstTime;
     }
 
-    public void setBurstTime(float burstTime) {
+    public void setBurstTime(double burstTime) {
         this.burstTime = burstTime;
     }
 
@@ -37,7 +37,7 @@ public class Process {
         return arrivalTime;
     }
 
-    public void setArrivalTime(float arrivalTime) {
+    public void setArrivalTime(double arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 

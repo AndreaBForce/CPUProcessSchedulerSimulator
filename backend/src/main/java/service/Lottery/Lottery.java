@@ -41,9 +41,6 @@ public class Lottery implements IAlgorithm {
             }
         }
 
-        System.out.println(simulationList);
-        System.out.println(resultList);
-
         return resultList;
     }
 

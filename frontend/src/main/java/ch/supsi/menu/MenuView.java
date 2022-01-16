@@ -8,10 +8,13 @@ import ch.supsi.handlers.ExitHandler;
 import ch.supsi.handlers.HelpHandler;
 import ch.supsi.utility.DisplayAlert;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
+import utility.Simulation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 public class MenuView {
 
@@ -37,9 +40,16 @@ public class MenuView {
 
         menuStructure.getMenuImportSim().setOnAction(actionEvent -> {
             try {
-                mediator.importSimulation();
-            } catch (IOException e) {
-                e.printStackTrace();
+                TextInputDialog textInputDialog = new TextInputDialog();
+                textInputDialog.setContentText("Enter name of file: ");
+                String fileName = textInputDialog.showAndWait().get();
+
+                if (!fileName.equals("")) {
+                    Simulation simulation = mediator.importSimulation(fileName);
+                    if (simulation != null)
+                        tabPaneNew.importSimulation(simulation);
+                }
+            } catch (IOException | NoSuchElementException e) {
             }
         });
 
@@ -48,7 +58,7 @@ public class MenuView {
         menuStructure.getMenuNew().setOnAction(actionEvent -> {
             CreateSimDialog createSimulation = new CreateSimDialog();
             createSimulation.getCreateStage().showAndWait();
-            tabPaneNew.createNewSimulation(createSimulation.getName(), createSimulation.getAlgortihm(),createSimulation.isConfirm());
+            tabPaneNew.createNewSimulation(createSimulation.getName(), createSimulation.getAlgortihm(), createSimulation.isConfirm());
         });
 
         menuStructure.getMenuRandomSim().setOnAction(actionEvent -> {

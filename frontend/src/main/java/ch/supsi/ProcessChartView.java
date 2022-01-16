@@ -45,7 +45,12 @@ public class ProcessChartView {
 
     public void add(Process process, double length, String color){
         XYChart.Data<Number, String> data = new XYChart.Data<>(length,"");
-        Label label = new Label(process.getName());
+        Label label;
+        if(process.getName().equals("SP") || process.getName().equals("CS")) {
+            label = new Label();
+        }else{
+            label = new Label(process.getName());
+        }
         label.setAlignment(Pos.CENTER);
         label.setStyle("-fx-background-color: "+color);
         data.setNode(label);

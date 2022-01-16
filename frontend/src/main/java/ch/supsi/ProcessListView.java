@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -45,7 +44,6 @@ public class ProcessListView {
         container.setAlignment(Pos.BASELINE_CENTER);
 
         addBtn.setOnMouseClicked(mouseEvent -> {
-            //TODO METTERE QUA IN VASE ALL'AGORTIMO LE SCELTE POSSIBILI
             GridPane gridPane = new GridPane();
             gridPane.setAlignment(Pos.CENTER);
             gridPane.setHgap(10);
@@ -61,14 +59,6 @@ public class ProcessListView {
             newWindow.setMinWidth(350);
             newWindow.setMaxHeight(320);
             newWindow.setMinHeight(320);
-            /*"FIFO" name, burst,arrival time,
-                "SJF",
-                "Round Robin"name burst arrival time,
-                "Lottery" name burst arrival priority,
-
-                "RMA" name, burst, period, priority,
-                "EDF"*/
-            //Li dichiaro tutti sopra, poi a seconda dello switch che ho li attivo/disattivo
 
             Text scenetitle = new Text("Add new process");
             gridPane.add(scenetitle, 0, 0, 2, 1);
@@ -117,15 +107,13 @@ public class ProcessListView {
             Button submitBtn = new Button("Add");
 
             switch (algortihm) {
-                case "FCFS":
-                case "SJF":
+                case "FCFS", "SJF" -> {
                     //Arrival time
                     gridPane.add(labelTmpArr, 0, 3);
                     gridPane.add(tmpArr, 1, 3);
                     //Burst time
                     gridPane.add(labelTmpBurst, 0, 4);
                     gridPane.add(tmpBurst, 1, 4);
-                    //setto il testo di priority cosi non va in eccezione
                     priority.setText("4");
                     submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
                             .or(Bindings.isEmpty(tmpArr.textProperty()))
@@ -134,8 +122,8 @@ public class ProcessListView {
                             .or(Bindings.greaterThan(String.valueOf(0.1), tmpArr.textProperty()))
                     );
                     gridPane.add(submitBtn, 1, 5);
-                    break;
-                case "Round Robin":
+                }
+                case "Round Robin" -> {
                     //Arrival time
                     priority.setText("4");
                     gridPane.add(labelTmpArr, 0, 3);
@@ -150,8 +138,8 @@ public class ProcessListView {
                             .or(Bindings.greaterThan(String.valueOf(0.1), tmpArr.textProperty()))
                     );
                     gridPane.add(submitBtn, 1, 6);
-                    break;
-                case "Lottery":
+                }
+                case "Lottery" -> {
                     //Arrival time
                     gridPane.add(labelTmpArr, 0, 3);
                     gridPane.add(tmpArr, 1, 3);
@@ -170,15 +158,11 @@ public class ProcessListView {
                             .or(Bindings.greaterThan(String.valueOf(0.1), tmpArr.textProperty()))
                     );
                     gridPane.add(submitBtn, 1, 6);
-                    break;
-                case "RMA":
-                case "EDF":
-                    //setto il testo di arrival time cosi non va in eccezione
+                }
+                case "RMA", "EDF" -> {
                     tmpArr.setText("4");
-                    //Burst time
                     gridPane.add(labelTmpBurst, 0, 3);
                     gridPane.add(tmpBurst, 1, 3);
-                    //Priority - diventa period cosi mega stonks
                     labelPriority.setText("Period:");
                     gridPane.add(labelPriority, 0, 4);
                     gridPane.add(priority, 1, 4);
@@ -189,7 +173,7 @@ public class ProcessListView {
                             .or(Bindings.greaterThan(String.valueOf(0.1), tmpBurst.textProperty()))
                     );
                     gridPane.add(submitBtn, 1, 5);
-                    break;
+                }
             }
 
             newWindow.show();
@@ -206,7 +190,6 @@ public class ProcessListView {
         processBox.setPadding(new Insets(10));
     }
 
-    //TODO Spostare questo pezzo di codice che converte in esadecimale il colore in una classe adatta
     private String format(double val) {
         String in = Integer.toHexString((int) Math.round(val * 255));
         return in.length() == 1 ? "0" + in : in;
@@ -221,7 +204,6 @@ public class ProcessListView {
 
         //TODO FAI IL FILTRO DEL COLORE SE ALTO O BASSO DI CAMBIARE IN NERO O BIANCO
         String hexColor = toHexString(process.getColor());
-        //83C1DC <-> COLORE INIZIALE
         processList.add(process);
 
         HBox cell = getCell(hexColor);
@@ -241,43 +223,35 @@ public class ProcessListView {
         Button button = getButton();
 
         switch (algortihm) {
-            case "FCFS":
-            case "SJF":
-                cell.getChildren().addAll(getSpace(),
-                        processDetails.getProcessName(),
-                        getSpace(),
-                        processDetails.getTmpArrivalTime(), processDetails.getValueArrival(),
-                        getSpace(),
-                        processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
-                        getSpace(),
-                        btnEdit, button);
-                break;
-            case "Round Robin":
-                cell.getChildren().addAll(getSpace(),
-                        processDetails.getProcessName(),
-                        getSpace(),
-                        processDetails.getTmpArrivalTime(), processDetails.getValueArrival(),
-                        getSpace(),
-                        processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
-                        getSpace(),
-                        processDetails.getTmpPriority(),
-                        getSpace(),
-                        btnEdit, button);
-                break;
-            case "Lottery":
-                cell.getChildren().addAll(getSpace(),
-                        processDetails.getProcessName(),
-                        getSpace(),
-                        processDetails.getTmpArrivalTime(), processDetails.getValueArrival(),
-                        getSpace(),
-                        processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
-                        getSpace(),
-                        processDetails.getTmpPriority(), processDetails.getValuePriority(),
-                        getSpace(),
-                        btnEdit, button);
-                break;
-            case "RMA":
-            case "EDF":
+            case "FCFS", "SJF" -> cell.getChildren().addAll(getSpace(),
+                    processDetails.getProcessName(),
+                    getSpace(),
+                    processDetails.getTmpArrivalTime(), processDetails.getValueArrival(),
+                    getSpace(),
+                    processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
+                    getSpace(),
+                    btnEdit, button);
+            case "Round Robin" -> cell.getChildren().addAll(getSpace(),
+                    processDetails.getProcessName(),
+                    getSpace(),
+                    processDetails.getTmpArrivalTime(), processDetails.getValueArrival(),
+                    getSpace(),
+                    processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
+                    getSpace(),
+                    processDetails.getTmpPriority(),
+                    getSpace(),
+                    btnEdit, button);
+            case "Lottery" -> cell.getChildren().addAll(getSpace(),
+                    processDetails.getProcessName(),
+                    getSpace(),
+                    processDetails.getTmpArrivalTime(), processDetails.getValueArrival(),
+                    getSpace(),
+                    processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
+                    getSpace(),
+                    processDetails.getTmpPriority(), processDetails.getValuePriority(),
+                    getSpace(),
+                    btnEdit, button);
+            case "RMA", "EDF" -> {
                 processDetails.getTmpPriority().setText("Period:");
                 cell.getChildren().addAll(getSpace(),
                         processDetails.getProcessName(),
@@ -287,13 +261,9 @@ public class ProcessListView {
                         processDetails.getTmpPriority(), processDetails.getValuePriority(),
                         getSpace(),
                         btnEdit, button);
-                break;
+            }
         }
         processBox.getChildren().add(cell);
-    }
-
-    public String getAlgortihm() {
-        return algortihm;
     }
 
     public void setAlgortihm(String algortihm) {
@@ -320,14 +290,6 @@ public class ProcessListView {
         return cell;
     }
 
-    private Label getLabel(String text) {
-        Label label = new Label(text);
-        label.setFont(Font.font("Futura"));
-        label.setPrefWidth(150);
-        label.setAlignment(Pos.CENTER);
-        return label;
-    }
-
     public Region getSpace() {
         Region space = new Region();
         space.setPrefWidth(50);
@@ -345,7 +307,6 @@ public class ProcessListView {
         HBox.setMargin(button, new Insets(5, 5, 5, 5));
 
         button.setOnMouseClicked(mouseEvent -> {
-
             removeCell(button.getParent().getId());
         });
 
