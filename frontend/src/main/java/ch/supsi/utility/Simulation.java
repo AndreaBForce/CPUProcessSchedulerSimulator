@@ -19,6 +19,10 @@ public class Simulation {
         return name;
     }
 
+    public String getAlgorithmName() {
+        return algorithmName;
+    }
+
     public List<? extends Process> getProcessList() {
         return processList;
     }

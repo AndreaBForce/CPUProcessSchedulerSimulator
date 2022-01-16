@@ -19,8 +19,6 @@ public class SJF implements IAlgorithm {
 
     @Override
     public List<Process> compute(List<? extends Process> processes){
-        if (processes.isEmpty())
-            return null;
         List<ProcessBatch> sorted = processes.stream().filter(ProcessBatch.class::isInstance).map(ProcessBatch.class::cast).sorted(Comparator.comparingDouble(ProcessBatch::getArrivalTime)).collect(Collectors.toList());
         List<ProcessBatch> queue = new ArrayList<>();
         List<Process> result = new ArrayList<>();
@@ -48,8 +46,6 @@ public class SJF implements IAlgorithm {
             result.add(exec);
             time += exec.getBurstTime();
         }
-
-        System.out.println("Result: "+result);
 
         return result;
     }

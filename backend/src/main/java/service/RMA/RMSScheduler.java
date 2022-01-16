@@ -62,8 +62,6 @@ public class RMSScheduler implements IAlgorithm {
                 }
             }
 
-        }else{
-            System.out.println("Non schedulabile in realtime... \nShutdown");
         }
 
         return resultList;

@@ -54,7 +54,7 @@ public class RoundRobin implements IAlgorithm {
             if (queue.isEmpty()){
                 queue.add(sorted.get(0));
                 time = sorted.get(0).getArrivalTime();
-                result.add(new ProcessInteractive("",time-finalTime, new BigDecimal(finalTime).setScale(1, RoundingMode.HALF_UP).doubleValue()));
+                result.add(new ProcessInteractive("SP",time-finalTime, new BigDecimal(finalTime).setScale(1, RoundingMode.HALF_UP).doubleValue()));
                 sorted.remove(0);
             }
 
@@ -66,7 +66,6 @@ public class RoundRobin implements IAlgorithm {
         exec.decrementRemainingTime(quantum);
         resultP.incrementBurstTime(Math.min(exec.getRemainingBurstTime(), quantum));
 
-        System.out.println(result);
         return result;
     }
 }

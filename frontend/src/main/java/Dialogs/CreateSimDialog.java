@@ -51,13 +51,13 @@ public class CreateSimDialog {
         nameSim.getChildren().addAll(nameSimulation, textSimulationName);
 
         ComboBox chooseAlgorithmCombo = new ComboBox();
-        chooseAlgorithmCombo.getItems().addAll("FIFO",
+        chooseAlgorithmCombo.getItems().addAll("FCFS",
                 "SJF",
                 "Round Robin",
                 "Lottery",
                 "RMA",
                 "EDF");
-        chooseAlgorithmCombo.setValue("FIFO");
+        chooseAlgorithmCombo.setValue("FCFS");
         Label algoChooseLabel = new Label();
         algoChooseLabel.setText(resourceBundle.getString("textAlgori.text"));
         algoChooseLabel.setFont(new Font("Arial", 15));
