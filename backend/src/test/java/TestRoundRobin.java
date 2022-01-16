@@ -21,9 +21,9 @@ public class TestRoundRobin {
         processList.add(p2);
         processList.add(p3);
 
-        resultList.add(new ProcessInteractive("",1.0,0));
+        resultList.add(new ProcessInteractive("SP",1.0,0));
         resultList.add(new ProcessInteractive("P3", 3.0,1.0));
-        resultList.add(new ProcessInteractive("",1.0,4.0));
+        resultList.add(new ProcessInteractive("SP",1.0,4.0));
         resultList.add(new ProcessInteractive("P1",2.5,5.0));
         resultList.add(new ProcessInteractive("CS",0.2,7.5));
         resultList.add(new ProcessInteractive("P2",2.5,7.7));
