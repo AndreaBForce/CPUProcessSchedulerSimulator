@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @SuppressWarnings("ALL")
 public class TabPaneNew {
@@ -219,7 +220,6 @@ public class TabPaneNew {
             TextInputDialog textInputDialog = new TextInputDialog();
             textInputDialog.setContentText("File name: ");
             String fileName = textInputDialog.showAndWait().get();
-
             String name = select.getSimulation().getAlgorithmName();
 
             if (!name.equals("")) {
@@ -234,7 +234,7 @@ public class TabPaneNew {
                 }
             }
 
-        } catch (IOException e) {
+        } catch (IOException | NoSuchElementException e) {
             e.printStackTrace();
         }
     }

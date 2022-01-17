@@ -182,7 +182,7 @@ public class ProcessListView {
             newWindow.show();
 
             submitBtn.setOnMouseClicked(mouseEvent1 -> {
-                add(new Process(textProcessName.getText(), Float.parseFloat(tmpBurst.getText()), Float.parseFloat(tmpArr.getText()), Integer.parseInt(priority.getText()), colorPicker.getValue()));
+                add(new Process(textProcessName.getText(), roundAvoid(Double.parseDouble(tmpBurst.getText()), 1), roundAvoid(Double.parseDouble(tmpArr.getText()), 1), Integer.parseInt(priority.getText()), colorPicker.getValue()));
                 newWindow.close();
             });
         });
@@ -191,6 +191,11 @@ public class ProcessListView {
         //scrollableList.setStyle("-fx-background: red; -fx-background-color: red");
         scrollableList.setMaxWidth(800);
         processBox.setPadding(new Insets(10));
+    }
+
+    public static double roundAvoid(double value, int places) {
+        double scale = Math.pow(10, places);
+        return Math.round(value * scale) / scale;
     }
 
     private String format(double val) {
