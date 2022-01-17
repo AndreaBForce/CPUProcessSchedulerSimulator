@@ -2,39 +2,33 @@ package Dialogs;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 
-public class DisplayInfoDialog {
-    private Stage displayStage;
-    private Scene scene;
+public class DisplayInfoDialog extends Dialog {
 
 
     public DisplayInfoDialog(){
+        super(500, 300);
+
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
 
-        displayStage = new Stage();
-        displayStage.setTitle(resourceBundle.getString("menuNewSim.text"));
-        displayStage.setAlwaysOnTop(true);
+        getStage().setTitle(resourceBundle.getString("menuNewSim.text"));
+        getStage().setAlwaysOnTop(true);
 
-        BorderPane displaySimulationBorder = new BorderPane();
         HBox dropdownAlgo = new HBox();
         VBox total = new VBox();
 
         VBox.setMargin(dropdownAlgo, new Insets(10,16,10,16));
 
-        ComboBox chooseAlgorithmCombo = new ComboBox();
+        ComboBox<String> chooseAlgorithmCombo = new ComboBox<>();
         chooseAlgorithmCombo.getItems().addAll("FIFO",
                 "SJF",
                 "Round Robin",
@@ -45,7 +39,6 @@ public class DisplayInfoDialog {
 
         Label algoChooseLabel = new Label();
         algoChooseLabel.setText(resourceBundle.getString("selezioneDescrizione.text"));
-        algoChooseLabel.setFont(new Font("Arial", 15));
 
         dropdownAlgo.getChildren().addAll(algoChooseLabel,chooseAlgorithmCombo);
         dropdownAlgo.setSpacing(20);
@@ -55,19 +48,20 @@ public class DisplayInfoDialog {
         showBorder.setAlignment(Pos.CENTER);
 
         total.getChildren().addAll(dropdownAlgo,showBorder);
-        displaySimulationBorder.setTop(total);
+        getBorderPane().setTop(total);
 
-        Label algoritmhDescription = new Label();
-        algoritmhDescription.setTextAlignment(TextAlignment.JUSTIFY);
-        algoritmhDescription.setWrapText(true);
-        algoritmhDescription.setMaxHeight(200);
-        algoritmhDescription.setMinWidth(200);
+        Label algorithmDescription = new Label();
+        algorithmDescription.setTextAlignment(TextAlignment.JUSTIFY);
+        algorithmDescription.setWrapText(true);
+        algorithmDescription.setMaxHeight(200);
+        algorithmDescription.setMinWidth(200);
 
-        algoritmhDescription.setText(resourceBundle.getString("FIFO.text"));
-        displaySimulationBorder.setCenter(algoritmhDescription);
+        algorithmDescription.setText(resourceBundle.getString("FIFO.text"));
+        getBorderPane().setCenter(algorithmDescription);
         HBox buttonHBOX = new HBox();
 
         Button exitAnnulla = new Button();
+        exitAnnulla.getStyleClass().add("btn");
         exitAnnulla.setText(resourceBundle.getString("closeDescription.text"));
 
 
@@ -77,47 +71,29 @@ public class DisplayInfoDialog {
 
         exitAnnulla.setPrefSize(120, 30);
 
-        displayStage.initModality(Modality.APPLICATION_MODAL);
+        getStage().initModality(Modality.APPLICATION_MODAL);
 
-        displaySimulationBorder.setBottom(buttonHBOX);
+        getBorderPane().setBottom(buttonHBOX);
 
-        scene = new Scene(displaySimulationBorder, 500, 300);
-        displayStage.setScene(scene);
+        getStage().setScene(getScene());
 
 
         exitAnnulla.setOnAction(x -> {
-            displayStage.close();
+            getStage().close();
         });
 
         chooseAlgorithmCombo.setOnAction(x -> {
-            switch (chooseAlgorithmCombo.getValue().toString()){
-                case "FIFO":
-                    algoritmhDescription.setText(resourceBundle.getString("FIFO.text"));
-                    break;
-                case "SJF":
-                    algoritmhDescription.setText(resourceBundle.getString("SJF.text"));
-                    break;
-                case "Round Robin":
-                    algoritmhDescription.setText(resourceBundle.getString("ROUND.text"));
-                    break;
-                case "Lottery":
-                    algoritmhDescription.setText(resourceBundle.getString("LOTTERY.text"));
-                    break;
-                case "RMA":
-                    algoritmhDescription.setText(resourceBundle.getString("RMA.text"));
-                    break;
-                case "EDF":
-                    algoritmhDescription.setText(resourceBundle.getString("EDF.text"));
-                    break;
-                default:
-                    break;
+            switch (chooseAlgorithmCombo.getValue().toString()) {
+                case "FIFO" -> algorithmDescription.setText(resourceBundle.getString("FIFO.text"));
+                case "SJF" -> algorithmDescription.setText(resourceBundle.getString("SJF.text"));
+                case "Round Robin" -> algorithmDescription.setText(resourceBundle.getString("ROUND.text"));
+                case "Lottery" -> algorithmDescription.setText(resourceBundle.getString("LOTTERY.text"));
+                case "RMA" -> algorithmDescription.setText(resourceBundle.getString("RMA.text"));
+                case "EDF" -> algorithmDescription.setText(resourceBundle.getString("EDF.text"));
+                default -> {
+                }
             }
         });
 
-    }
-
-
-    public Stage getDisplayStage() {
-        return displayStage;
     }
 }

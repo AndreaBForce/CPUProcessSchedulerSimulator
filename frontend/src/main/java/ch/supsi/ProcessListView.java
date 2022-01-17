@@ -25,18 +25,20 @@ public class ProcessListView {
     private final Button addBtn;
     private long id = 0;
     private final List<Process> processList = new ArrayList<>();
-    private String algortihm;
+    private String algorithm;
 
     public ProcessListView() {
         container = new VBox();
         processBox = new VBox();
         addBtn = new Button("Add new process");
-
+        addBtn.getStyleClass().add("btn");
         cells = new ArrayList<>();
         scrollableList = new ScrollPane();
+    }
+
+    public void initList(){
         container.setSpacing(16);
         container.setPadding(new Insets(10));
-        container.setStyle("-fx-background-color: red");
         container.getChildren().addAll(addBtn, scrollableList);
         container.setMinWidth(200);
         processBox.setMaxWidth(800);
@@ -45,6 +47,7 @@ public class ProcessListView {
 
         addBtn.setOnMouseClicked(mouseEvent -> {
             GridPane gridPane = new GridPane();
+            gridPane.getStylesheets().add("Style.css");
             gridPane.setAlignment(Pos.CENTER);
             gridPane.setHgap(10);
             gridPane.setVgap(10);
@@ -106,7 +109,7 @@ public class ProcessListView {
 
             Button submitBtn = new Button("Add");
 
-            switch (algortihm) {
+            switch (algorithm) {
                 case "FCFS", "SJF" -> {
                     //Arrival time
                     gridPane.add(labelTmpArr, 0, 3);
@@ -185,7 +188,7 @@ public class ProcessListView {
         });
         scrollableList.setContent(processBox);
         scrollableList.setFitToWidth(true);
-        scrollableList.setStyle("-fx-background: red; -fx-background-color: red");
+        //scrollableList.setStyle("-fx-background: red; -fx-background-color: red");
         scrollableList.setMaxWidth(800);
         processBox.setPadding(new Insets(10));
     }
@@ -208,21 +211,20 @@ public class ProcessListView {
 
         HBox cell = getCell(hexColor);
         ProcessDetailsView processDetails = new ProcessDetailsView(process);
-        //Btn edit
-        Button btnEdit = new Button();
-        btnEdit.setText("Edit");
-        btnEdit.setStyle("-fx-background-insets: 0; -fx-background-color: #f0f0f0; -fx-font-size: 10px;");
-        btnEdit.setMaxHeight(10);
-        HBox.setMargin(btnEdit, new Insets(5, 5, 5, 5));
+
+        Button btnEdit = getButton("Edit");
 
         btnEdit.setOnMouseClicked(mouseEvent -> {
             EditDialog editDialog = new EditDialog(processDetails, process);
-            editDialog.getEditStage().showAndWait();
+            editDialog.getStage().showAndWait();
         });
 
-        Button button = getButton();
+        Button btnRemove = getButton("Remove");
+        btnRemove.setOnMouseClicked(mouseEvent -> {
+            removeCell(btnRemove.getParent().getId());
+        });
 
-        switch (algortihm) {
+        switch (algorithm) {
             case "FCFS", "SJF" -> cell.getChildren().addAll(getSpace(),
                     processDetails.getProcessName(),
                     getSpace(),
@@ -230,7 +232,7 @@ public class ProcessListView {
                     getSpace(),
                     processDetails.getTmpBurstTime(), processDetails.getValueBurst(),
                     getSpace(),
-                    btnEdit, button);
+                    btnEdit, btnRemove);
             case "Round Robin" -> cell.getChildren().addAll(getSpace(),
                     processDetails.getProcessName(),
                     getSpace(),
@@ -240,7 +242,7 @@ public class ProcessListView {
                     getSpace(),
                     processDetails.getTmpPriority(),
                     getSpace(),
-                    btnEdit, button);
+                    btnEdit, btnRemove);
             case "Lottery" -> cell.getChildren().addAll(getSpace(),
                     processDetails.getProcessName(),
                     getSpace(),
@@ -250,7 +252,7 @@ public class ProcessListView {
                     getSpace(),
                     processDetails.getTmpPriority(), processDetails.getValuePriority(),
                     getSpace(),
-                    btnEdit, button);
+                    btnEdit, btnRemove);
             case "RMA", "EDF" -> {
                 processDetails.getTmpPriority().setText("Period:");
                 cell.getChildren().addAll(getSpace(),
@@ -260,14 +262,14 @@ public class ProcessListView {
                         getSpace(),
                         processDetails.getTmpPriority(), processDetails.getValuePriority(),
                         getSpace(),
-                        btnEdit, button);
+                        btnEdit, btnRemove);
             }
         }
         processBox.getChildren().add(cell);
     }
 
-    public void setAlgortihm(String algortihm) {
-        this.algortihm = algortihm;
+    public void setAlgorithm(String algorithm) {
+        this.algorithm = algorithm;
     }
 
     public void removeCell(String id) {
@@ -281,7 +283,7 @@ public class ProcessListView {
     private HBox getCell(String hexColor) {
         HBox cell = new HBox();
         cell.setStyle("-fx-background-radius: 5; -fx-background-color: " + hexColor + ";");
-        cell.setEffect(new DropShadow(10, Color.BLACK));
+        cell.setEffect(new DropShadow(4, Color.BLACK));
         cell.setPrefHeight(32);
         cell.setAlignment(Pos.CENTER);
         cell.setFillHeight(false);
@@ -298,17 +300,13 @@ public class ProcessListView {
         return space;
     }
 
-    private Button getButton() {
+    private Button getButton(String text) {
         Button button = new Button();
-
-        button.setText("Remove");
-        button.setStyle("-fx-background-insets: 0; -fx-background-color: #f0f0f0; -fx-font-size: 10px;");
+        button.getStyleClass().add("btn");
+        button.setText(text);
+        button.setStyle("-fx-effect: none; -fx-font-size: 10px;");
         button.setMaxHeight(10);
         HBox.setMargin(button, new Insets(5, 5, 5, 5));
-
-        button.setOnMouseClicked(mouseEvent -> {
-            removeCell(button.getParent().getId());
-        });
 
         return button;
     }

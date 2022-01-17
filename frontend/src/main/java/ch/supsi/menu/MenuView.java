@@ -1,6 +1,6 @@
 package ch.supsi.menu;
 
-import Dialogs.CreateSimDialog;
+import Dialogs.SimulationDialog;
 import Dialogs.DisplayInfoDialog;
 import ch.supsi.*;
 import ch.supsi.controller.Mediator;
@@ -56,9 +56,9 @@ public class MenuView {
         menuStructure.getExitItem().setOnAction(exitHandler);
 
         menuStructure.getMenuNew().setOnAction(actionEvent -> {
-            CreateSimDialog createSimulation = new CreateSimDialog();
-            createSimulation.getCreateStage().showAndWait();
-            tabPaneNew.createNewSimulation(createSimulation.getName(), createSimulation.getAlgortihm(), createSimulation.isConfirm());
+            SimulationDialog createSimulation = new SimulationDialog();
+            createSimulation.getStage().showAndWait();
+            tabPaneNew.createNewSimulation(createSimulation.getName(), createSimulation.getAlgorithm(), createSimulation.isConfirm());
         });
 
         menuStructure.getMenuRandomSim().setOnAction(actionEvent -> {
@@ -70,7 +70,7 @@ public class MenuView {
         menuStructure.getInfoAlgoItem().setOnAction(actionEvent -> {
             DisplayInfoDialog displayInfoDialog = new DisplayInfoDialog();
 
-            displayInfoDialog.getDisplayStage().showAndWait();
+            displayInfoDialog.getStage().showAndWait();
         });
 
         return menuStructure.getMenuBar();

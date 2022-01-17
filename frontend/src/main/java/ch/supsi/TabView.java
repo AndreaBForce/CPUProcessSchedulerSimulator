@@ -20,7 +20,7 @@ public class TabView {
 
         tab.setOnCloseRequest(event -> {
                     exit = new ExitDialog();
-                    exit.getExitStage().showAndWait();
+                    exit.getStage().showAndWait();
                     if (!exit.isEnd()) {
                         event.consume();
                     }

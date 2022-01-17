@@ -3,31 +3,24 @@ package Dialogs;
 import ch.supsi.Process;
 import ch.supsi.menu.ProcessDetailsView;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 
-public class EditDialog {
-    private Stage editStage;
-    private Scene scene;
+public class EditDialog extends Dialog {
 
     //TODO RIMPIAZZA CON OGGETTO PROCESSO
     public EditDialog(ProcessDetailsView detailsView, Process process){
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
-        editStage = new Stage();
-        editStage.setTitle(resourceBundle.getString("editDialogTitle.text"));
-        editStage.setAlwaysOnTop(true);
+        super(300, 180);
 
-        BorderPane editBorder = new BorderPane();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
+        getStage().setTitle(resourceBundle.getString("editDialogTitle.text"));
+        getStage().setAlwaysOnTop(true);
+
         VBox cushion = new VBox();
 
         HBox hb_p_name = new HBox();
@@ -81,6 +74,8 @@ public class EditDialog {
         Button btn_confirm = new Button();
         Button btn_close = new Button();
 
+        btn_confirm.getStyleClass().add("btn");
+        btn_close.getStyleClass().add("btn");
         btn_confirm.setText(resourceBundle.getString("editDialogConfirm.text"));
         btn_close.setText(resourceBundle.getString("editDialogAnnulla.text"));
 
@@ -91,10 +86,9 @@ public class EditDialog {
         cushion.setSpacing(10);
         cushion.setAlignment(Pos.CENTER);
         cushion.getChildren().addAll(hb_p_name,hb_arrival,hb_burst,hb_priority,hb_btns);
-        editBorder.setCenter(cushion);
+        getBorderPane().setCenter(cushion);
 
-        scene = new Scene(editBorder, 300, 180);
-        editStage.setScene(scene);
+        getStage().setScene(getScene());
 
         btn_confirm.setOnMouseClicked(x -> {
             detailsView.getProcessName().setText(pName.getText());
@@ -107,15 +101,11 @@ public class EditDialog {
             process.setBurstTime(Double.parseDouble(pBurst.getText()));
             process.setPriority(Integer.parseInt(pPrio.getText()));
 
-            editStage.close();
+            getStage().close();
         });
 
         btn_close.setOnAction(x -> {
-            editStage.close();
+            getStage().close();
         });
-    }
-
-    public Stage getEditStage() {
-        return editStage;
     }
 }
