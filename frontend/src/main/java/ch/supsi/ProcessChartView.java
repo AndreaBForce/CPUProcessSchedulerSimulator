@@ -58,17 +58,7 @@ public class ProcessChartView {
         processList.getData().add(data);
     }
 
-    public void addSpace(int pos, int length){
-        XYChart.Data<Number, String> data = new XYChart.Data<>(length,"");
-        Region space = new Region();
-        space.setStyle("-fx-background-color: #e7e7e7");
-        data.setNode(space);
-
-        processList.getData().add(pos, data);
-    }
-
     public void testChart(){
-
         chart.getData().add(processList);
     }
 

@@ -13,8 +13,7 @@ import javafx.stage.Modality;
 import java.util.ResourceBundle;
 
 public class DisplayInfoDialog extends Dialog {
-
-
+    
     public DisplayInfoDialog(){
         super(500, 300);
 
@@ -29,6 +28,7 @@ public class DisplayInfoDialog extends Dialog {
         VBox.setMargin(dropdownAlgo, new Insets(10,16,10,16));
 
         ComboBox<String> chooseAlgorithmCombo = new ComboBox<>();
+        chooseAlgorithmCombo.setId("comboBoxItem");
         chooseAlgorithmCombo.getItems().addAll("FIFO",
                 "SJF",
                 "Round Robin",

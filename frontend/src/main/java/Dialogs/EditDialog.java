@@ -13,7 +13,6 @@ import java.util.ResourceBundle;
 
 public class EditDialog extends Dialog {
 
-    //TODO RIMPIAZZA CON OGGETTO PROCESSO
     public EditDialog(ProcessDetailsView detailsView, Process process){
         super(300, 180);
 
@@ -29,29 +28,29 @@ public class EditDialog extends Dialog {
         HBox hb_priority = new HBox();
         HBox hb_btns = new HBox();
 
-        //Label di modifica parametri
-        //TODO INTERNALIZZAZIONE
         Label name = new Label();
         Label arrivalTime = new Label();
         Label burstTime = new Label();
         Label priority = new Label();
 
-        name.setText("Process name: ");
-        arrivalTime.setText("Arrival time:     ");
-        burstTime.setText("Burst time:       ");
-        priority.setText("Priority:            ");
+        name.setText(resourceBundle.getString("labelEditName.text"));
+        arrivalTime.setText(resourceBundle.getString("labelEditArrivalTime.text"));
+        burstTime.setText(resourceBundle.getString("labelEditBurstTime.text"));
+        priority.setText(resourceBundle.getString("labelEditPriority.text"));
 
         TextField pName = new TextField();
+        pName.setId("pName");
         TextField pArrival = new TextField();
+        pArrival.setId("pArrival");
         TextField pBurst = new TextField();
+        pBurst.setId("pBurst");
         TextField pPrio = new TextField();
+        pPrio.setId("pPrio");
 
         pName.setText(detailsView.getProcessName().getText());
         pArrival.setText(detailsView.getValueArrival().getText());
         pBurst.setText(detailsView.getValueBurst().getText());
         pPrio.setText(detailsView.getValuePriority().getText());
-
-        //TODO: CHECK INPUT E FAI
 
         hb_p_name.getChildren().addAll(name,pName);
         hb_p_name.setSpacing(10);
@@ -64,7 +63,6 @@ public class EditDialog extends Dialog {
 
         hb_priority.getChildren().addAll(priority, pPrio);
         hb_priority.setSpacing(10);
-
 
         hb_arrival.setAlignment(Pos.CENTER);
         hb_burst.setAlignment(Pos.CENTER);

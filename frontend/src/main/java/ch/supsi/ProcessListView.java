@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class ProcessListView {
     private final VBox container;
@@ -28,15 +29,17 @@ public class ProcessListView {
     private String algorithm;
 
     public ProcessListView() {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         container = new VBox();
         processBox = new VBox();
-        addBtn = new Button("Add new process");
+        addBtn = new Button(resourceBundle.getString("labelAddProcess.text"));
         addBtn.getStyleClass().add("btn");
         cells = new ArrayList<>();
         scrollableList = new ScrollPane();
     }
 
     public void initList(){
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         container.setSpacing(16);
         container.setPadding(new Insets(10));
         container.getChildren().addAll(addBtn, scrollableList);
@@ -55,7 +58,7 @@ public class ProcessListView {
             Scene secondScene = new Scene(gridPane, 320, 350);
 
             Stage newWindow = new Stage();
-            newWindow.setTitle("Add new process");
+            newWindow.setTitle(resourceBundle.getString("labelAddProcess.text"));
             newWindow.setScene(secondScene);
 
             newWindow.setMaxWidth(350);
@@ -63,22 +66,24 @@ public class ProcessListView {
             newWindow.setMaxHeight(320);
             newWindow.setMinHeight(320);
 
-            Text scenetitle = new Text("Add new process");
+            Text scenetitle = new Text(resourceBundle.getString("labelAddProcess.text"));
             gridPane.add(scenetitle, 0, 0, 2, 1);
 
-            Label labelProcessName = new Label("Name:");
+            Label labelProcessName = new Label(resourceBundle.getString("labelEditName.text"));
             gridPane.add(labelProcessName, 0, 1);
             TextField textProcessName = new TextField();
             gridPane.add(textProcessName, 1, 1);
 
-            Label labelColor = new Label("Color:");
+            Label labelColor = new Label(resourceBundle.getString("labelColorProcess.text"));
             gridPane.add(labelColor, 0, 2);
             ColorPicker colorPicker = new ColorPicker();
+            colorPicker.setId("colorPicker");
             gridPane.add(colorPicker, 1, 2);
 
 
-            Label labelTmpArr = new Label("Arrival time:");
+            Label labelTmpArr = new Label(resourceBundle.getString("labelEditArrivalTime.text"));
             TextField tmpArr = new TextField();
+            tmpArr.setId("tmpArr");
             tmpArr.focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (!tmpArr.getText().matches("^(?:1?\\d(?:\\.\\d{1,2})?|20(?:\\.0?)?)$")) {
@@ -87,8 +92,9 @@ public class ProcessListView {
                 }
             });
 
-            Label labelTmpBurst = new Label("Burst time:");
+            Label labelTmpBurst = new Label(resourceBundle.getString("labelEditBurstTime.text"));
             TextField tmpBurst = new TextField();
+            tmpBurst.setId("tmpBurst");
             tmpBurst.focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (!tmpBurst.getText().matches("^(?:1?\\d(?:\\.\\d{1,2})?|20(?:\\.0?)?)$")) {
@@ -97,8 +103,9 @@ public class ProcessListView {
                 }
             });
 
-            Label labelPriority = new Label("Priority:");
+            Label labelPriority = new Label(resourceBundle.getString("labelEditPriority.text"));
             TextField priority = new TextField();
+            priority.setId("priority");
             priority.focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (!priority.getText().matches("^(?:1?\\d(?:\\.\\d{1,2})?|20(?:\\.0?)?)$")) {
@@ -107,7 +114,7 @@ public class ProcessListView {
                 }
             });
 
-            Button submitBtn = new Button("Add");
+            Button submitBtn = new Button(resourceBundle.getString("labelAdd.text"));
 
             switch (algorithm) {
                 case "FCFS", "SJF" -> {
@@ -166,7 +173,7 @@ public class ProcessListView {
                     tmpArr.setText("4");
                     gridPane.add(labelTmpBurst, 0, 3);
                     gridPane.add(tmpBurst, 1, 3);
-                    labelPriority.setText("Period:");
+                    labelPriority.setText(resourceBundle.getString("labelPeriod.text"));
                     gridPane.add(labelPriority, 0, 4);
                     gridPane.add(priority, 1, 4);
                     submitBtn.disableProperty().bind(Bindings.isEmpty(textProcessName.textProperty())
@@ -188,7 +195,6 @@ public class ProcessListView {
         });
         scrollableList.setContent(processBox);
         scrollableList.setFitToWidth(true);
-        //scrollableList.setStyle("-fx-background: red; -fx-background-color: red");
         scrollableList.setMaxWidth(800);
         processBox.setPadding(new Insets(10));
     }
@@ -209,22 +215,23 @@ public class ProcessListView {
     }
 
     public void add(Process process) {
-
-        //TODO FAI IL FILTRO DEL COLORE SE ALTO O BASSO DI CAMBIARE IN NERO O BIANCO
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         String hexColor = toHexString(process.getColor());
         processList.add(process);
 
         HBox cell = getCell(hexColor);
         ProcessDetailsView processDetails = new ProcessDetailsView(process);
 
-        Button btnEdit = getButton("Edit");
+        Button btnEdit = getButton(resourceBundle.getString("labelEdit.text"));
+
+        btnEdit.setId("btnEdit");
 
         btnEdit.setOnMouseClicked(mouseEvent -> {
             EditDialog editDialog = new EditDialog(processDetails, process);
             editDialog.getStage().showAndWait();
         });
 
-        Button btnRemove = getButton("Remove");
+        Button btnRemove = getButton(resourceBundle.getString("labelRemove.text"));
         btnRemove.setOnMouseClicked(mouseEvent -> {
             removeCell(btnRemove.getParent().getId());
         });
@@ -259,7 +266,7 @@ public class ProcessListView {
                     getSpace(),
                     btnEdit, btnRemove);
             case "RMA", "EDF" -> {
-                processDetails.getTmpPriority().setText("Period:");
+                processDetails.getTmpPriority().setText(resourceBundle.getString("labelPeriod.text"));
                 cell.getChildren().addAll(getSpace(),
                         processDetails.getProcessName(),
                         getSpace(),
