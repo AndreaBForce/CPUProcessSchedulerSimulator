@@ -1,0 +1,1 @@
+{"processList":[{"arrivalTime":7.9,"name":"p0","burstTime":3.4},{"arrivalTime":3.9,"name":"p1","burstTime":8.6},{"arrivalTime":3.5,"name":"p2","burstTime":10.7},{"arrivalTime":6.8,"name":"p3","burstTime":5.4}],"name":"random","algorithmName":"SJF"}

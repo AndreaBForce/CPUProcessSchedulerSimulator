@@ -25,16 +25,25 @@ public class MenuStructure {
     public void setMenuBar(Scheduler scheduler) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         menuFile = new Menu(resourceBundle.getString("menuFile.text"));
+        menuFile.setId("fileMenu");
         exitItem = new MenuItem(resourceBundle.getString("menuExit.text"));
+        exitItem.setId("exitItem");
         menuEdit = new Menu(resourceBundle.getString("menuEdit.text"));
+        menuEdit.setId("editMenu");
         menuRandomSim = new MenuItem(resourceBundle.getString("menuRandomSim.text"));
+        menuRandomSim.setId("randomSimItem");
         menuNew = new MenuItem(resourceBundle.getString("menuNewSim.text"));
+        menuNew.setId("newSimItem");
         menuHelp = new Menu(resourceBundle.getString("menuHelp.text"));
+        menuHelp.setId("helpMenu");
 
         aboutItem = new MenuItem(resourceBundle.getString("menuAbout.text"));
+        aboutItem.setId("aboutItem");
         infoAlgoItem = new MenuItem(resourceBundle.getString("menuInfoAlgorithm.text"));
+        infoAlgoItem.setId("infoAlgoItem");
 
         menuImportSim = new MenuItem(resourceBundle.getString("menuImportGraph.text"));
+        menuImportSim.setId("importSimItem");
 
         menuBar.getMenus().add(menuFile);
         menuBar.getMenus().add(menuEdit);

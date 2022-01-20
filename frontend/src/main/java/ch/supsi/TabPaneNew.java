@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @SuppressWarnings("ALL")
 public class TabPaneNew {
@@ -37,9 +38,7 @@ public class TabPaneNew {
 
         plus.setOnSelectionChanged(e -> {
                     if (plus.isSelected()) {
-                        if (createSimulation.isFirst()) {
-                            createNewSimulation("Simulation tab", "FIFO", true);
-                        } else {
+                        if (!createSimulation.isFirst()) {
                             createSimulation.getStage().showAndWait();
                             createNewSimulation(createSimulation.getName(), createSimulation.getAlgorithm(), createSimulation.isConfirm());
                         }
@@ -69,6 +68,7 @@ public class TabPaneNew {
     }
 
     public void createRandomSimulation() {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         ProcessListView list = new ProcessListView();
         list.initList();
         String[] algorithms = {"RMA", "Lottery", "FCFS", "EDF", "SJF", "Round Robin"};
@@ -79,10 +79,10 @@ public class TabPaneNew {
             list.add(new Process("p" + i, roundAvoid((double) (Math.random() * 10.9) + 0.1, 1), roundAvoid((double) (Math.random() * 10.9) + 0.1, 1), (int) (Math.random() * 11), Color.color(Math.random(), Math.random(), Math.random())));
         }
 
-        Button exportGraph = new Button("Export graph");
+        Button exportGraph = new Button(resourceBundle.getString("labelExportGraph.text"));
         exportGraph.getStyleClass().add("btn");
         exportGraph.setDisable(true);
-        Button exportSim = new Button("Export simulation");
+        Button exportSim = new Button(resourceBundle.getString("labelExportSim.text"));
         exportSim.getStyleClass().add("btn");
         exportSim.setDisable(true);
         TabView newTab = new TabView("random", algorithms[algorithm]);
@@ -116,13 +116,14 @@ public class TabPaneNew {
     }
 
     public void createNewSimulation(String nameSimulation, String nameAlgorithm, boolean confirmed) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         ProcessListView list = new ProcessListView();
         list.initList();
         list.setAlgorithm(nameAlgorithm);
-        Button exportGraph = new Button("Export graph");
+        Button exportGraph = new Button(resourceBundle.getString("labelExportGraph.text"));
         exportGraph.getStyleClass().add("btn");
         exportGraph.setDisable(true);
-        Button exportSim = new Button("Export simulation");
+        Button exportSim = new Button(resourceBundle.getString("labelExportSim.text"));
         exportSim.getStyleClass().add("btn");
         exportSim.setDisable(true);
         TabView newTab = new TabView(nameSimulation, nameAlgorithm);
@@ -214,10 +215,11 @@ public class TabPaneNew {
     }
 
     public void exportSim() {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         TabView select = getSelectedTab();
         try {
             TextInputDialog textInputDialog = new TextInputDialog();
-            textInputDialog.setContentText("File name: ");
+            textInputDialog.setContentText(resourceBundle.getString("labelFileName.text"));
             String fileName = textInputDialog.showAndWait().get();
 
             String name = select.getSimulation().getAlgorithmName();
@@ -240,13 +242,14 @@ public class TabPaneNew {
     }
 
     public void addImportSimulation(Simulation simulation) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         ProcessListView list = new ProcessListView();
         list.initList();
         list.setAlgorithm(simulation.getAlgorithmName());
-        Button exportGraph = new Button("Export graph");
+        Button exportGraph = new Button(resourceBundle.getString("labelExportGraph.text"));
         exportGraph.getStyleClass().add("btn");
         exportGraph.setDisable(true);
-        Button exportSim = new Button("Export simulation");
+        Button exportSim = new Button(resourceBundle.getString("labelExportSim.text"));
         exportSim.getStyleClass().add("btn");
         exportSim.setDisable(true);
         TabView newTab = new TabView(simulation.getName(), simulation.getAlgorithmName());
@@ -276,7 +279,7 @@ public class TabPaneNew {
         }
 
 
-        startButton = new Button("start");
+        startButton = new Button("Start");
         {
             VBox vBox = new VBox();
             vBox.setAlignment(Pos.BOTTOM_CENTER);
@@ -346,13 +349,14 @@ public class TabPaneNew {
     }
 
     public void serializeProcess(String nameAlgorithm, TabView select, List<? extends service.process.Process> processList, ProcessListView list) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/stringhe");
         List<service.process.Process> processList1 = null;
 
         TextInputDialog textInputDialog = new TextInputDialog();
-        textInputDialog.setContentText("Enter context switch: ");
+        textInputDialog.setContentText(resourceBundle.getString("labelContextSwitch.text"));
 
         TextInputDialog textInputDialog1 = new TextInputDialog();
-        textInputDialog1.setContentText("Enter quantum: ");
+        textInputDialog1.setContentText(resourceBundle.getString("labelQuantum.text"));
 
         if (nameAlgorithm.equals("SJF")) {
             String contextSwitch = textInputDialog.showAndWait().get();
@@ -375,7 +379,7 @@ public class TabPaneNew {
 
         if (processList1.size() == 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Not schedulable");
+            alert.setContentText(resourceBundle.getString("labelNotSchedulable.text"));
             alert.show();
         } else {
             for (service.process.Process process : processList1) {
