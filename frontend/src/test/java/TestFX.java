@@ -129,8 +129,8 @@ public class TestFX extends ApplicationTest{
         clickOn("Create simulation");
         clickOn("ciao");
         clickOn("ciao");
-        verifyThat("Add new process", isVisible());
-        clickOn("Add new process");
+        verifyThat("Add new Process", isVisible());
+        clickOn("Add new Process");
         verifyThat("Add", Node::isDisable);
         write("p1");
         clickOn("#tmpArr");
