@@ -3,7 +3,6 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Order;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import static org.testfx.api.FxAssert.verifyThat;
@@ -23,7 +22,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(1)
     public void clickOnFileMenu(){
         clickOn("#fileMenu");
         verifyThat("#exitItem", isVisible());
@@ -31,7 +29,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(2)
     public void clickOnExitMenu(){
         clickOn("#fileMenu");
         clickOn("#exitItem");
@@ -40,7 +37,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(3)
     public void clickOnImportSimMenu() {
         clickOn("#fileMenu");
         clickOn("#importSimItem");
@@ -50,7 +46,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(4)
     public void clickOnEditMenu(){
         clickOn("#editMenu");
         verifyThat("#newSimItem", isVisible());
@@ -58,7 +53,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(5)
     public void clickOnNewSimMenu(){
         clickOn("#editMenu");
         clickOn("#newSimItem");
@@ -74,7 +68,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(6)
     public void clickOnNewRandomSimMenu(){
         clickOn("#editMenu");
         clickOn("#randomSimItem");
@@ -84,7 +77,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(7)
     public void clickOnHelpMenu(){
         clickOn("#helpMenu");
         verifyThat("#aboutItem", isVisible());
@@ -92,7 +84,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(8)
     public void clickOnAboutMenu(){
         clickOn("#helpMenu");
         clickOn("#aboutItem");
@@ -101,7 +92,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(9)
     public void clickOnInfoAlgoMenu(){
         clickOn("#helpMenu");
         clickOn("#infoAlgoItem");
@@ -121,7 +111,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(10)
     public void testAddProcess(){
         clickOn("#editMenu");
         clickOn("#newSimItem");
@@ -142,7 +131,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(11)
     public void testButtonSimulation(){
         testAddProcess();
         verifyThat("Export simulation", Node::isDisable);
@@ -156,7 +144,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(12)
     public void testExportSim(){
         testButtonSimulation();
         clickOn("Export simulation");
@@ -165,7 +152,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(13)
     public void testRemoveProcess(){
         testAddProcess();
         verifyThat("Remove", isVisible());
@@ -174,7 +160,6 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
-    @Order(14)
     public void testEditProcess(){
         testAddProcess();
         verifyThat("#btnEdit", isVisible());
