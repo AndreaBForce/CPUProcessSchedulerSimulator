@@ -13,7 +13,7 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) {
-        Locale.setDefault(Locale.ITALIAN);
+        Locale.setDefault(Locale.ENGLISH);
         stage.setTitle("Scheduler");
         Scheduler scheduler = new Scheduler();
 
