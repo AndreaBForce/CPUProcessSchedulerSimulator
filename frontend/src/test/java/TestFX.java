@@ -2,6 +2,7 @@ import ch.supsi.MainApplication;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -22,6 +23,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void clickOnFileMenu(){
         clickOn("#fileMenu");
         verifyThat("#exitItem", isVisible());
@@ -29,6 +31,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void clickOnExitMenu(){
         clickOn("#fileMenu");
         clickOn("#exitItem");
@@ -37,6 +40,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void clickOnImportSimMenu() {
         clickOn("#fileMenu");
         clickOn("#importSimItem");
@@ -46,6 +50,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void clickOnEditMenu(){
         clickOn("#editMenu");
         verifyThat("#newSimItem", isVisible());
@@ -53,6 +58,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void clickOnNewSimMenu(){
         clickOn("#editMenu");
         clickOn("#newSimItem");
@@ -68,6 +74,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void clickOnNewRandomSimMenu(){
         clickOn("#editMenu");
         clickOn("#randomSimItem");
@@ -77,6 +84,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void clickOnHelpMenu(){
         clickOn("#helpMenu");
         verifyThat("#aboutItem", isVisible());
@@ -84,6 +92,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void clickOnAboutMenu(){
         clickOn("#helpMenu");
         clickOn("#aboutItem");
@@ -92,6 +101,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void clickOnInfoAlgoMenu(){
         clickOn("#helpMenu");
         clickOn("#infoAlgoItem");
@@ -111,6 +121,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void testAddProcess(){
         clickOn("#editMenu");
         clickOn("#newSimItem");
@@ -131,6 +142,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void testButtonSimulation(){
         testAddProcess();
         verifyThat("Export simulation", Node::isDisable);
@@ -144,6 +156,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void testExportSim(){
         testButtonSimulation();
         clickOn("Export simulation");
@@ -152,6 +165,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void testRemoveProcess(){
         testAddProcess();
         verifyThat("Remove", isVisible());
@@ -160,6 +174,7 @@ public class TestFX extends ApplicationTest{
     }
 
     @Test
+    @Ignore
     public void testEditProcess(){
         testAddProcess();
         verifyThat("#btnEdit", isVisible());
